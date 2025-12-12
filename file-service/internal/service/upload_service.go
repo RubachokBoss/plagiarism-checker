@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"mime/multipart"
@@ -10,17 +9,23 @@ import (
 	"strings"
 	"time"
 
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
 	"github.com/google/uuid"
-	"github.com/plagiarism-checker/file-service/internal/models"
-	"github.com/plagiarism-checker/file-service/internal/repository"
-	"github.com/plagiarism-checker/file-service/pkg/hash"
 	"github.com/rs/zerolog"
 )
 
+// Добавим в интерфейс UploadService
 type UploadService interface {
 	UploadFile(ctx context.Context, fileHeader *multipart.FileHeader, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error)
 	UploadFileBytes(ctx context.Context, fileName string, fileBytes []byte, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error)
 	CheckDuplicate(ctx context.Context, fileHash string, fileSize int64) ([]*models.FileMetadata, error)
+	GetConfig() UploadConfig // Новый метод
+}
+
+// Добавим метод в uploadService структуру
+func (s *uploadService) GetConfig() UploadConfig {
+	return s.config
 }
 
 type uploadService struct {

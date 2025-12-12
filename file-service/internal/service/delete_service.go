@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/plagiarism-checker/file-service/internal/models"
-	"github.com/plagiarism-checker/file-service/internal/repository"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
 	"github.com/rs/zerolog"
 )
 

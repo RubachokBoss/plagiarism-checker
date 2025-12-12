@@ -3,18 +3,17 @@ package app
 import (
 	"context"
 	"database/sql"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/delivery/httpd"
 	"net/http"
 	"time"
 
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-	"github.com/plagiarism-checker/file-service/internal/config"
-	"github.com/plagiarism-checker/file-service/internal/database"
-	"github.com/plagiarism-checker/file-service/internal/delivery/http"
-	"github.com/plagiarism-checker/file-service/internal/repository"
-	"github.com/plagiarism-checker/file-service/internal/service"
-	"github.com/plagiarism-checker/file-service/pkg/logger"
 	"github.com/rs/zerolog"
 )
 
@@ -78,10 +77,13 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 	)
 
 	// Создаем обработчики
-	handler := http.NewHandler(
+	// В функции New после создания репозиториев и сервисов:
+	handler := httpd.NewHandler(
 		uploadService,
 		downloadService,
 		deleteService,
+		metadataRepo, // Добавляем репозиторий метаданных
+		storageRepo,  // Добавляем репозиторий хранилища
 		log,
 	)
 

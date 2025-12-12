@@ -1,0 +1,4207 @@
+﻿
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\go.mod
+================================================================================
+
+module github.com/RubachokBoss/plagiarism-checker/file-service
+
+go 1.21
+
+require (
+	github.com/go-chi/chi/v5 v5.0.10
+	github.com/go-chi/cors v1.2.1
+	github.com/google/uuid v1.3.1
+	github.com/jackc/pgx/v5 v5.4.3
+	github.com/lib/pq v1.10.9
+	github.com/minio/minio-go/v7 v7.0.63
+	github.com/rs/zerolog v1.31.0
+	github.com/spf13/viper v1.17.0
+)
+require (
+	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/fsnotify/fsnotify v1.6.0 // indirect
+	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/klauspost/compress v1.17.2 // indirect
+	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
+	github.com/magiconair/properties v1.8.7 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.19 // indirect
+	github.com/minio/md5-simd v1.1.2 // indirect
+	github.com/minio/sha256-simd v1.0.1 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/modern-go/concurrent v1.0.0 // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
+	github.com/rs/xid v1.5.0 // indirect
+	github.com/sagikazarmark/locafero v0.3.0 // indirect
+	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/sourcegraph/conc v0.3.0 // indirect
+	github.com/spf13/afero v1.10.0 // indirect
+	github.com/spf13/cast v1.5.1 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/subosito/gotenv v1.6.0 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/multierr v1.9.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
+	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\go.sum
+================================================================================
+
+cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
+cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
+cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=
+cloud.google.com/go v0.44.1/go.mod h1:iSa0KzasP4Uvy3f1mN/7PiObzGgflwredwwASm/v6AU=
+cloud.google.com/go v0.44.2/go.mod h1:60680Gw3Yr4ikxnPRS/oxxkBccT6SA1yMk63TGekxKY=
+cloud.google.com/go v0.44.3/go.mod h1:60680Gw3Yr4ikxnPRS/oxxkBccT6SA1yMk63TGekxKY=
+cloud.google.com/go v0.45.1/go.mod h1:RpBamKRgapWJb87xiFSdk4g1CME7QZg3uwTez+TSTjc=
+cloud.google.com/go v0.46.3/go.mod h1:a6bKKbmY7er1mI7TEI4lsAkts/mkhTSZK8w33B4RAg0=
+cloud.google.com/go v0.50.0/go.mod h1:r9sluTvynVuxRIOHXQEHMFffphuXHOMZMycpNR5e6To=
+cloud.google.com/go v0.52.0/go.mod h1:pXajvRH/6o3+F9jDHZWQ5PbGhn+o8w9qiu/CffaVdO4=
+cloud.google.com/go v0.53.0/go.mod h1:fp/UouUEsRkN6ryDKNW/Upv/JBKnv6WDthjR6+vze6M=
+cloud.google.com/go v0.54.0/go.mod h1:1rq2OEkV3YMf6n/9ZvGWI3GWw0VoqH/1x2nd8Is/bPc=
+cloud.google.com/go v0.56.0/go.mod h1:jr7tqZxxKOVYizybht9+26Z/gUq7tiRzu+ACVAMbKVk=
+cloud.google.com/go v0.57.0/go.mod h1:oXiQ6Rzq3RAkkY7N6t3TcE6jE+CIBBbA36lwQ1JyzZs=
+cloud.google.com/go v0.62.0/go.mod h1:jmCYTdRCQuc1PHIIJ/maLInMho30T/Y0M4hTdTShOYc=
+cloud.google.com/go v0.65.0/go.mod h1:O5N8zS7uWy9vkA9vayVHs65eM1ubvY4h553ofrNHObY=
+cloud.google.com/go v0.72.0/go.mod h1:M+5Vjvlc2wnp6tjzE102Dw08nGShTscUx2nZMufOKPI=
+cloud.google.com/go v0.74.0/go.mod h1:VV1xSbzvo+9QJOxLDaJfTjx5e+MePCpCWwvftOeQmWk=
+cloud.google.com/go v0.75.0 h1:XgtDnVJRCPEUG21gjFiRPz4zI1Mjg16R+NYQjfmU4XY=
+cloud.google.com/go v0.75.0/go.mod h1:VGuuCn7PG0dwsd5XPVm2Mm3wlh3EL55/79EKB6hlPTY=
+cloud.google.com/go/bigquery v1.0.1/go.mod h1:i/xbL2UlR5RvWAURpBYZTtm/cXjCha9lbfbpx4poX+o=
+cloud.google.com/go/bigquery v1.3.0/go.mod h1:PjpwJnslEMmckchkHFfq+HTD2DmtT67aNFKH1/VBDHE=
+cloud.google.com/go/bigquery v1.4.0/go.mod h1:S8dzgnTigyfTmLBfrtrhyYhwRxG72rYxvftPBK2Dvzc=
+cloud.google.com/go/bigquery v1.5.0/go.mod h1:snEHRnqQbz117VIFhE8bmtwIDY80NLUZUMb4Nv6dBIg=
+cloud.google.com/go/bigquery v1.7.0/go.mod h1://okPTzCYNXSlb24MZs83e2Do+h+VXtc4gLoIoXIAPc=
+cloud.google.com/go/bigquery v1.8.0 h1:PQcPefKFdaIzjQFbiyOgAqyx8q5djaE7x9Sqe712DPA=
+cloud.google.com/go/bigquery v1.8.0/go.mod h1:J5hqkt3O0uAFnINi6JXValWIb1v0goeZM77hZzJN/fQ=
+cloud.google.com/go/datastore v1.0.0/go.mod h1:LXYbyblFSglQ5pkeyhO+Qmw7ukd3C+pD7TKLgZqpHYE=
+cloud.google.com/go/datastore v1.1.0 h1:/May9ojXjRkPBNVrq+oWLqmWCkr4OU5uRY29bu0mRyQ=
+cloud.google.com/go/datastore v1.1.0/go.mod h1:umbIZjpQpHh4hmRpGhH4tLFup+FVzqBi1b3c64qFpCk=
+cloud.google.com/go/pubsub v1.0.1/go.mod h1:R0Gpsv3s54REJCy4fxDixWD93lHJMoZTyQ2kNxGRt3I=
+cloud.google.com/go/pubsub v1.1.0/go.mod h1:EwwdRX2sKPjnvnqCa270oGRyludottCI76h+R3AArQw=
+cloud.google.com/go/pubsub v1.2.0/go.mod h1:jhfEVHT8odbXTkndysNHCcx0awwzvfOlguIAii9o8iA=
+cloud.google.com/go/pubsub v1.3.1 h1:ukjixP1wl0LpnZ6LWtZJ0mX5tBmjp1f8Sqer8Z2OMUU=
+cloud.google.com/go/pubsub v1.3.1/go.mod h1:i+ucay31+CNRpDW4Lu78I4xXG+O1r/MAHgjpRVR+TSU=
+cloud.google.com/go/storage v1.0.0/go.mod h1:IhtSnM/ZTZV8YYJWCY8RULGVqBDmpoyjwiyrjsg+URw=
+cloud.google.com/go/storage v1.5.0/go.mod h1:tpKbwo567HUNpVclU5sGELwQWBDZ8gh0ZeosJ0Rtdos=
+cloud.google.com/go/storage v1.6.0/go.mod h1:N7U0C8pVQ/+NIKOBQyamJIeKQKkZ+mxpohlUTyfDhBk=
+cloud.google.com/go/storage v1.8.0/go.mod h1:Wv1Oy7z6Yz3DshWRJFhqM/UCfaWIRTdp0RXyy7KQOVs=
+cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9ullr3+Kg0=
+cloud.google.com/go/storage v1.14.0 h1:6RRlFMv1omScs6iq2hfE3IvgE+l6RfJPampq8UZc5TU=
+cloud.google.com/go/storage v1.14.0/go.mod h1:GrKmX003DSIwi9o29oFT7YDnHYwZoctc3fOKtUw0Xmo=
+dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9 h1:VpgP7xuJadIUuKccphEpTJnWhS2jkQyMt6Y7pJCD7fY=
+dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
+github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
+github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802 h1:1BDTz0u9nC3//pOCMdNH+CiXJVYJh5UQNCOBG7jbELc=
+github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/census-instrumentation/opencensus-proto v0.2.1 h1:glEXhBS5PSLLv4IXzLA5yPRVX4bilULVyxxbrfOtDAk=
+github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
+github.com/chzyer/logex v1.1.10 h1:Swpa1K6QvQznwJRcfTfQJmTE72DqScAa40E+fbHEXEE=
+github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
+github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e h1:fY5BOSpyZCqRo5OhCuC+XN+r/bBCmeuuJtjz+bCNIf8=
+github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
+github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1 h1:q763qf9huN11kDQavWsoZXJNW3xEE4JJyHa5Q25/sd8=
+github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
+github.com/client9/misspell v0.3.4 h1:ta993UF76GwbvJcIo3Y68y/M3WxlpEHPWIGDkJYwzJI=
+github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
+github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
+github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
+github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403 h1:cqQfy1jclcSy/FwLjemeg3SR1yaINm74aQyupQ0Bl8M=
+github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
+github.com/coreos/go-systemd/v22 v22.5.0 h1:RrqgGjYQKalulkV8NGVIfkXQf6YYmOyiJKk8iXXhfZs=
+github.com/coreos/go-systemd/v22 v22.5.0/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
+github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=
+github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
+github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
+github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
+github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
+github.com/envoyproxy/go-control-plane v0.9.7/go.mod h1:cwu0lG7PUMfa9snN8LXBig5ynNVH9qI8YYLbd1fK2po=
+github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad h1:EmNYJhPYy0pOFjCx2PrgtaBXmee0iUX9hLlxE1xHOJE=
+github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.mod h1:cXg6YxExXjJnVBQHBLXeUAgxn2UodCpnH306RInaBQk=
+github.com/envoyproxy/protoc-gen-validate v0.1.0 h1:EQciDnbrYxy13PgWoY8AqoxGiPrpgBZ1R8UNe3ddc+A=
+github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
+github.com/frankban/quicktest v1.14.4 h1:g2rn0vABPOOXmZUj+vbmUp0lPoXEMuhTpIluN0XL9UY=
+github.com/frankban/quicktest v1.14.4/go.mod h1:4ptaffx2x8+WTWXmUCuVU6aPUX1/Mz7zb5vbUoiM6w0=
+github.com/fsnotify/fsnotify v1.6.0/go.mod h1:sl3t1tCWJFWoRz9R8WJCbQihKKwmorjAbSClcnxKAGw=
+github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S9k=
+github.com/fsnotify/fsnotify v1.9.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
+github.com/go-chi/chi/v5 v5.2.3 h1:WQIt9uxdsAbgIYgid+BpYc+liqQZGMHRaUwp0JUcvdE=
+github.com/go-chi/chi/v5 v5.2.3/go.mod h1:L2yAIGWB3H+phAw1NxKwWM+7eUH/lU8pOMm5hHcoops=
+github.com/go-chi/cors v1.2.2 h1:Jmey33TE+b+rB7fT8MUy1u0I4L+NARQlK6LhzKPSyQE=
+github.com/go-chi/cors v1.2.2/go.mod h1:sSbTewc+6wYHBBCW7ytsFSn836hqM7JxpglAy2Vzc58=
+github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1 h1:QbL/5oDUmRBzO9/Z7Seo6zf912W/a6Sr4Eu0G/3Jho0=
+github.com/go-gl/glfw v0.0.0-20190409004039-e6da0acd62b1/go.mod h1:vR7hzQXu2zJy9AVAgeJqvqgH9Q5CA+iKCZ2gyEVpxRU=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20191125211704-12ad95a8df72/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4 h1:WtGNWLvXpe6ZudgnXrq0barxBImvnnJoMEhXAzcbM0I=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
+github.com/go-viper/mapstructure/v2 v2.4.0 h1:EBsztssimR/CONLSZZ04E8qAkxNYq4Qp9LvH92wZUgs=
+github.com/go-viper/mapstructure/v2 v2.4.0/go.mod h1:oJDH3BJKyqBA2TXFhDsKDGDTlndYOZ6rGS0BRZIxGhM=
+github.com/godbus/dbus/v5 v5.0.4 h1:9349emZab16e7zQvpmsbtjc18ykshndd8y2PG3sgJbA=
+github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5xrFpKfA=
+github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
+github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
+github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
+github.com/golang/groupcache v0.0.0-20191227052852-215e87163ea7/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
+github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e h1:1r7pUrabqp18hOBcwBwiTsbnFeTZHV9eER/QT5JVZxY=
+github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
+github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
+github.com/golang/mock v1.2.0/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
+github.com/golang/mock v1.3.1/go.mod h1:sBzyDLLjw3U8JLTeZvSv8jJB+tU5PVekmnlKIyFUx0Y=
+github.com/golang/mock v1.4.0/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt3cw=
+github.com/golang/mock v1.4.1/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt3cw=
+github.com/golang/mock v1.4.3/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt3cw=
+github.com/golang/mock v1.4.4 h1:l75CXGRSwbaYNpl/Z2X1XIIAMSCquvXgpVZDhwEIJsc=
+github.com/golang/mock v1.4.4/go.mod h1:l3mdAwkq5BuhzHwde/uurv3sEJeZMXNpwsxVWU71h+4=
+github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/golang/protobuf v1.3.2/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/golang/protobuf v1.3.3/go.mod h1:vzj43D7+SQXF/4pzW/hwtAqwc6iTitCiVSaWz5lYuqw=
+github.com/golang/protobuf v1.3.4/go.mod h1:vzj43D7+SQXF/4pzW/hwtAqwc6iTitCiVSaWz5lYuqw=
+github.com/golang/protobuf v1.3.5/go.mod h1:6O5/vntMXwX2lRkT1hjjk0nAC1IDOTvTlVgjlRvqsdk=
+github.com/golang/protobuf v1.4.0-rc.1/go.mod h1:ceaxUfeHdC40wWswd/P6IGgMaK3YpKi5j83Wpe3EHw8=
+github.com/golang/protobuf v1.4.0-rc.1.0.20200221234624-67d41d38c208/go.mod h1:xKAWHe0F5eneWXFV3EuXVDTCmh+JuBKY0li0aMyXATA=
+github.com/golang/protobuf v1.4.0-rc.2/go.mod h1:LlEzMj4AhA7rCAGe4KMBDvJI+AwstrUpVNzEA03Pprs=
+github.com/golang/protobuf v1.4.0-rc.4.0.20200313231945-b860323f09d0/go.mod h1:WU3c8KckQ9AFe+yFwt9sWVRKCVIyN9cPHBJSNnbL67w=
+github.com/golang/protobuf v1.4.0/go.mod h1:jodUvKwWbYaEsadDk5Fwe5c77LiNKVO9IDvqG2KuDX0=
+github.com/golang/protobuf v1.4.1/go.mod h1:U8fpvMrcmy5pZrNK1lt4xCsGvpyWQ/VVv6QDs8UjoX8=
+github.com/golang/protobuf v1.4.2/go.mod h1:oDoupMAO8OvCJWAcko0GGGIgR6R6ocIYbsSw735rRwI=
+github.com/golang/protobuf v1.4.3 h1:JjCZWpVbqXDqFVmTfYWEVTMIYrL/NPdPSCHPJ0T/raM=
+github.com/golang/protobuf v1.4.3/go.mod h1:oDoupMAO8OvCJWAcko0GGGIgR6R6ocIYbsSw735rRwI=
+github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
+github.com/google/btree v1.0.0 h1:0udJVsspx3VBr5FwtLhQQtuAsVc79tTq0ocGIPAU6qo=
+github.com/google/btree v1.0.0/go.mod h1:lNA+9X1NB3Zf8V7Ke586lFgjr2dZNuvo3lPJSGZ5JPQ=
+github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
+github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
+github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
+github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.4.1/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.5.1/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.5.4/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
+github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
+github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
+github.com/google/gofuzz v1.0.0 h1:A8PeW59pxE9IoFRqBp37U+mSNaQoZ46F1f0f863XSXw=
+github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
+github.com/google/martian v2.1.0+incompatible h1:/CP5g8u/VJHijgedC/Legn3BAbAaWPgecwXBIDzw5no=
+github.com/google/martian v2.1.0+incompatible/go.mod h1:9I4somxYTbIHy5NJKHRl3wXiIaQGbYVAs8BPL6v8lEs=
+github.com/google/martian/v3 v3.0.0/go.mod h1:y5Zk1BBys9G+gd6Jrk0W3cC1+ELVxBWuIGO+w/tUAp0=
+github.com/google/martian/v3 v3.1.0 h1:wCKgOCHuUEVfsaQLpPSJb7VdYCdTVZQAuOdYm1yc/60=
+github.com/google/martian/v3 v3.1.0/go.mod h1:y5Zk1BBys9G+gd6Jrk0W3cC1+ELVxBWuIGO+w/tUAp0=
+github.com/google/pprof v0.0.0-20181206194817-3ea8567a2e57/go.mod h1:zfwlbNMJ+OItoe0UupaVj+oy1omPYYDuagoSzA8v9mc=
+github.com/google/pprof v0.0.0-20190515194954-54271f7e092f/go.mod h1:zfwlbNMJ+OItoe0UupaVj+oy1omPYYDuagoSzA8v9mc=
+github.com/google/pprof v0.0.0-20191218002539-d4f498aebedc/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
+github.com/google/pprof v0.0.0-20200212024743-f11f1df84d12/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
+github.com/google/pprof v0.0.0-20200229191704-1ebb73c60ed3/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
+github.com/google/pprof v0.0.0-20200430221834-fc25d7d30c6d/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
+github.com/google/pprof v0.0.0-20200708004538-1a94d8640e99/go.mod h1:ZgVRPoUq/hfqzAqh7sHMqb3I9Rq5C59dIz2SbBwJ4eM=
+github.com/google/pprof v0.0.0-20201023163331-3e6fc7fc9c4c/go.mod h1:kpwsk12EmLew5upagYY7GY0pfYCcupk39gWOCRROcvE=
+github.com/google/pprof v0.0.0-20201203190320-1bf35d6f28c2/go.mod h1:kpwsk12EmLew5upagYY7GY0pfYCcupk39gWOCRROcvE=
+github.com/google/pprof v0.0.0-20201218002935-b9804c9f04c2 h1:LR89qFljJ48s990kEKGsk213yIJDPI4205OKOzbURK8=
+github.com/google/pprof v0.0.0-20201218002935-b9804c9f04c2/go.mod h1:kpwsk12EmLew5upagYY7GY0pfYCcupk39gWOCRROcvE=
+github.com/google/renameio v0.1.0 h1:GOZbcHa3HfsPKPlmyPyN2KEohoMXOhdMbHrvbpl2QaA=
+github.com/google/renameio v0.1.0/go.mod h1:KWCgfxg9yswjAJkECMjeO8J8rahYeXnNhOm40UhjYkI=
+github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/google/uuid v1.3.1 h1:KjJaJ9iWZ3jOFZIf1Lqf4laDRCasjl0BCmnEGxkdLb4=
+github.com/google/uuid v1.3.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/googleapis/gax-go/v2 v2.0.4/go.mod h1:0Wqv26UfaUD9n4G6kQubkQ+KchISgw+vpHVxEJEs9eg=
+github.com/googleapis/gax-go/v2 v2.0.5 h1:sjZBwGj9Jlw33ImPtvFviGYvseOtDM7hkSKB7+Tv3SM=
+github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5mhpdKc/us6bOk=
+github.com/googleapis/google-cloud-go-testing v0.0.0-20200911160855-bcd43fbb19e8 h1:tlyzajkF3030q6M8SvmJSemC9DTHL/xaMa18b65+JM4=
+github.com/googleapis/google-cloud-go-testing v0.0.0-20200911160855-bcd43fbb19e8/go.mod h1:dvDLG8qkwmyD9a/MJJN3XJcT3xFxOKAvTZGvuZmac9g=
+github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
+github.com/hashicorp/golang-lru v0.5.1 h1:0hERBMJE1eitiLkihrMvRVBYAkpHzc/J3QdDN+dAcgU=
+github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
+github.com/hashicorp/hcl v1.0.0 h1:0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4=
+github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T20WEQ=
+github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
+github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639 h1:mV02weKRL81bEnm8A0HT1/CAelMQDBuQIfLw8n+d6xI=
+github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
+github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
+github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
+github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a h1:bbPeKD0xmW/Y25WS6cokEszi5g+S0QxI/d45PkRi7Nk=
+github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
+github.com/jackc/pgx/v5 v5.4.3 h1:cxFyXhxlvAifxnkKKdlxv8XqUf59tDlYjnV5YYfsJJY=
+github.com/jackc/pgx/v5 v5.4.3/go.mod h1:Ig06C2Vu0t5qXC60W8sqIthScaEnFvojjj9dSljmHRA=
+github.com/jackc/puddle/v2 v2.2.1 h1:RhxXJtFG022u4ibrCSMSiu5aOq1i77R3OHKNJj77OAk=
+github.com/jackc/puddle/v2 v2.2.1/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
+github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
+github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
+github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
+github.com/jstemmer/go-junit-report v0.9.1 h1:6QPYqodiu3GuPL+7mfx+NwDdp2eTkp9IfEUpgAwUN0o=
+github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
+github.com/kisielk/gotool v1.0.0 h1:AV2c/EiW3KqPNT9ZKl07ehoAGi4C5/01Cfbblndcapg=
+github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
+github.com/klauspost/compress v1.17.2 h1:RlWWUY/Dr4fL8qk9YG7DTZ7PDgME2V4csBXA8L/ixi4=
+github.com/klauspost/compress v1.17.2/go.mod h1:ntbaceVETuRiXiv4DpjP66DpAtAGkEQskQzEyD//IeE=
+github.com/klauspost/cpuid/v2 v2.0.1/go.mod h1:FInQzS24/EEf25PyTYn52gqo7WaD8xa0213Md/qVLRg=
+github.com/klauspost/cpuid/v2 v2.2.5 h1:0E5MSMDEoAulmXNFquVs//DdoomxaoTY1kUhbc/qbZg=
+github.com/klauspost/cpuid/v2 v2.2.5/go.mod h1:Lcz8mBdAVJIBVzewtcLocK12l3Y+JytZYpaMropDUws=
+github.com/kr/fs v0.1.0 h1:Jskdu9ieNAYnjxsi0LbQp1ulIKZV1LAFgK1tWhpZgl8=
+github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
+github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
+github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
+github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
+github.com/kr/pty v1.1.1 h1:VkoXIwSboBpnk99O/KFauAEILuNHv5DVFKZMBN/gUgw=
+github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
+github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
+github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
+github.com/kr/text v0.2.0/go.mod h1:eLer722TekiGuMkidMxC/pM04lWEeraHUUmBw8l2grE=
+github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
+github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=
+github.com/magiconair/properties v1.8.7 h1:IeQXZAiQcpL9mgcAe1Nu6cX9LLw6ExEHKjN0VQdvPDY=
+github.com/magiconair/properties v1.8.7/go.mod h1:Dhd985XPs7jluiymwWYZ0G4Z61jb3vdS329zhj2hYo0=
+github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
+github.com/mattn/go-colorable v0.1.13/go.mod h1:7S9/ev0klgBDR4GtXTXX8a3vIGJpMovkB8vQcUbaXHg=
+github.com/mattn/go-isatty v0.0.16/go.mod h1:kYGgaQfpe5nmfYZH+SKPsOc2e4SrIfOl2e/yFXSvRLM=
+github.com/mattn/go-isatty v0.0.19 h1:JITubQf0MOLdlGRuRq+jtsDlekdYPia9ZFsB8h/APPA=
+github.com/mattn/go-isatty v0.0.19/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
+github.com/minio/md5-simd v1.1.2 h1:Gdi1DZK69+ZVMoNHRXJyNcxrMA4dSxoYHZSQbirFg34=
+github.com/minio/md5-simd v1.1.2/go.mod h1:MzdKDxYpY2BT9XQFocsiZf/NKVtR7nkE4RoEpN+20RM=
+github.com/minio/minio-go/v7 v7.0.63 h1:GbZ2oCvaUdgT5640WJOpyDhhDxvknAJU2/T3yurwcbQ=
+github.com/minio/minio-go/v7 v7.0.63/go.mod h1:Q6X7Qjb7WMhvG65qKf4gUgA5XaiSox74kR1uAEjxRS4=
+github.com/minio/sha256-simd v1.0.1 h1:6kaan5IFmwTNynnKKpDHe6FWHohJOHhCPchzK49dzMM=
+github.com/minio/sha256-simd v1.0.1/go.mod h1:Pz6AKMiUdngCLpeTL/RJY1M9rUuPMYujV5xJjtbRSN8=
+github.com/mitchellh/mapstructure v1.5.0 h1:jeMsZIYE/09sWLaz43PL7Gy6RuMjD2eJVyuac5Z2hdY=
+github.com/mitchellh/mapstructure v1.5.0/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RRV2QTWOzhPopBRo=
+github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
+github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9Gz0M=
+github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
+github.com/pelletier/go-toml/v2 v2.1.0/go.mod h1:tJU2Z3ZkXwnxa4DPO899bsyIoywizdUvyaeZurnPPDc=
+github.com/pelletier/go-toml/v2 v2.2.4 h1:mye9XuhQ6gvn5h28+VilKrrPoQVanw5PMw/TB0t5Ec4=
+github.com/pelletier/go-toml/v2 v2.2.4/go.mod h1:2gIqNv+qfxSVS7cM2xJQKtLSTLUE9V8t9Stt+h56mCY=
+github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/pkg/sftp v1.13.1 h1:I2qBYMChEhIjOgazfJmV3/mZM256btk6wkCDRmW7JYs=
+github.com/pkg/sftp v1.13.1/go.mod h1:3HaPG6Dq1ILlpPZRO0HVMrsydcdLt6HRDccSgb87qRg=
+github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4 h1:gQz4mCbXsO+nc9n1hCxHcGA3Zx3Eo+UHZoInFGUIXNM=
+github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
+github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
+github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZVejAe8=
+github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
+github.com/rs/xid v1.5.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
+github.com/rs/xid v1.6.0 h1:fV591PaemRlL6JfRxGDEPl69wICngIQ3shQtzfy2gxU=
+github.com/rs/xid v1.6.0/go.mod h1:7XoLgs4eV+QndskICGsho+ADou8ySMSjJKDIan90Nz0=
+github.com/rs/zerolog v1.34.0 h1:k43nTLIwcTVQAncfCw4KZ2VY6ukYoZaBPNOE8txlOeY=
+github.com/rs/zerolog v1.34.0/go.mod h1:bJsvje4Z08ROH4Nhs5iH600c3IkWhwp44iRc54W6wYQ=
+github.com/sagikazarmark/locafero v0.3.0/go.mod h1:w+v7UsPNFwzF1cHuOajOOzoq4U7v/ig1mpRjqV+Bu1U=
+github.com/sagikazarmark/locafero v0.11.0 h1:1iurJgmM9G3PA/I+wWYIOw/5SyBtxapeHDcg+AAIFXc=
+github.com/sagikazarmark/locafero v0.11.0/go.mod h1:nVIGvgyzw595SUSUE6tvCp3YYTeHs15MvlmU87WwIik=
+github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6gto+ugjYE=
+github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
+github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
+github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
+github.com/sourcegraph/conc v0.3.0/go.mod h1:Sdozi7LEKbFPqYX2/J+iBAM6HpqSLTASQIKqDmF7Mt0=
+github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 h1:+jumHNA0Wrelhe64i8F6HNlS8pkoyMv5sreGx2Ry5Rw=
+github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8/go.mod h1:3n1Cwaq1E1/1lhQhtRK2ts/ZwZEhjcQeJQ1RuC6Q/8U=
+github.com/spf13/afero v1.10.0/go.mod h1:UBogFpq8E9Hx+xc5CNTTEpTnuHVmXDwZcZcE1eb/UhQ=
+github.com/spf13/afero v1.15.0 h1:b/YBCLWAJdFWJTN9cLhiXXcD7mzKn9Dm86dNnfyQw1I=
+github.com/spf13/afero v1.15.0/go.mod h1:NC2ByUVxtQs4b3sIUphxK0NioZnmxgyCrfzeuq8lxMg=
+github.com/spf13/cast v1.5.1/go.mod h1:b9PdjNptOpzXr7Rq1q9gJML/2cdGQAo69NKzQ10KN48=
+github.com/spf13/cast v1.10.0 h1:h2x0u2shc1QuLHfxi+cTJvs30+ZAHOGRic8uyGTDWxY=
+github.com/spf13/cast v1.10.0/go.mod h1:jNfB8QC9IA6ZuY2ZjDp0KtFO2LZZlg4S/7bzP6qqeHo=
+github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
+github.com/spf13/pflag v1.0.10 h1:4EBh2KAYBwaONj6b2Ye1GiHfwjqyROoF4RwYO+vPwFk=
+github.com/spf13/pflag v1.0.10/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
+github.com/spf13/viper v1.21.0 h1:x5S+0EU27Lbphp4UKm1C+1oQO+rKx36vfCoaVebLFSU=
+github.com/spf13/viper v1.21.0/go.mod h1:P0lhsswPGWD/1lZJ9ny3fYnVqxiegrlNrEmgLjbTCAY=
+github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+github.com/stretchr/objx v0.4.0/go.mod h1:YvHI0jy2hoMjB+UWwv71VJQ9isScKT/TqJzVSSt89Yw=
+github.com/stretchr/objx v0.5.0 h1:1zr/of2m5FGMsad5YfcqgdqdWrIhu+EBEJRhR1U7z/c=
+github.com/stretchr/objx v0.5.0/go.mod h1:Yh+to48EsGEfYuaHDzXPcE3xhTkx73EhmCGUpEOglKo=
+github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
+github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5cxcmMvtA=
+github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/stretchr/testify v1.8.0/go.mod h1:yNjHg4UonilssWZ8iaSj1OCr/vHnekPRkoO+kdMU+MU=
+github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
+github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
+github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
+github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
+github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
+github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
+github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
+github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
+github.com/yuin/goldmark v1.2.1 h1:ruQGxdhGHe7FWOJPT0mKs5+pD2Xs1Bm/kdGlHO04FmM=
+github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
+go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
+go.opencensus.io v0.22.0/go.mod h1:+kGneAE2xo2IficOXnaByMWTGM9T73dGwxeWcUqIpI8=
+go.opencensus.io v0.22.2/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
+go.opencensus.io v0.22.3/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
+go.opencensus.io v0.22.4/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
+go.opencensus.io v0.22.5 h1:dntmOdLpSpHlVqbW5Eay97DelsZHe+55D+xC6i0dDS0=
+go.opencensus.io v0.22.5/go.mod h1:5pWMHQbX5EPX2/62yrJeAkowc+lfs/XD7Uxpq3pI6kk=
+go.uber.org/atomic v1.9.0 h1:ECmE8Bn/WFTYwEW/bpKD3M8VtR/zQVbavAoalC1PYyE=
+go.uber.org/atomic v1.9.0/go.mod h1:fEN4uk6kAWBTFdckzkM89CLk9XfWZrxpCo0nPH17wJc=
+go.uber.org/multierr v1.9.0 h1:7fIwc/ZtS0q++VgcfqFDxSBZVv/Xo49/SYnDFupUwlI=
+go.uber.org/multierr v1.9.0/go.mod h1:X2jQV1h+kxSjClGpnseKVIxpmcjrj7MNnI0bnlfKTVQ=
+go.yaml.in/yaml/v3 v3.0.4 h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=
+go.yaml.in/yaml/v3 v3.0.4/go.mod h1:DhzuOOF2ATzADvBadXxruRBLzYTpT36CKvDb3+aBEFg=
+golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
+golang.org/x/crypto v0.0.0-20190510104115-cbcb75029529/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
+golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
+golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
+golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
+golang.org/x/crypto v0.0.0-20210421170649-83a5a9bb288b/go.mod h1:T9bdIzuCu7OtxOm1hfPfRQxPLYneinmdGuTeoZ9dtd4=
+golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa/go.mod h1:IxCIyHEi3zRg3s0A5j5BB6A9Jmi73HwBIUl50j+osU4=
+golang.org/x/crypto v0.14.0 h1:wBqGXzWJW6m1XrIKlAH0Hs1JJ7+9KBwnIO8v66Q9cHc=
+golang.org/x/crypto v0.14.0/go.mod h1:MVFd36DqK4CsrnJYDkBA3VC4m2GkXAM0PvzMCn4JQf4=
+golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
+golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8/go.mod h1:CJ0aWSM057203Lf6IL+f9T1iT9GByDxfZKAQTCR3kQA=
+golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522/go.mod h1:ZjyILWgesfNpC6sMxTJOJm9Kp84zZh5NQWvqDGG3Qr8=
+golang.org/x/exp v0.0.0-20190829153037-c13cbed26979/go.mod h1:86+5VVa7VpoJ4kLfm080zCjGlMRFzhUhsZKEZO7MGek=
+golang.org/x/exp v0.0.0-20191030013958-a1ab85dbe136/go.mod h1:JXzH8nQsPlswgeRAPE3MuO9GYsAcnJvJ4vnMwN/5qkY=
+golang.org/x/exp v0.0.0-20191129062945-2f5052295587/go.mod h1:2RIsYlXP63K8oxa1u096TMicItID8zy7Y6sNkU49FU4=
+golang.org/x/exp v0.0.0-20191227195350-da58074b4299/go.mod h1:2RIsYlXP63K8oxa1u096TMicItID8zy7Y6sNkU49FU4=
+golang.org/x/exp v0.0.0-20200119233911-0405dc783f0a/go.mod h1:2RIsYlXP63K8oxa1u096TMicItID8zy7Y6sNkU49FU4=
+golang.org/x/exp v0.0.0-20200207192155-f17229e696bd/go.mod h1:J/WKrq2StrnmMY6+EHIKF9dgMWnmCNThgcyBT1FY9mM=
+golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6/go.mod h1:3jZMyOhIsHpP37uCMkUooju7aAi5cS1Q23tOzKc+0MU=
+golang.org/x/exp v0.0.0-20230905200255-921286631fa9 h1:GoHiUyI/Tp2nVkLI2mCxVkOjsbSXD66ic0XW0js0R9g=
+golang.org/x/exp v0.0.0-20230905200255-921286631fa9/go.mod h1:S2oDrQGGwySpoQPVqRShND87VCbxmc6bL1Yd2oYrm6k=
+golang.org/x/image v0.0.0-20190227222117-0694c2d4d067/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
+golang.org/x/image v0.0.0-20190802002840-cff245a6509b h1:+qEpEAPhDZ1o0x3tHzZTQDArnOixOzGD9HUJfcg0mb4=
+golang.org/x/image v0.0.0-20190802002840-cff245a6509b/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
+golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
+golang.org/x/lint v0.0.0-20190227174305-5b3e6a55c961/go.mod h1:wehouNa3lNwaWXcvxsM5YxQ5yQlVC4a0KAMCusXpPoU=
+golang.org/x/lint v0.0.0-20190301231843-5614ed5bae6f/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
+golang.org/x/lint v0.0.0-20190313153728-d0100b6bd8b3/go.mod h1:6SW0HCj/g11FgYtHlgUYUwCkIfeOF89ocIRzGO/8vkc=
+golang.org/x/lint v0.0.0-20190409202823-959b441ac422/go.mod h1:6SW0HCj/g11FgYtHlgUYUwCkIfeOF89ocIRzGO/8vkc=
+golang.org/x/lint v0.0.0-20190909230951-414d861bb4ac/go.mod h1:6SW0HCj/g11FgYtHlgUYUwCkIfeOF89ocIRzGO/8vkc=
+golang.org/x/lint v0.0.0-20190930215403-16217165b5de/go.mod h1:6SW0HCj/g11FgYtHlgUYUwCkIfeOF89ocIRzGO/8vkc=
+golang.org/x/lint v0.0.0-20191125180803-fdd1cda4f05f/go.mod h1:5qLYkcX4OjUUV8bRuDixDT3tpyyb+LUpUlRWLxfhWrs=
+golang.org/x/lint v0.0.0-20200130185559-910be7a94367/go.mod h1:3xt1FjdF8hUf6vQPIChWIBhFzV8gjjsPE/fR3IyQdNY=
+golang.org/x/lint v0.0.0-20200302205851-738671d3881b/go.mod h1:3xt1FjdF8hUf6vQPIChWIBhFzV8gjjsPE/fR3IyQdNY=
+golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 h1:2M3HP5CCK1Si9FQhwnzYhXdG6DXeebvUHFpre8QvbyI=
+golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5/go.mod h1:3xt1FjdF8hUf6vQPIChWIBhFzV8gjjsPE/fR3IyQdNY=
+golang.org/x/mobile v0.0.0-20190312151609-d3739f865fa6/go.mod h1:z+o9i4GpDbdi3rU15maQ/Ox0txvL9dWGYEHz965HBQE=
+golang.org/x/mobile v0.0.0-20190719004257-d2bd2a29d028 h1:4+4C/Iv2U4fMZBiMCc98MG1In4gJY5YRhtpDNeDeHWs=
+golang.org/x/mobile v0.0.0-20190719004257-d2bd2a29d028/go.mod h1:E/iHnbuqvinMTCcRqshq8CkpyQDoeVncDDYHnLhea+o=
+golang.org/x/mod v0.0.0-20190513183733-4bf6d317e70e/go.mod h1:mXi4GBBbnImb6dmsKGUJ2LatrhH/nqhxcFungHvyanc=
+golang.org/x/mod v0.1.0/go.mod h1:0QHyrYULN0/3qlju5TqG8bIK38QM8yzMo5ekMj3DlcY=
+golang.org/x/mod v0.1.1-0.20191105210325-c90efee705ee/go.mod h1:QqPTAvyqsEbceGzBzNggFXnrqF1CaUcvgkdR5Ot7KZg=
+golang.org/x/mod v0.1.1-0.20191107180719-034126e5016b/go.mod h1:QqPTAvyqsEbceGzBzNggFXnrqF1CaUcvgkdR5Ot7KZg=
+golang.org/x/mod v0.2.0/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=
+golang.org/x/mod v0.3.0/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=
+golang.org/x/mod v0.4.0/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=
+golang.org/x/mod v0.4.1/go.mod h1:s0Qsj1ACt9ePp/hMypM3fl4fZqREWJwdYDEqhRiZZUA=
+golang.org/x/mod v0.12.0 h1:rmsUpXtvNzj340zd98LZ4KntptpfRHwpFOHG188oHXc=
+golang.org/x/mod v0.12.0/go.mod h1:iBbtSCu2XBx23ZKBPSOrRkjjQPZFPuis4dIYUhu/chs=
+golang.org/x/net v0.0.0-20180724234803-3673e40ba225/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/net v0.0.0-20180826012351-8a410e7b638d/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/net v0.0.0-20190108225652-1e06a53dbb7e/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/net v0.0.0-20190213061140-3a22650c66bd/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/net v0.0.0-20190311183353-d8887717615a/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
+golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
+golang.org/x/net v0.0.0-20190501004415-9ce7a6920f09/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
+golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
+golang.org/x/net v0.0.0-20190603091049-60506f45cf65/go.mod h1:HSz+uSET+XFnRR8LxR5pz3Of3rY3CfYBVs4xY44aLks=
+golang.org/x/net v0.0.0-20190620200207-3b0461eec859/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20190628185345-da137c7871d7/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20190724013045-ca1201d0de80/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20200202094626-16171245cfb2/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20200222125558-5a598a2470a0/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20200226121028-0de0cce0169b/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20200301022130-244492dfa37a/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
+golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e/go.mod h1:qpuaurCH72eLCgpAm/N6yyVIVM9cpaDIP3A8BGJEC5A=
+golang.org/x/net v0.0.0-20200501053045-e0ff5e5a1de5/go.mod h1:qpuaurCH72eLCgpAm/N6yyVIVM9cpaDIP3A8BGJEC5A=
+golang.org/x/net v0.0.0-20200506145744-7e3656a0809f/go.mod h1:qpuaurCH72eLCgpAm/N6yyVIVM9cpaDIP3A8BGJEC5A=
+golang.org/x/net v0.0.0-20200513185701-a91f0712d120/go.mod h1:qpuaurCH72eLCgpAm/N6yyVIVM9cpaDIP3A8BGJEC5A=
+golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2/go.mod h1:qpuaurCH72eLCgpAm/N6yyVIVM9cpaDIP3A8BGJEC5A=
+golang.org/x/net v0.0.0-20200625001655-4c5254603344/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
+golang.org/x/net v0.0.0-20200707034311-ab3426394381/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
+golang.org/x/net v0.0.0-20200822124328-c89045814202/go.mod h1:/O7V0waA8r7cgGh81Ro3o1hOxt32SMVPicZroKQ2sZA=
+golang.org/x/net v0.0.0-20201021035429-f5854403a974/go.mod h1:sp8m0HH+o8qH0wwXwYZr8TS3Oi6o0r6Gce1SSxlDquU=
+golang.org/x/net v0.0.0-20201031054903-ff519b6c9102/go.mod h1:sp8m0HH+o8qH0wwXwYZr8TS3Oi6o0r6Gce1SSxlDquU=
+golang.org/x/net v0.0.0-20201209123823-ac852fbbde11/go.mod h1:m0MpNAwzfU5UDzcl9v0D8zg8gWTRqZa9RBIspLL5mdg=
+golang.org/x/net v0.0.0-20201224014010-6772e930b67b/go.mod h1:m0MpNAwzfU5UDzcl9v0D8zg8gWTRqZa9RBIspLL5mdg=
+golang.org/x/net v0.0.0-20210226172049-e18ecbb05110/go.mod h1:m0MpNAwzfU5UDzcl9v0D8zg8gWTRqZa9RBIspLL5mdg=
+golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
+golang.org/x/net v0.17.0 h1:pVaXccu2ozPjCXewfr1S7xza/zcXTity9cCdXQYSjIM=
+golang.org/x/net v0.17.0/go.mod h1:NxSsAGuq816PNPmqtQdLE42eU2Fs7NoRIZrHJAlaCOE=
+golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
+golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
+golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
+golang.org/x/oauth2 v0.0.0-20191202225959-858c2ad4c8b6/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
+golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
+golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43/go.mod h1:KelEdhl1UZF7XfJ4dDtk6s++YSgaE7mD/BuKKDLBl4A=
+golang.org/x/oauth2 v0.0.0-20201109201403-9fd604954f58/go.mod h1:KelEdhl1UZF7XfJ4dDtk6s++YSgaE7mD/BuKKDLBl4A=
+golang.org/x/oauth2 v0.0.0-20201208152858-08078c50e5b5/go.mod h1:KelEdhl1UZF7XfJ4dDtk6s++YSgaE7mD/BuKKDLBl4A=
+golang.org/x/oauth2 v0.0.0-20210218202405-ba52d332ba99 h1:5vD4XjIc0X5+kHZjx4UecYdjA6mJo+XXNoaW0EjU5Os=
+golang.org/x/oauth2 v0.0.0-20210218202405-ba52d332ba99/go.mod h1:KelEdhl1UZF7XfJ4dDtk6s++YSgaE7mD/BuKKDLBl4A=
+golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20181108010431-42b317875d0f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20201207232520-09787c993a3a/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=
+golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/sys v0.0.0-20190312061237-fead79001313/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190502145724-3ef323f4f1fd/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190507160741-ecd444e8653b/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190606165138-5da285871e9c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190624142023-c5567b49c5d0/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20190726091711-fc99dfbffb4e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20191001151750-bb3f8db39f24/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20191204072324-ce4227a45e2e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20191228213918-04cbcbbfeed8/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200113162924-86b910548bc1/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200122134326-e047566fdf82/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200202164722-d101bd2416d5/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200212091648-12a6c2dcc1e4/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200331124033-c3d80250170d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200501052902-10377860bb8e/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200511232937-7e40ca221e25/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200515095857-1151b9dac4a9/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200523222454-059865788121/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200803210538-64077c9b5642/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200905004654-be1d3432aa8f/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20201201145000-ef89a241ccb3/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210104204734-6f8348627aad/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210225134936-a50acf3fe073/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210423082822-04245dca01da/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210423185535-09eb48e85fd7/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220908164124-27713097b956/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.5.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.6.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.12.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.13.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.29.0 h1:TPYlXGxvx1MGTn2GiZDhnjPA9wZzZeGKHHmKhHYvgaU=
+golang.org/x/sys v0.29.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
+golang.org/x/term v0.13.0 h1:bb+I9cTfFazGW51MZqBVmZy7+JEJMouUHTUSKVQLBek=
+golang.org/x/term v0.13.0/go.mod h1:LTmsnFJwVN6bCy1rVCoS+qHT1HhALEFxKncY3WNNh4U=
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+golang.org/x/text v0.3.2/go.mod h1:bEr9sfX3Q8Zfm5fL9x+3itogRgK3+ptLWKqgva+5dAk=
+golang.org/x/text v0.3.3/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
+golang.org/x/text v0.3.4/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
+golang.org/x/text v0.3.6/go.mod h1:5Zoc/QRtKVWzQhOtBMvqHzDpF6irO9z98xDceosuGiQ=
+golang.org/x/text v0.3.7/go.mod h1:u+2+/6zg+i71rQMx5EYifcz6MCKuco9NR6JIITiCfzQ=
+golang.org/x/text v0.13.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
+golang.org/x/text v0.28.0 h1:rhazDwis8INMIwQ4tpjLDzUhx6RlXqZNPEM0huQojng=
+golang.org/x/text v0.28.0/go.mod h1:U8nCwOR8jO/marOQ0QbDiOngZVEBB7MAiitBuMjXiNU=
+golang.org/x/time v0.0.0-20181108054448-85acf8d2951c/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
+golang.org/x/time v0.0.0-20190308202827-9d24e82272b4/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
+golang.org/x/time v0.0.0-20191024005414-555d28b269f0 h1:/5xXl8Y5W96D+TtHSlonuFqGHIWVuyCkGJLwGh9JJFs=
+golang.org/x/time v0.0.0-20191024005414-555d28b269f0/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
+golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+golang.org/x/tools v0.0.0-20190114222345-bf090417da8b/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+golang.org/x/tools v0.0.0-20190226205152-f727befe758c/go.mod h1:9Yl7xja0Znq3iFh3HoIrodX9oNMXvdceNzlUR8zjMvY=
+golang.org/x/tools v0.0.0-20190311212946-11955173bddd/go.mod h1:LCzVGOaR6xXOjkQ3onu1FJEFr0SW1gC7cKk1uF8kGRs=
+golang.org/x/tools v0.0.0-20190312151545-0bb0c0a6e846/go.mod h1:LCzVGOaR6xXOjkQ3onu1FJEFr0SW1gC7cKk1uF8kGRs=
+golang.org/x/tools v0.0.0-20190312170243-e65039ee4138/go.mod h1:LCzVGOaR6xXOjkQ3onu1FJEFr0SW1gC7cKk1uF8kGRs=
+golang.org/x/tools v0.0.0-20190425150028-36563e24a262/go.mod h1:RgjU9mgBXZiqYHBnxXauZ1Gv1EHHAz9KjViQ78xBX0Q=
+golang.org/x/tools v0.0.0-20190506145303-2d16b83fe98c/go.mod h1:RgjU9mgBXZiqYHBnxXauZ1Gv1EHHAz9KjViQ78xBX0Q=
+golang.org/x/tools v0.0.0-20190524140312-2c0ae7006135/go.mod h1:RgjU9mgBXZiqYHBnxXauZ1Gv1EHHAz9KjViQ78xBX0Q=
+golang.org/x/tools v0.0.0-20190606124116-d0a3d012864b/go.mod h1:/rFqwRUd4F7ZHNgwSSTFct+R/Kf4OFW1sUzUTQQTgfc=
+golang.org/x/tools v0.0.0-20190621195816-6e04913cbbac/go.mod h1:/rFqwRUd4F7ZHNgwSSTFct+R/Kf4OFW1sUzUTQQTgfc=
+golang.org/x/tools v0.0.0-20190628153133-6cdbf07be9d0/go.mod h1:/rFqwRUd4F7ZHNgwSSTFct+R/Kf4OFW1sUzUTQQTgfc=
+golang.org/x/tools v0.0.0-20190816200558-6889da9d5479/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20190911174233-4f2ddba30aff/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191012152004-8de300cfc20a/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191113191852-77e3bb0ad9e7/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191115202509-3a792d9c32b2/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191119224855-298f0cb1881e/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191125144606-a911d9008d1f/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191130070609-6e064ea0cf2d/go.mod h1:b+2E5dAYhXwXZwtnZ6UAqBI28+e2cm9otk0dWdXHAEo=
+golang.org/x/tools v0.0.0-20191216173652-a0e659d51361/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20191227053925-7b8e75db28f4/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200117161641-43d50277825c/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200122220014-bf1340f18c4a/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200130002326-2f3ba24bd6e7/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200204074204-1cc6d1ef6c74/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200207183749-b753a1ba74fa/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200212150539-ea181f53ac56/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200224181240-023911ca70b2/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200227222343-706bc42d1f0d/go.mod h1:TB2adYChydJhpapKDTa4BR/hXlZSLoq2Wpct/0txZ28=
+golang.org/x/tools v0.0.0-20200304193943-95d2e580d8eb/go.mod h1:o4KQGtdN14AW+yjsvvwRTJJuXz8XRtIHtEnmAXLyFUw=
+golang.org/x/tools v0.0.0-20200312045724-11d5b4c81c7d/go.mod h1:o4KQGtdN14AW+yjsvvwRTJJuXz8XRtIHtEnmAXLyFUw=
+golang.org/x/tools v0.0.0-20200331025713-a30bf2db82d4/go.mod h1:Sl4aGygMT6LrqrWclx+PTx3U+LnKx/seiNR+3G19Ar8=
+golang.org/x/tools v0.0.0-20200501065659-ab2804fb9c9d/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
+golang.org/x/tools v0.0.0-20200512131952-2bc93b1c0c88/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
+golang.org/x/tools v0.0.0-20200515010526-7d3b6ebf133d/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
+golang.org/x/tools v0.0.0-20200618134242-20370b0cb4b2/go.mod h1:EkVYQZoAsY45+roYkvgYkIh4xh/qjgUK9TdY2XT94GE=
+golang.org/x/tools v0.0.0-20200729194436-6467de6f59a7/go.mod h1:njjCfa9FT2d7l9Bc6FUM5FLjQPp3cFF28FI3qnDFljA=
+golang.org/x/tools v0.0.0-20200804011535-6c149bb5ef0d/go.mod h1:njjCfa9FT2d7l9Bc6FUM5FLjQPp3cFF28FI3qnDFljA=
+golang.org/x/tools v0.0.0-20200825202427-b303f430e36d/go.mod h1:njjCfa9FT2d7l9Bc6FUM5FLjQPp3cFF28FI3qnDFljA=
+golang.org/x/tools v0.0.0-20200904185747-39188db58858/go.mod h1:Cj7w3i3Rnn0Xh82ur9kSqwfTHTeVxaDqrfMjpcNT6bE=
+golang.org/x/tools v0.0.0-20201110124207-079ba7bd75cd/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=
+golang.org/x/tools v0.0.0-20201201161351-ac6f37ff4c2a/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=
+golang.org/x/tools v0.0.0-20201208233053-a543418bbed2/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=
+golang.org/x/tools v0.0.0-20210105154028-b0ab187a4818/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=
+golang.org/x/tools v0.0.0-20210108195828-e2f9c7f1fc8e/go.mod h1:emZCQorbCU4vsT4fOWvOPXz4eW1wZW4PmDk9uLelYpA=
+golang.org/x/tools v0.1.0/go.mod h1:xkSsbof2nBLbhDlRMhhhyNLN/zl3eTqcnHD5viDpcZ0=
+golang.org/x/tools v0.13.0 h1:Iey4qkscZuv0VvIt8E0neZjtPVQFSc870HQ448QgEmQ=
+golang.org/x/tools v0.13.0/go.mod h1:HvlwmtVNQAhOuCjW7xxvovg8wbNq7LwfXh/k7wXUl58=
+golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=
+golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=
+google.golang.org/api v0.4.0/go.mod h1:8k5glujaEP+g9n7WNsDg8QP6cUVNI86fCNMcbazEtwE=
+google.golang.org/api v0.7.0/go.mod h1:WtwebWUNSVBH/HAw79HIFXZNqEvBhG+Ra+ax0hx3E3M=
+google.golang.org/api v0.8.0/go.mod h1:o4eAsZoiT+ibD93RtjEohWalFOjRDx6CVaqeizhEnKg=
+google.golang.org/api v0.9.0/go.mod h1:o4eAsZoiT+ibD93RtjEohWalFOjRDx6CVaqeizhEnKg=
+google.golang.org/api v0.13.0/go.mod h1:iLdEw5Ide6rF15KTC1Kkl0iskquN2gFfn9o9XIsbkAI=
+google.golang.org/api v0.14.0/go.mod h1:iLdEw5Ide6rF15KTC1Kkl0iskquN2gFfn9o9XIsbkAI=
+google.golang.org/api v0.15.0/go.mod h1:iLdEw5Ide6rF15KTC1Kkl0iskquN2gFfn9o9XIsbkAI=
+google.golang.org/api v0.17.0/go.mod h1:BwFmGc8tA3vsd7r/7kR8DY7iEEGSU04BFxCo5jP/sfE=
+google.golang.org/api v0.18.0/go.mod h1:BwFmGc8tA3vsd7r/7kR8DY7iEEGSU04BFxCo5jP/sfE=
+google.golang.org/api v0.19.0/go.mod h1:BwFmGc8tA3vsd7r/7kR8DY7iEEGSU04BFxCo5jP/sfE=
+google.golang.org/api v0.20.0/go.mod h1:BwFmGc8tA3vsd7r/7kR8DY7iEEGSU04BFxCo5jP/sfE=
+google.golang.org/api v0.22.0/go.mod h1:BwFmGc8tA3vsd7r/7kR8DY7iEEGSU04BFxCo5jP/sfE=
+google.golang.org/api v0.24.0/go.mod h1:lIXQywCXRcnZPGlsd8NbLnOjtAoL6em04bJ9+z0MncE=
+google.golang.org/api v0.28.0/go.mod h1:lIXQywCXRcnZPGlsd8NbLnOjtAoL6em04bJ9+z0MncE=
+google.golang.org/api v0.29.0/go.mod h1:Lcubydp8VUV7KeIHD9z2Bys/sm/vGKnG1UHuDBSrHWM=
+google.golang.org/api v0.30.0/go.mod h1:QGmEvQ87FHZNiUVJkT14jQNYJ4ZJjdRF23ZXz5138Fc=
+google.golang.org/api v0.35.0/go.mod h1:/XrVsuzM0rZmrsbjJutiuftIzeuTQcEeaYcSk/mQ1dg=
+google.golang.org/api v0.36.0/go.mod h1:+z5ficQTmoYpPn8LCUNVpK5I7hwkpjbcgqA7I34qYtE=
+google.golang.org/api v0.40.0 h1:uWrpz12dpVPn7cojP82mk02XDgTJLDPc2KbVTxrWb4A=
+google.golang.org/api v0.40.0/go.mod h1:fYKFpnQN0DsDSKRVRcQSDQNtqWPfM9i+zNPxepjRCQ8=
+google.golang.org/appengine v1.1.0/go.mod h1:EbEs0AVv82hx2wNQdGPgUI5lhzA/G0D9YwlJXL52JkM=
+google.golang.org/appengine v1.4.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
+google.golang.org/appengine v1.5.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
+google.golang.org/appengine v1.6.1/go.mod h1:i06prIuMbXzDqacNJfV5OdTW448YApPu5ww/cMBSeb0=
+google.golang.org/appengine v1.6.5/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
+google.golang.org/appengine v1.6.6/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
+google.golang.org/appengine v1.6.7 h1:FZR1q0exgwxzPzp/aF+VccGrSfxfPpkBqjIIEq3ru6c=
+google.golang.org/appengine v1.6.7/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
+google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
+google.golang.org/genproto v0.0.0-20190307195333-5fe7a883aa19/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
+google.golang.org/genproto v0.0.0-20190418145605-e7d98fc518a7/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
+google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
+google.golang.org/genproto v0.0.0-20190502173448-54afdca5d873/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
+google.golang.org/genproto v0.0.0-20190801165951-fa694d86fc64/go.mod h1:DMBHOl98Agz4BDEuKkezgsaosCRResVns1a3J2ZsMNc=
+google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55/go.mod h1:DMBHOl98Agz4BDEuKkezgsaosCRResVns1a3J2ZsMNc=
+google.golang.org/genproto v0.0.0-20190911173649-1774047e7e51/go.mod h1:IbNlFCBrqXvoKpeg0TB2l7cyZUmoaFKYIwrEpbDKLA8=
+google.golang.org/genproto v0.0.0-20191108220845-16a3f7862a1a/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
+google.golang.org/genproto v0.0.0-20191115194625-c23dd37a84c9/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
+google.golang.org/genproto v0.0.0-20191216164720-4f79533eabd1/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
+google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
+google.golang.org/genproto v0.0.0-20200115191322-ca5a22157cba/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
+google.golang.org/genproto v0.0.0-20200122232147-0452cf42e150/go.mod h1:n3cpQtvxv34hfy77yVDNjmbRyujviMdxYliBSkLhpCc=
+google.golang.org/genproto v0.0.0-20200204135345-fa8e72b47b90/go.mod h1:GmwEX6Z4W5gMy59cAlVYjN9JhxgbQH6Gn+gFDQe2lzA=
+google.golang.org/genproto v0.0.0-20200212174721-66ed5ce911ce/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200224152610-e50cd9704f63/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200228133532-8c2c7df3a383/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200305110556-506484158171/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200312145019-da6875a35672/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200331122359-1ee6d9798940/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200430143042-b979b6f78d84/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200511104702-f5ebc3bea380/go.mod h1:55QSHmfGQM9UVYDPBsyGGes0y52j32PQ3BqQfXhyH3c=
+google.golang.org/genproto v0.0.0-20200515170657-fc4c6c6a6587/go.mod h1:YsZOwe1myG/8QRHRsmBRE1LrgQY60beZKjly0O1fX9U=
+google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013/go.mod h1:NbSheEEYHJ7i3ixzK3sjbqSGDJWnxyFXZblF3eUsNvo=
+google.golang.org/genproto v0.0.0-20200618031413-b414f8b61790/go.mod h1:jDfRM7FcilCzHH/e9qn6dsT145K34l5v+OpcnNgKAAA=
+google.golang.org/genproto v0.0.0-20200729003335-053ba62fc06f/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20200804131852-c06518451d9c/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20200825200019-8632dd797987/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20200904004341-0bd0a958aa1d/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20201109203340-2640f1f9cdfb/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20201201144952-b05cb90ed32e/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20201210142538-e3217bee35cc/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20201214200347-8c77b98c765d/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20210108203827-ffc7fda8c3d7/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/genproto v0.0.0-20210226172003-ab064af71705 h1:PYBmACG+YEv8uQPW0r1kJj8tR+gkF0UWq7iFdUezwEw=
+google.golang.org/genproto v0.0.0-20210226172003-ab064af71705/go.mod h1:FWY/as6DDZQgahTzZj3fqbO1CbirC29ZNUFHwi0/+no=
+google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
+google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
+google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=
+google.golang.org/grpc v1.23.0/go.mod h1:Y5yQAOtifL1yxbo5wqy6BxZv8vAUGQwXBOALyacEbxg=
+google.golang.org/grpc v1.25.1/go.mod h1:c3i+UQWmh7LiEpx4sFZnkU36qjEYZ0imhYfXVyQciAY=
+google.golang.org/grpc v1.26.0/go.mod h1:qbnxyOmOxrQa7FizSgH+ReBfzJrCY1pSN7KXBS8abTk=
+google.golang.org/grpc v1.27.0/go.mod h1:qbnxyOmOxrQa7FizSgH+ReBfzJrCY1pSN7KXBS8abTk=
+google.golang.org/grpc v1.27.1/go.mod h1:qbnxyOmOxrQa7FizSgH+ReBfzJrCY1pSN7KXBS8abTk=
+google.golang.org/grpc v1.28.0/go.mod h1:rpkK4SK4GF4Ach/+MFLZUBavHOvF2JJB5uozKKal+60=
+google.golang.org/grpc v1.29.1/go.mod h1:itym6AZVZYACWQqET3MqgPpjcuV5QH3BxFS3IjizoKk=
+google.golang.org/grpc v1.30.0/go.mod h1:N36X2cJ7JwdamYAgDz+s+rVMFjt3numwzf/HckM8pak=
+google.golang.org/grpc v1.31.0/go.mod h1:N36X2cJ7JwdamYAgDz+s+rVMFjt3numwzf/HckM8pak=
+google.golang.org/grpc v1.31.1/go.mod h1:N36X2cJ7JwdamYAgDz+s+rVMFjt3numwzf/HckM8pak=
+google.golang.org/grpc v1.33.2/go.mod h1:JMHMWHQWaTccqQQlmk3MJZS+GWXOdAesneDmEnv2fbc=
+google.golang.org/grpc v1.34.0/go.mod h1:WotjhfgOW/POjDeRt8vscBtXq+2VjORFy659qA51WJ8=
+google.golang.org/grpc v1.35.0 h1:TwIQcH3es+MojMVojxxfQ3l3OF2KzlRxML2xZq0kRo8=
+google.golang.org/grpc v1.35.0/go.mod h1:qjiiYl8FncCW8feJPdyg3v6XW24KsRHe+dy9BAGRRjU=
+google.golang.org/protobuf v0.0.0-20200109180630-ec00e32a8dfd/go.mod h1:DFci5gLYBciE7Vtevhsrf46CRTquxDuWsQurQQe4oz8=
+google.golang.org/protobuf v0.0.0-20200221191635-4d8936d0db64/go.mod h1:kwYJMbMJ01Woi6D6+Kah6886xMZcty6N08ah7+eCXa0=
+google.golang.org/protobuf v0.0.0-20200228230310-ab0ca4ff8a60/go.mod h1:cfTl7dwQJ+fmap5saPgwCLgHXTUD7jkjRqWcaiX5VyM=
+google.golang.org/protobuf v1.20.1-0.20200309200217-e05f789c0967/go.mod h1:A+miEFZTKqfCUM6K7xSMQL9OKL/b6hQv+e19PK+JZNE=
+google.golang.org/protobuf v1.21.0/go.mod h1:47Nbq4nVaFHyn7ilMalzfO3qCViNmqZ2kzikPIcrTAo=
+google.golang.org/protobuf v1.22.0/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
+google.golang.org/protobuf v1.23.0/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
+google.golang.org/protobuf v1.23.1-0.20200526195155-81db48ad09cc/go.mod h1:EGpADcykh3NcUnDUJcl1+ZksZNG86OlYog2l/sGQquU=
+google.golang.org/protobuf v1.24.0/go.mod h1:r/3tXBNzIEhYS9I1OUVjXDlt8tc493IdKGjtUeSXeh4=
+google.golang.org/protobuf v1.25.0 h1:Ejskq+SyPohKW+1uil0JJMtmHCgJPJ/qWTxr8qp+R4c=
+google.golang.org/protobuf v1.25.0/go.mod h1:9JNX74DMeImyA3h4bdi1ymwjUzf21/xIlbajtzgsN7c=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntNwaWcugrBjAiHlqqRiVk=
+gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c/go.mod h1:JHkPIbrfpd72SG/EVd6muEfDQjcINNoR0C8j2r3qZ4Q=
+gopkg.in/errgo.v2 v2.1.0 h1:0vLT13EuvQ0hNvakwLuFZ/jYrLp5F3kcWHXdRggjCE8=
+gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
+gopkg.in/ini.v1 v1.67.0 h1:Dgnx+6+nfE+IfzjUEISNeydPJh9AXNNsWbGP9KzCsOA=
+gopkg.in/ini.v1 v1.67.0/go.mod h1:pNLf8WUiyNEtQjuu5G5vTm06TEv9tsIgeAvK8hOrP4k=
+gopkg.in/yaml.v2 v2.2.2 h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=
+gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
+gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+honnef.co/go/tools v0.0.0-20190102054323-c2f93a96b099/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
+honnef.co/go/tools v0.0.0-20190106161140-3f1c8253044a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
+honnef.co/go/tools v0.0.0-20190418001031-e561f6794a2a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
+honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
+honnef.co/go/tools v0.0.1-2019.2.3/go.mod h1:a3bituU0lyd329TUQxRnasdCoJDkEUEAqEt0JzvZhAg=
+honnef.co/go/tools v0.0.1-2020.1.3/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
+honnef.co/go/tools v0.0.1-2020.1.4 h1:UoveltGrhghAA7ePc+e+QYDHXrBps2PqFZiHkGR/xK8=
+honnef.co/go/tools v0.0.1-2020.1.4/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
+rsc.io/binaryregexp v0.2.0 h1:HfqmD5MEmC0zvwBuF187nq9mdnXjXsSivRiXN7SmRkE=
+rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
+rsc.io/quote/v3 v3.1.0 h1:9JKUTTIUgS6kzR9mK1YuGKv6Nl+DijDNIc0ghT58FaY=
+rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
+rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=
+rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\main.go
+================================================================================
+
+package main
+
+import (
+	"context"
+	"flag"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/app"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/database"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/pkg/logger"
+)
+
+func main() {
+	// РџР°СЂСЃРёРЅРі Р°СЂРіСѓРјРµРЅС‚РѕРІ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё
+	migrateCmd := flag.NewFlagSet("migrate", flag.ExitOnError)
+	migrateDirection := migrateCmd.String("direction", "up", "direction of migration (up/down)")
+
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "migrate":
+			migrateCmd.Parse(os.Args[2:])
+			runMigrations(*migrateDirection)
+			return
+		}
+	}
+
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р»РѕРіРіРµСЂР°
+	log := logger.New()
+
+	// Р—Р°РіСЂСѓР·РєР° РєРѕРЅС„РёРіСѓСЂР°С†РёРё
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to load configuration")
+	}
+
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
+	db, err := database.NewPostgres(cfg.Database)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to connect to database")
+	}
+	defer db.Close()
+
+	// РџСЂРѕРІРµСЂРєР° СЃРѕРµРґРёРЅРµРЅРёСЏ СЃ Р‘Р”
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := db.PingContext(ctx); err != nil {
+		log.Fatal().Err(err).Msg("Failed to ping database")
+	}
+
+	log.Info().Msg("Database connection established")
+
+	// РЎРѕР·РґР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ
+	application, err := app.New(cfg, log, db)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to create application")
+	}
+
+	// РљРѕРЅС‚РµРєСЃС‚ РґР»СЏ graceful shutdown
+	ctx, stop := signal.NotifyContext(context.Background(),
+		syscall.SIGINT,
+		syscall.SIGTERM,
+	)
+	defer stop()
+
+	// Р—Р°РїСѓСЃРє СЃРµСЂРІРµСЂР° РІ РіРѕСЂСѓС‚РёРЅРµ
+	go func() {
+		if err := application.Run(); err != nil {
+			log.Fatal().Err(err).Msg("Failed to run application")
+		}
+	}()
+
+	log.Info().Msgf("File Service started on %s", cfg.Server.Address)
+
+	// РћР¶РёРґР°РЅРёРµ СЃРёРіРЅР°Р»Р° Р·Р°РІРµСЂС€РµРЅРёСЏ
+	<-ctx.Done()
+	log.Info().Msg("Shutting down File Service...")
+
+	// Graceful shutdown
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	if err := application.Shutdown(shutdownCtx); err != nil {
+		log.Error().Err(err).Msg("Failed to shutdown gracefully")
+	}
+
+	log.Info().Msg("File Service stopped")
+}
+
+func runMigrations(direction string) {
+	log := logger.New()
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to load configuration")
+	}
+
+	migrator := database.NewMigrator(cfg.Database)
+
+	switch direction {
+	case "up":
+		if err := migrator.Up(); err != nil {
+			log.Fatal().Err(err).Msg("Failed to apply migrations")
+		}
+		log.Info().Msg("Migrations applied successfully")
+	case "down":
+		if err := migrator.Down(); err != nil {
+			log.Fatal().Err(err).Msg("Failed to rollback migrations")
+		}
+		log.Info().Msg("Migrations rolled back successfully")
+	default:
+		log.Fatal().Msg("Invalid migration direction. Use 'up' or 'down'")
+	}
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\config\config.yaml
+================================================================================
+
+server:
+  address: ":8082"
+  read_timeout: 30s
+  write_timeout: 30s
+  idle_timeout: 120s
+  shutdown_timeout: 10s
+  max_upload_size: 104857600  # 100MB
+
+database:
+  host: "postgres-file"
+  port: 5432
+  user: "file_user"
+  password: "file_password"
+  name: "file_db"
+  sslmode: "disable"
+  max_open_conns: 25
+  max_idle_conns: 5
+  conn_max_lifetime: "5m"
+
+storage:
+  provider: "minio"
+  bucket_name: "plagiarism-files"
+  region: "us-east-1"
+
+minio:
+  endpoint: "minio:9000"
+  access_key: "minioadmin"
+  secret_key: "minioadmin"
+  use_ssl: false
+  timeout: 30s
+
+hash:
+  algorithm: "sha256"
+
+logging:
+  level: "info"
+  pretty: false
+  no_color: false
+
+cors:
+  allowed_origins:
+    - "*"
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers:
+    - "Accept"
+    - "Authorization"
+    - "Content-Type"
+    - "X-CSRF-Token"
+  exposed_headers:
+    - "Link"
+  allow_credentials: true
+  max_age: 300
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\app\app.go
+================================================================================
+
+package app
+
+import (
+	"context"
+	"database/sql"
+	"net/http"
+	"time"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/database"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/delivery/http"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/service"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/pkg/logger"
+	"github.com/rs/zerolog"
+)
+
+type App struct {
+	server *http.Server
+	logger zerolog.Logger
+	config *config.Config
+	db     *sql.DB
+}
+
+func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
+	// РЎРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ MinIO
+	minioRepo, err := repository.NewMinIORepository(
+		cfg.MinIO.Endpoint,
+		cfg.MinIO.AccessKey,
+		cfg.MinIO.SecretKey,
+		cfg.Storage.BucketName,
+		cfg.Storage.Region,
+		cfg.MinIO.UseSSL,
+		log,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// РЎРѕР·РґР°РµРј РѕР±РµСЂС‚РѕС‡РЅС‹Р№ СЂРµРїРѕР·РёС‚РѕСЂРёР№ С…СЂР°РЅРёР»РёС‰Р°
+	storageRepo := repository.NewStorageRepository(minioRepo, log)
+
+	// РЎРѕР·РґР°РµРј СЂРµРїРѕР·РёС‚РѕСЂРёР№ РјРµС‚Р°РґР°РЅРЅС‹С…
+	metadataRepo := repository.NewFileMetadataRepository(db, log)
+
+	// РЎРѕР·РґР°РµРј СЃРµСЂРІРёСЃС‹
+	hashService := service.NewHashService(cfg.Hash.Algorithm)
+
+	uploadService := service.NewUploadService(
+		metadataRepo,
+		storageRepo,
+		hashService,
+		log,
+		service.UploadConfig{
+			MaxUploadSize:  cfg.Server.MaxUploadSize,
+			BucketName:     cfg.Storage.BucketName,
+			AllowedTypes:   []string{".txt", ".pdf", ".doc", ".docx", ".zip", ".rar"},
+			GenerateHash:   true,
+			CheckDuplicate: true,
+		},
+	)
+
+	downloadService := service.NewDownloadService(
+		metadataRepo,
+		storageRepo,
+		log,
+		cfg.Storage.BucketName,
+	)
+
+	deleteService := service.NewDeleteService(
+		metadataRepo,
+		storageRepo,
+		log,
+		cfg.Storage.BucketName,
+	)
+
+	// РЎРѕР·РґР°РµРј РѕР±СЂР°Р±РѕС‚С‡РёРєРё
+	handler := http.NewHandler(
+		uploadService,
+		downloadService,
+		deleteService,
+		log,
+	)
+
+	// РЎРѕР·РґР°РµРј СЂРѕСѓС‚РµСЂ
+	router := chi.NewRouter()
+
+	// РќР°СЃС‚СЂР°РёРІР°РµРј middleware
+	router.Use(middleware.RequestID)
+	router.Use(middleware.RealIP)
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
+	router.Use(middleware.Timeout(60 * time.Second))
+
+	// РќР°СЃС‚СЂР°РёРІР°РµРј CORS
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   cfg.CORS.AllowedOrigins,
+		AllowedMethods:   cfg.CORS.AllowedMethods,
+		AllowedHeaders:   cfg.CORS.AllowedHeaders,
+		ExposedHeaders:   cfg.CORS.ExposedHeaders,
+		AllowCredentials: cfg.CORS.AllowCredentials,
+		MaxAge:           cfg.CORS.MaxAge,
+	}))
+
+	// Р РµРіРёСЃС‚СЂРёСЂСѓРµРј РјР°СЂС€СЂСѓС‚С‹
+	handler.RegisterRoutes(router)
+
+	// РЎРѕР·РґР°РµРј HTTP СЃРµСЂРІРµСЂ
+	server := &http.Server{
+		Addr:         cfg.Server.Address,
+		Handler:      router,
+		ReadTimeout:  cfg.Server.ReadTimeout,
+		WriteTimeout: cfg.Server.WriteTimeout,
+		IdleTimeout:  cfg.Server.IdleTimeout,
+	}
+
+	return &App{
+		server: server,
+		logger: log,
+		config: cfg,
+		db:     db,
+	}, nil
+}
+
+func (a *App) Run() error {
+	a.logger.Info().Msgf("Starting file service on %s", a.config.Server.Address)
+	return a.server.ListenAndServe()
+}
+
+func (a *App) Shutdown(ctx context.Context) error {
+	a.logger.Info().Msg("Shutting down file service...")
+
+	// Р—Р°РєСЂС‹РІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ СЃ Р‘Р”
+	if a.db != nil {
+		if err := a.db.Close(); err != nil {
+			a.logger.Error().Err(err).Msg("Failed to close database connection")
+		}
+	}
+
+	// РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРµСЂРІРµСЂ
+	return a.server.Shutdown(ctx)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\config\config.go
+================================================================================
+
+package config
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/spf13/viper"
+)
+
+type Config struct {
+	Server   ServerConfig
+	Database DatabaseConfig
+	Storage  StorageConfig
+	MinIO    MinIOConfig
+	Hash     HashConfig
+	Logging  LoggingConfig
+	CORS     CORSConfig
+}
+
+type ServerConfig struct {
+	Address         string
+	ReadTimeout     time.Duration
+	WriteTimeout    time.Duration
+	IdleTimeout     time.Duration
+	ShutdownTimeout time.Duration
+	MaxUploadSize   int64
+}
+
+type DatabaseConfig struct {
+	Host            string
+	Port            int
+	User            string
+	Password        string
+	Name            string
+	SSLMode         string
+	MaxOpenConns    int
+	MaxIdleConns    int
+	ConnMaxLifetime time.Duration
+}
+
+type StorageConfig struct {
+	Provider   string
+	BucketName string
+	Region     string
+}
+
+type MinIOConfig struct {
+	Endpoint  string
+	AccessKey string
+	SecretKey string
+	UseSSL    bool
+	Timeout   time.Duration
+}
+
+type HashConfig struct {
+	Algorithm string
+}
+
+type LoggingConfig struct {
+	Level   string
+	Pretty  bool
+	NoColor bool
+}
+
+type CORSConfig struct {
+	AllowedOrigins   []string
+	AllowedMethods   []string
+	AllowedHeaders   []string
+	ExposedHeaders   []string
+	AllowCredentials bool
+	MaxAge           int
+}
+
+func Load() (*Config, error) {
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./config")
+	viper.AddConfigPath(".")
+
+	// РЈСЃС‚Р°РЅРѕРІРєР° Р·РЅР°С‡РµРЅРёР№ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+	setDefaults()
+
+	// Р§С‚РµРЅРёРµ РєРѕРЅС„РёРіСѓСЂР°С†РёРё
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			return nil, fmt.Errorf("failed to read config: %w", err)
+		}
+	}
+
+	// РџСЂРёРІСЏР·РєР° РїРµСЂРµРјРµРЅРЅС‹С… РѕРєСЂСѓР¶РµРЅРёСЏ
+	viper.AutomaticEnv()
+
+	// Р—Р°РіСЂСѓР·РєР° РєРѕРЅС„РёРіСѓСЂР°С†РёРё РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ
+	var cfg Config
+	if err := viper.Unmarshal(&cfg); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
+	}
+
+	return &cfg, nil
+}
+
+func setDefaults() {
+	// Server defaults
+	viper.SetDefault("server.address", ":8082")
+	viper.SetDefault("server.read_timeout", "30s")
+	viper.SetDefault("server.write_timeout", "30s")
+	viper.SetDefault("server.idle_timeout", "120s")
+	viper.SetDefault("server.shutdown_timeout", "10s")
+	viper.SetDefault("server.max_upload_size", 104857600) // 100MB
+
+	// Database defaults
+	viper.SetDefault("database.host", "localhost")
+	viper.SetDefault("database.port", 5432)
+	viper.SetDefault("database.user", "file_user")
+	viper.SetDefault("database.password", "file_password")
+	viper.SetDefault("database.name", "file_db")
+	viper.SetDefault("database.sslmode", "disable")
+	viper.SetDefault("database.max_open_conns", 25)
+	viper.SetDefault("database.max_idle_conns", 5)
+	viper.SetDefault("database.conn_max_lifetime", "5m")
+
+	// Storage defaults
+	viper.SetDefault("storage.provider", "minio")
+	viper.SetDefault("storage.bucket_name", "plagiarism-files")
+	viper.SetDefault("storage.region", "us-east-1")
+
+	// MinIO defaults
+	viper.SetDefault("minio.endpoint", "minio:9000")
+	viper.SetDefault("minio.access_key", "minioadmin")
+	viper.SetDefault("minio.secret_key", "minioadmin")
+	viper.SetDefault("minio.use_ssl", false)
+	viper.SetDefault("minio.timeout", "30s")
+
+	// Hash defaults
+	viper.SetDefault("hash.algorithm", "sha256")
+
+	// Logging defaults
+	viper.SetDefault("logging.level", "info")
+	viper.SetDefault("logging.pretty", false)
+	viper.SetDefault("logging.no_color", false)
+
+	// CORS defaults
+	viper.SetDefault("cors.allowed_origins", []string{"*"})
+	viper.SetDefault("cors.allowed_methods", []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+	viper.SetDefault("cors.allowed_headers", []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"})
+	viper.SetDefault("cors.exposed_headers", []string{"Link"})
+	viper.SetDefault("cors.allow_credentials", true)
+	viper.SetDefault("cors.max_age", 300)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\database\migrations.go
+================================================================================
+
+package database
+
+import (
+	"database/sql"
+	"fmt"
+	"os"
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
+)
+
+type Migrator struct {
+	migrate *migrate.Migrate
+}
+
+func NewMigrator(cfg config.DatabaseConfig) *Migrator {
+	dsn := fmt.Sprintf(
+		"postgres://%s:%s@%s:%d/%s?sslmode=%s",
+		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Name, cfg.SSLMode,
+	)
+
+	db, err := sql.Open("postgres", dsn)
+	if err != nil {
+		panic(fmt.Sprintf("failed to open database: %v", err))
+	}
+	defer db.Close()
+
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	if err != nil {
+		panic(fmt.Sprintf("failed to create migration driver: %v", err))
+	}
+
+	// РџРѕР»СѓС‡Р°РµРј РїСѓС‚СЊ Рє РјРёРіСЂР°С†РёСЏРј
+	migrationPath := "file://migrations"
+	if _, err := os.Stat("migrations"); os.IsNotExist(err) {
+		// РџСЂРѕР±СѓРµРј РґСЂСѓРіРѕР№ РїСѓС‚СЊ
+		migrationPath = "file://./migrations"
+	}
+
+	m, err := migrate.NewWithDatabaseInstance(
+		migrationPath,
+		"postgres", driver,
+	)
+	if err != nil {
+		panic(fmt.Sprintf("failed to create migrator: %v", err))
+	}
+
+	return &Migrator{migrate: m}
+}
+
+func (m *Migrator) Up() error {
+	if err := m.migrate.Up(); err != nil && err != migrate.ErrNoChange {
+		return fmt.Errorf("failed to apply migrations: %w", err)
+	}
+	return nil
+}
+
+func (m *Migrator) Down() error {
+	if err := m.migrate.Down(); err != nil && err != migrate.ErrNoChange {
+		return fmt.Errorf("failed to rollback migrations: %w", err)
+	}
+	return nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\database\postgres.go
+================================================================================
+
+package database
+
+import (
+	"context"
+	"database/sql"
+	"fmt"
+	"time"
+
+	_ "github.com/lib/pq"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
+)
+
+func NewPostgres(cfg config.DatabaseConfig) (*sql.DB, error) {
+	dsn := fmt.Sprintf(
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
+		cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Name, cfg.SSLMode,
+	)
+
+	db, err := sql.Open("postgres", dsn)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open database: %w", err)
+	}
+
+	// РќР°СЃС‚СЂР°РёРІР°РµРј РїСѓР» СЃРѕРµРґРёРЅРµРЅРёР№
+	db.SetMaxOpenConns(cfg.MaxOpenConns)
+	db.SetMaxIdleConns(cfg.MaxIdleConns)
+	db.SetConnMaxLifetime(cfg.ConnMaxLifetime)
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃРѕРµРґРёРЅРµРЅРёРµ
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := db.PingContext(ctx); err != nil {
+		db.Close()
+		return nil, fmt.Errorf("failed to ping database: %w", err)
+	}
+
+	return db, nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\delivery\http\delete_handler.go
+================================================================================
+
+package http
+
+import (
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
+)
+
+func (h *Handler) DeleteFile(w http.ResponseWriter, r *http.Request) {
+	fileID := chi.URLParam(r, "file_id")
+	if fileID == "" {
+		writeError(w, http.StatusBadRequest, "File ID is required")
+		return
+	}
+
+	hardDelete := r.URL.Query().Get("hard") == "true"
+
+	ctx := r.Context()
+	response, err := h.deleteService.DeleteFile(ctx, fileID, hardDelete)
+	if err != nil {
+		h.handleDeleteError(w, err)
+		return
+	}
+
+	writeSuccess(w, response)
+}
+
+func (h *Handler) CleanupFiles(w http.ResponseWriter, r *http.Request) {
+	daysOld := getIntQueryParam(r, "days", 30)
+	hardDelete := r.URL.Query().Get("hard") == "true"
+
+	ctx := r.Context()
+	count, err := h.deleteService.CleanupExpiredFiles(ctx, daysOld)
+	if err != nil {
+		h.logger.Error().Err(err).Msg("Cleanup error")
+		writeError(w, http.StatusInternalServerError, "Failed to cleanup files")
+		return
+	}
+
+	response := map[string]interface{}{
+		"cleaned":     count,
+		"days_old":    daysOld,
+		"hard_delete": hardDelete,
+		"message":     "Cleanup completed",
+	}
+
+	writeSuccess(w, response)
+}
+
+func (h *Handler) handleDeleteError(w http.ResponseWriter, err error) {
+	errMsg := err.Error()
+
+	switch {
+	case contains(errMsg, "file not found"):
+		writeError(w, http.StatusNotFound, "File not found")
+	case contains(errMsg, "failed to delete file from storage"):
+		h.logger.Error().Err(err).Msg("Storage delete error")
+		writeError(w, http.StatusInternalServerError, "Failed to delete file from storage")
+	case contains(errMsg, "failed to delete file metadata"):
+		h.logger.Error().Err(err).Msg("Database delete error")
+		writeError(w, http.StatusInternalServerError, "Failed to delete file information")
+	default:
+		h.logger.Error().Err(err).Msg("Delete error")
+		writeError(w, http.StatusInternalServerError, "Failed to delete file")
+	}
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\delivery\http\download_handler.go
+================================================================================
+
+package http
+
+import (
+	"net/http"
+	"strconv"
+
+	"github.com/go-chi/chi/v5"
+)
+
+func (h *Handler) DownloadFile(w http.ResponseWriter, r *http.Request) {
+	fileID := chi.URLParam(r, "file_id")
+	if fileID == "" {
+		writeError(w, http.StatusBadRequest, "File ID is required")
+		return
+	}
+
+	ctx := r.Context()
+	response, err := h.downloadService.DownloadFile(ctx, fileID)
+	if err != nil {
+		h.handleDownloadError(w, err)
+		return
+	}
+
+	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·Р°РіРѕР»РѕРІРєРё РґР»СЏ СЃРєР°С‡РёРІР°РЅРёСЏ
+	w.Header().Set("Content-Type", response.ContentType)
+	w.Header().Set("Content-Disposition", "attachment; filename=\""+response.FileName+"\"")
+	w.Header().Set("Content-Length", strconv.FormatInt(response.FileSize, 10))
+	w.Header().Set("Cache-Control", "private, max-age=86400")
+
+	// РћС‚РїСЂР°РІР»СЏРµРј С„Р°Р№Р»
+	w.WriteHeader(http.StatusOK)
+	w.Write(response.Content)
+}
+
+func (h *Handler) GetFileInfo(w http.ResponseWriter, r *http.Request) {
+	fileID := chi.URLParam(r, "file_id")
+	if fileID == "" {
+		writeError(w, http.StatusBadRequest, "File ID is required")
+		return
+	}
+
+	ctx := r.Context()
+	info, err := h.downloadService.GetFileInfo(ctx, fileID)
+	if err != nil {
+		h.handleDownloadError(w, err)
+		return
+	}
+
+	writeSuccess(w, info)
+}
+
+func (h *Handler) GetFileURL(w http.ResponseWriter, r *http.Request) {
+	fileID := chi.URLParam(r, "file_id")
+	if fileID == "" {
+		writeError(w, http.StatusBadRequest, "File ID is required")
+		return
+	}
+
+	expiresIn := getInt64QueryParam(r, "expires", 3600) // РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 1 С‡Р°СЃ
+
+	ctx := r.Context()
+	url, err := h.downloadService.GetPresignedURL(ctx, fileID, expiresIn)
+	if err != nil {
+		h.handleDownloadError(w, err)
+		return
+	}
+
+	response := map[string]interface{}{
+		"url":        url,
+		"expires_in": expiresIn,
+		"file_id":    fileID,
+	}
+
+	writeSuccess(w, response)
+}
+
+func (h *Handler) handleDownloadError(w http.ResponseWriter, err error) {
+	errMsg := err.Error()
+
+	switch {
+	case contains(errMsg, "file not found"):
+		writeError(w, http.StatusNotFound, "File not found")
+	case contains(errMsg, "file has been deleted"):
+		writeError(w, http.StatusGone, "File has been deleted")
+	case contains(errMsg, "failed to download file from storage"):
+		h.logger.Error().Err(err).Msg("Storage download error")
+		writeError(w, http.StatusInternalServerError, "Failed to retrieve file")
+	default:
+		h.logger.Error().Err(err).Msg("Download error")
+		writeError(w, http.StatusInternalServerError, "Failed to download file")
+	}
+}
+
+// DownloadByHashHandler РґР»СЏ СЃРєР°С‡РёРІР°РЅРёСЏ С„Р°Р№Р»Р° РїРѕ С…СЌС€Сѓ (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ Analysis Service)
+func (h *Handler) DownloadByHash(w http.ResponseWriter, r *http.Request) {
+	hash := r.URL.Query().Get("hash")
+	fileSize := getInt64QueryParam(r, "size", 0)
+
+	if hash == "" || fileSize == 0 {
+		writeError(w, http.StatusBadRequest, "hash and size parameters are required")
+		return
+	}
+
+	ctx := r.Context()
+	response, err := h.downloadService.DownloadFileByHash(ctx, hash, fileSize)
+	if err != nil {
+		h.handleDownloadError(w, err)
+		return
+	}
+
+	// РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·Р°РіРѕР»РѕРІРєРё РґР»СЏ СЃРєР°С‡РёРІР°РЅРёСЏ
+	w.Header().Set("Content-Type", response.ContentType)
+	w.Header().Set("Content-Disposition", "attachment; filename=\""+response.FileName+"\"")
+	w.Header().Set("Content-Length", strconv.FormatInt(response.FileSize, 10))
+	w.Header().Set("Cache-Control", "private, max-age=86400")
+
+	// РћС‚РїСЂР°РІР»СЏРµРј С„Р°Р№Р»
+	w.WriteHeader(http.StatusOK)
+	w.Write(response.Content)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\delivery\http\handler.go
+================================================================================
+
+package http
+
+import (
+	"encoding/json"
+	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/service"
+	"github.com/rs/zerolog"
+)
+
+type Handler struct {
+	uploadService   service.UploadService
+	downloadService service.DownloadService
+	deleteService   service.DeleteService
+	logger          zerolog.Logger
+}
+
+func NewHandler(
+	uploadService service.UploadService,
+	downloadService service.DownloadService,
+	deleteService service.DeleteService,
+	logger zerolog.Logger,
+) *Handler {
+	return &Handler{
+		uploadService:   uploadService,
+		downloadService: downloadService,
+		deleteService:   deleteService,
+		logger:          logger,
+	}
+}
+
+func (h *Handler) RegisterRoutes(router chi.Router) {
+	// Health check
+	router.Get("/health", h.HealthCheck)
+	router.Get("/ready", h.ReadyCheck)
+	router.Get("/stats", h.GetStats)
+
+	// File operations
+	router.Route("/files", func(r chi.Router) {
+		r.Post("/upload", h.UploadFile)
+		r.Get("/{file_id}", h.DownloadFile)
+		r.Get("/{file_id}/info", h.GetFileInfo)
+		r.Get("/{file_id}/url", h.GetFileURL)
+		r.Delete("/{file_id}", h.DeleteFile)
+	})
+
+	// Admin operations
+	router.Route("/admin/files", func(r chi.Router) {
+		r.Get("/", h.ListFiles)
+		r.Get("/search", h.SearchFiles)
+		r.Delete("/cleanup", h.CleanupFiles)
+	})
+}
+
+func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request) {
+	response := map[string]interface{}{
+		"status":    "healthy",
+		"service":   "file-service",
+		"timestamp": time.Now().UTC(),
+	}
+
+	writeJSON(w, http.StatusOK, response)
+}
+
+func (h *Handler) ReadyCheck(w http.ResponseWriter, r *http.Request) {
+	response := map[string]interface{}{
+		"status":    "ready",
+		"timestamp": time.Now().UTC(),
+	}
+
+	writeJSON(w, http.StatusOK, response)
+}
+
+// Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ С„СѓРЅРєС†РёРё
+func getIntQueryParam(r *http.Request, key string, defaultValue int) int {
+	value := r.URL.Query().Get(key)
+	if value == "" {
+		return defaultValue
+	}
+
+	intValue, err := strconv.Atoi(value)
+	if err != nil {
+		return defaultValue
+	}
+
+	return intValue
+}
+
+func getInt64QueryParam(r *http.Request, key string, defaultValue int64) int64 {
+	value := r.URL.Query().Get(key)
+	if value == "" {
+		return defaultValue
+	}
+
+	intValue, err := strconv.ParseInt(value, 10, 64)
+	if err != nil {
+		return defaultValue
+	}
+
+	return intValue
+}
+
+func writeJSON(w http.ResponseWriter, status int, data interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+
+	if data != nil {
+		json.NewEncoder(w).Encode(data)
+	}
+}
+
+func writeError(w http.ResponseWriter, status int, message string) {
+	writeJSON(w, status, map[string]interface{}{
+		"error":   http.StatusText(status),
+		"message": message,
+	})
+}
+
+func writeSuccess(w http.ResponseWriter, data interface{}) {
+	response := map[string]interface{}{
+		"success": true,
+		"data":    data,
+	}
+	writeJSON(w, http.StatusOK, response)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\delivery\http\health_handler.go
+================================================================================
+
+package http
+
+import (
+	"net/http"
+	"time"
+)
+
+func (h *Handler) GetStats(w http.ResponseWriter, r *http.Request) {
+	// Р’ СЂРµР°Р»СЊРЅРѕР№ СЂРµР°Р»РёР·Р°С†РёРё Р·РґРµСЃСЊ РЅСѓР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ РёР· СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
+	// Р”Р»СЏ РїСЂРёРјРµСЂР° РІРѕР·РІСЂР°С‰Р°РµРј Р·Р°РіР»СѓС€РєСѓ
+
+	stats := map[string]interface{}{
+		"service":         "file-service",
+		"timestamp":       time.Now().UTC(),
+		"uptime":          "24h",
+		"total_uploads":   1000,
+		"total_downloads": 5000,
+		"storage_used":    "2.5 GB",
+		"active_files":    750,
+	}
+
+	writeSuccess(w, stats)
+}
+
+func (h *Handler) ListFiles(w http.ResponseWriter, r *http.Request) {
+	page := getIntQueryParam(r, "page", 1)
+	limit := getIntQueryParam(r, "limit", 20)
+	status := r.URL.Query().Get("status")
+
+	// Р’ СЂРµР°Р»СЊРЅРѕР№ СЂРµР°Р»РёР·Р°С†РёРё Р·РґРµСЃСЊ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
+	// Р”Р»СЏ РїСЂРёРјРµСЂР° РІРѕР·РІСЂР°С‰Р°РµРј Р·Р°РіР»СѓС€РєСѓ
+
+	files := []map[string]interface{}{
+		{
+			"id":           "file_001",
+			"name":         "document.pdf",
+			"size":         "2.5 MB",
+			"uploaded_at":  "2024-01-15T10:30:00Z",
+			"access_count": 15,
+			"status":       "uploaded",
+		},
+	}
+
+	response := map[string]interface{}{
+		"files": files,
+		"page":  page,
+		"limit": limit,
+		"total": 1,
+	}
+
+	writeSuccess(w, response)
+}
+
+func (h *Handler) SearchFiles(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("q")
+	if query == "" {
+		writeError(w, http.StatusBadRequest, "Search query is required")
+		return
+	}
+
+	// Р’ СЂРµР°Р»СЊРЅРѕР№ СЂРµР°Р»РёР·Р°С†РёРё Р·РґРµСЃСЊ РЅСѓР¶РЅРѕ РІС‹Р·РІР°С‚СЊ РјРµС‚РѕРґ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
+	// Р”Р»СЏ РїСЂРёРјРµСЂР° РІРѕР·РІСЂР°С‰Р°РµРј Р·Р°РіР»СѓС€РєСѓ
+
+	results := []map[string]interface{}{
+		{
+			"id":          "file_001",
+			"name":        "document.pdf",
+			"size":        "2.5 MB",
+			"uploaded_at": "2024-01-15T10:30:00Z",
+			"relevance":   0.95,
+		},
+	}
+
+	writeSuccess(w, map[string]interface{}{
+		"query":   query,
+		"results": results,
+		"count":   len(results),
+	})
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\delivery\http\upload_handler.go
+================================================================================
+
+package http
+
+import (
+	"encoding/json"
+	"io"
+	"net/http"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+)
+
+func (h *Handler) UploadFile(w http.ResponseWriter, r *http.Request) {
+	// РџСЂРѕРІРµСЂСЏРµРј Content-Type
+	contentType := r.Header.Get("Content-Type")
+	if contentType != "multipart/form-data" && !contains(contentType, "multipart/form-data") {
+		writeError(w, http.StatusBadRequest, "Content-Type must be multipart/form-data")
+		return
+	}
+
+	// РџР°СЂСЃРёРј multipart С„РѕСЂРјСѓ
+	if err := r.ParseMultipartForm(32 << 20); err != nil { // 32MB
+		writeError(w, http.StatusBadRequest, "Failed to parse form data")
+		return
+	}
+
+	// РџРѕР»СѓС‡Р°РµРј С„Р°Р№Р»
+	file, fileHeader, err := r.FormFile("file")
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "File is required")
+		return
+	}
+	defer file.Close()
+
+	// Р§РёС‚Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
+	fileBytes, err := io.ReadAll(file)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "Failed to read file")
+		return
+	}
+
+	// РџРѕР»СѓС‡Р°РµРј РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹
+	uploadedBy := r.FormValue("uploaded_by")
+	metadataStr := r.FormValue("metadata")
+
+	var metadata []byte
+	if metadataStr != "" {
+		var metadataMap map[string]interface{}
+		if err := json.Unmarshal([]byte(metadataStr), &metadataMap); err != nil {
+			writeError(w, http.StatusBadRequest, "Invalid metadata format")
+			return
+		}
+		metadata, _ = json.Marshal(metadataMap)
+	}
+
+	// Р—Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р»
+	ctx := r.Context()
+	response, err := h.uploadService.UploadFileBytes(ctx, fileHeader.Filename, fileBytes, uploadedBy, metadata)
+	if err != nil {
+		h.handleUploadError(w, err)
+		return
+	}
+
+	writeSuccess(w, response)
+}
+
+func (h *Handler) handleUploadError(w http.ResponseWriter, err error) {
+	errMsg := err.Error()
+
+	switch {
+	case contains(errMsg, "file size exceeds limit"):
+		writeError(w, http.StatusRequestEntityTooLarge, errMsg)
+	case contains(errMsg, "file type not allowed"):
+		writeError(w, http.StatusUnsupportedMediaType, errMsg)
+	case contains(errMsg, "failed to calculate file hash"):
+		h.logger.Error().Err(err).Msg("Hash calculation error")
+		writeError(w, http.StatusInternalServerError, "Failed to process file")
+	case contains(errMsg, "failed to upload file to storage"):
+		h.logger.Error().Err(err).Msg("Storage upload error")
+		writeError(w, http.StatusInternalServerError, "Failed to store file")
+	case contains(errMsg, "failed to save file metadata"):
+		h.logger.Error().Err(err).Msg("Database error")
+		writeError(w, http.StatusInternalServerError, "Failed to save file information")
+	default:
+		h.logger.Error().Err(err).Msg("Upload error")
+		writeError(w, http.StatusInternalServerError, "Failed to upload file")
+	}
+}
+
+func contains(s, substr string) bool {
+	return len(s) >= len(substr) && (s == substr || len(s) > len(substr) && (s[:len(substr)] == substr || contains(s[1:], substr)))
+}
+
+// UploadBytesHandler РґР»СЏ Р·Р°РіСЂСѓР·РєРё С„Р°Р№Р»РѕРІ РёР· Р±Р°Р№С‚РѕРІ (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґСЂСѓРіРёРјРё СЃРµСЂРІРёСЃР°РјРё)
+func (h *Handler) UploadBytes(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		FileName   string          `json:"file_name"`
+		FileBytes  []byte          `json:"file_bytes"`
+		UploadedBy string          `json:"uploaded_by,omitempty"`
+		Metadata   json.RawMessage `json:"metadata,omitempty"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	if req.FileName == "" || len(req.FileBytes) == 0 {
+		writeError(w, http.StatusBadRequest, "file_name and file_bytes are required")
+		return
+	}
+
+	ctx := r.Context()
+	response, err := h.uploadService.UploadFileBytes(ctx, req.FileName, req.FileBytes, req.UploadedBy, req.Metadata)
+	if err != nil {
+		h.handleUploadError(w, err)
+		return
+	}
+
+	writeSuccess(w, response)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\models\dto.go
+================================================================================
+
+package models
+
+import (
+	"encoding/json"
+	"mime/multipart"
+	"time"
+)
+
+// Data Transfer Objects
+
+type UploadFileRequest struct {
+	File       *multipart.FileHeader `json:"-" form:"file"`
+	UploadedBy string                `json:"uploaded_by,omitempty" form:"uploaded_by"`
+	Metadata   json.RawMessage       `json:"metadata,omitempty" form:"metadata"`
+}
+
+type UploadFileResponse struct {
+	FileID     string          `json:"file_id"`
+	FileName   string          `json:"file_name"`
+	FileSize   int64           `json:"file_size"`
+	Hash       string          `json:"hash"`
+	MimeType   string          `json:"mime_type"`
+	UploadedAt time.Time       `json:"uploaded_at"`
+	StorageURL string          `json:"storage_url,omitempty"`
+	Metadata   json.RawMessage `json:"metadata,omitempty"`
+}
+
+type FileInfoResponse struct {
+	FileID         string          `json:"file_id"`
+	OriginalName   string          `json:"original_name"`
+	FileSize       int64           `json:"file_size"`
+	MimeType       string          `json:"mime_type"`
+	Hash           string          `json:"hash"`
+	UploadStatus   string          `json:"upload_status"`
+	UploadedAt     time.Time       `json:"uploaded_at"`
+	AccessCount    int             `json:"access_count"`
+	LastAccessedAt *time.Time      `json:"last_accessed_at,omitempty"`
+	StorageURL     string          `json:"storage_url,omitempty"`
+	Metadata       json.RawMessage `json:"metadata,omitempty"`
+}
+
+type DownloadFileResponse struct {
+	Content     []byte `json:"-"`
+	FileName    string `json:"file_name"`
+	ContentType string `json:"content_type"`
+	FileSize    int64  `json:"file_size"`
+}
+
+type DeleteFileResponse struct {
+	FileID  string `json:"file_id"`
+	Deleted bool   `json:"deleted"`
+	Message string `json:"message,omitempty"`
+}
+
+type AssociateFileRequest struct {
+	FileID          string `json:"file_id" validate:"required,uuid"`
+	EntityType      string `json:"entity_type" validate:"required"`
+	EntityID        string `json:"entity_id" validate:"required"`
+	AssociationType string `json:"association_type" validate:"required"`
+}
+
+type StorageInfo struct {
+	Provider   string `json:"provider"`
+	BucketName string `json:"bucket_name"`
+	Region     string `json:"region"`
+	UsedSpace  int64  `json:"used_space"`
+	FileCount  int64  `json:"file_count"`
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\models\file_metadata.go
+================================================================================
+
+package models
+
+import (
+	"encoding/json"
+	"time"
+)
+
+type FileMetadata struct {
+	ID              string          `json:"id" db:"id"`
+	OriginalName    string          `json:"original_name" db:"original_name"`
+	FileName        string          `json:"file_name" db:"file_name"`
+	FileExtension   string          `json:"file_extension" db:"file_extension"`
+	FileSize        int64           `json:"file_size" db:"file_size"`
+	MimeType        string          `json:"mime_type" db:"mime_type"`
+	Hash            string          `json:"hash" db:"hash"`
+	StorageProvider string          `json:"storage_provider" db:"storage_provider"`
+	StorageBucket   string          `json:"storage_bucket" db:"storage_bucket"`
+	StoragePath     string          `json:"storage_path" db:"storage_path"`
+	StorageURL      string          `json:"storage_url,omitempty" db:"storage_url"`
+	UploadStatus    string          `json:"upload_status" db:"upload_status"`
+	UploadedBy      string          `json:"uploaded_by,omitempty" db:"uploaded_by"`
+	UploadedAt      time.Time       `json:"uploaded_at" db:"uploaded_at"`
+	AccessCount     int             `json:"access_count" db:"access_count"`
+	LastAccessedAt  *time.Time      `json:"last_accessed_at,omitempty" db:"last_accessed_at"`
+	Metadata        json.RawMessage `json:"metadata,omitempty" db:"metadata"`
+}
+
+type FileUploadStatus string
+
+const (
+	FileStatusUploaded   FileUploadStatus = "uploaded"
+	FileStatusProcessing FileUploadStatus = "processing"
+	FileStatusFailed     FileUploadStatus = "failed"
+	FileStatusDeleted    FileUploadStatus = "deleted"
+)
+
+func (fs FileUploadStatus) String() string {
+	return string(fs)
+}
+
+type FileAssociation struct {
+	ID              string    `json:"id" db:"id"`
+	FileID          string    `json:"file_id" db:"file_id"`
+	EntityType      string    `json:"entity_type" db:"entity_type"`
+	EntityID        string    `json:"entity_id" db:"entity_id"`
+	AssociationType string    `json:"association_type" db:"association_type"`
+	CreatedAt       time.Time `json:"created_at" db:"created_at"`
+}
+
+type FileStats struct {
+	TotalFiles      int64               `json:"total_files"`
+	TotalSize       int64               `json:"total_size"`
+	UploadedToday   int64               `json:"uploaded_today"`
+	AverageFileSize int64               `json:"average_file_size"`
+	TopExtensions   []FileExtensionStat `json:"top_extensions"`
+}
+
+type FileExtensionStat struct {
+	Extension string `json:"extension"`
+	Count     int64  `json:"count"`
+	TotalSize int64  `json:"total_size"`
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\repository\file_metadata_repository.go
+================================================================================
+
+package repository
+
+import (
+	"context"
+	"database/sql"
+	"errors"
+	"fmt"
+	"github.com/rs/zerolog"
+	"time"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+)
+
+type FileMetadataRepository interface {
+	Create(ctx context.Context, metadata *models.FileMetadata) error
+	GetByID(ctx context.Context, id string) (*models.FileMetadata, error)
+	GetByHash(ctx context.Context, hash string, fileSize int64) ([]*models.FileMetadata, error)
+	GetByFileName(ctx context.Context, fileName string) (*models.FileMetadata, error)
+	GetAll(ctx context.Context, limit, offset int, status string) ([]*models.FileMetadata, int, error)
+	UpdateStatus(ctx context.Context, id, status string) error
+	UpdateAccessInfo(ctx context.Context, id string) error
+	UpdateMetadata(ctx context.Context, id string, metadata []byte) error
+	Delete(ctx context.Context, id string) error
+	SoftDelete(ctx context.Context, id string) error
+	GetStats(ctx context.Context) (*models.FileStats, error)
+	Exists(ctx context.Context, id string) (bool, error)
+	SearchByMetadata(ctx context.Context, key, value string) ([]*models.FileMetadata, error)
+}
+
+type fileMetadataRepository struct {
+	*PostgresRepository
+}
+
+func NewFileMetadataRepository(db *sql.DB, logger zerolog.Logger) FileMetadataRepository {
+	return &fileMetadataRepository{
+		PostgresRepository: NewPostgresRepository(db, logger),
+	}
+}
+
+func (r *fileMetadataRepository) Create(ctx context.Context, metadata *models.FileMetadata) error {
+	query := `
+		INSERT INTO file_metadata (
+			id, original_name, file_name, file_extension, file_size, mime_type,
+			hash, storage_provider, storage_bucket, storage_path, storage_url,
+			upload_status, uploaded_by, uploaded_at, metadata
+		) VALUES (
+			$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+		)
+	`
+
+	_, err := r.db.ExecContext(ctx, query,
+		metadata.ID,
+		metadata.OriginalName,
+		metadata.FileName,
+		metadata.FileExtension,
+		metadata.FileSize,
+		metadata.MimeType,
+		metadata.Hash,
+		metadata.StorageProvider,
+		metadata.StorageBucket,
+		metadata.StoragePath,
+		metadata.StorageURL,
+		metadata.UploadStatus,
+		metadata.UploadedBy,
+		metadata.UploadedAt,
+		metadata.Metadata,
+	)
+
+	return err
+}
+
+func (r *fileMetadataRepository) GetByID(ctx context.Context, id string) (*models.FileMetadata, error) {
+	query := `
+		SELECT 
+			id, original_name, file_name, file_extension, file_size, mime_type,
+			hash, storage_provider, storage_bucket, storage_path, storage_url,
+			upload_status, uploaded_by, uploaded_at, access_count, 
+			last_accessed_at, metadata
+		FROM file_metadata
+		WHERE id = $1 AND upload_status != 'deleted'
+	`
+
+	metadata := &models.FileMetadata{}
+	err := r.db.QueryRowContext(ctx, query, id).Scan(
+		&metadata.ID,
+		&metadata.OriginalName,
+		&metadata.FileName,
+		&metadata.FileExtension,
+		&metadata.FileSize,
+		&metadata.MimeType,
+		&metadata.Hash,
+		&metadata.StorageProvider,
+		&metadata.StorageBucket,
+		&metadata.StoragePath,
+		&metadata.StorageURL,
+		&metadata.UploadStatus,
+		&metadata.UploadedBy,
+		&metadata.UploadedAt,
+		&metadata.AccessCount,
+		&metadata.LastAccessedAt,
+		&metadata.Metadata,
+	)
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	return metadata, err
+}
+
+func (r *fileMetadataRepository) GetByHash(ctx context.Context, hash string, fileSize int64) ([]*models.FileMetadata, error) {
+	query := `
+		SELECT 
+			id, original_name, file_name, file_extension, file_size, mime_type,
+			hash, storage_provider, storage_bucket, storage_path, storage_url,
+			upload_status, uploaded_by, uploaded_at, access_count, 
+			last_accessed_at, metadata
+		FROM file_metadata
+		WHERE hash = $1 AND file_size = $2 AND upload_status != 'deleted'
+		ORDER BY uploaded_at DESC
+	`
+
+	rows, err := r.db.QueryContext(ctx, query, hash, fileSize)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var files []*models.FileMetadata
+	for rows.Next() {
+		metadata := &models.FileMetadata{}
+		err := rows.Scan(
+			&metadata.ID,
+			&metadata.OriginalName,
+			&metadata.FileName,
+			&metadata.FileExtension,
+			&metadata.FileSize,
+			&metadata.MimeType,
+			&metadata.Hash,
+			&metadata.StorageProvider,
+			&metadata.StorageBucket,
+			&metadata.StoragePath,
+			&metadata.StorageURL,
+			&metadata.UploadStatus,
+			&metadata.UploadedBy,
+			&metadata.UploadedAt,
+			&metadata.AccessCount,
+			&metadata.LastAccessedAt,
+			&metadata.Metadata,
+		)
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, metadata)
+	}
+
+	return files, nil
+}
+
+func (r *fileMetadataRepository) GetByFileName(ctx context.Context, fileName string) (*models.FileMetadata, error) {
+	query := `
+		SELECT 
+			id, original_name, file_name, file_extension, file_size, mime_type,
+			hash, storage_provider, storage_bucket, storage_path, storage_url,
+			upload_status, uploaded_by, uploaded_at, access_count, 
+			last_accessed_at, metadata
+		FROM file_metadata
+		WHERE file_name = $1 AND upload_status != 'deleted'
+	`
+
+	metadata := &models.FileMetadata{}
+	err := r.db.QueryRowContext(ctx, query, fileName).Scan(
+		&metadata.ID,
+		&metadata.OriginalName,
+		&metadata.FileName,
+		&metadata.FileExtension,
+		&metadata.FileSize,
+		&metadata.MimeType,
+		&metadata.Hash,
+		&metadata.StorageProvider,
+		&metadata.StorageBucket,
+		&metadata.StoragePath,
+		&metadata.StorageURL,
+		&metadata.UploadStatus,
+		&metadata.UploadedBy,
+		&metadata.UploadedAt,
+		&metadata.AccessCount,
+		&metadata.LastAccessedAt,
+		&metadata.Metadata,
+	)
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	return metadata, err
+}
+
+func (r *fileMetadataRepository) GetAll(ctx context.Context, limit, offset int, status string) ([]*models.FileMetadata, int, error) {
+	// РџРѕР»СѓС‡Р°РµРј РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ
+	countQuery := `SELECT COUNT(*) FROM file_metadata WHERE upload_status != 'deleted'`
+	var countArgs []interface{}
+
+	if status != "" {
+		countQuery += ` AND upload_status = $1`
+		countArgs = append(countArgs, status)
+	}
+
+	var total int
+	err := r.db.QueryRowContext(ctx, countQuery, countArgs...).Scan(&total)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// РџРѕР»СѓС‡Р°РµРј С„Р°Р№Р»С‹
+	query := `
+		SELECT 
+			id, original_name, file_name, file_extension, file_size, mime_type,
+			hash, storage_provider, storage_bucket, storage_path, storage_url,
+			upload_status, uploaded_by, uploaded_at, access_count, 
+			last_accessed_at, metadata
+		FROM file_metadata
+		WHERE upload_status != 'deleted'
+	`
+
+	var queryArgs []interface{}
+	argCount := 1
+
+	if status != "" {
+		query += ` AND upload_status = $1`
+		queryArgs = append(queryArgs, status)
+		argCount++
+	}
+
+	query += ` ORDER BY uploaded_at DESC LIMIT $` + fmt.Sprint(argCount) + ` OFFSET $` + fmt.Sprint(argCount+1)
+	queryArgs = append(queryArgs, limit, offset)
+
+	rows, err := r.db.QueryContext(ctx, query, queryArgs...)
+	if err != nil {
+		return nil, 0, err
+	}
+	defer rows.Close()
+
+	var files []*models.FileMetadata
+	for rows.Next() {
+		metadata := &models.FileMetadata{}
+		err := rows.Scan(
+			&metadata.ID,
+			&metadata.OriginalName,
+			&metadata.FileName,
+			&metadata.FileExtension,
+			&metadata.FileSize,
+			&metadata.MimeType,
+			&metadata.Hash,
+			&metadata.StorageProvider,
+			&metadata.StorageBucket,
+			&metadata.StoragePath,
+			&metadata.StorageURL,
+			&metadata.UploadStatus,
+			&metadata.UploadedBy,
+			&metadata.UploadedAt,
+			&metadata.AccessCount,
+			&metadata.LastAccessedAt,
+			&metadata.Metadata,
+		)
+		if err != nil {
+			return nil, 0, err
+		}
+		files = append(files, metadata)
+	}
+
+	return files, total, nil
+}
+
+func (r *fileMetadataRepository) UpdateStatus(ctx context.Context, id, status string) error {
+	query := `
+		UPDATE file_metadata
+		SET upload_status = $1
+		WHERE id = $2
+	`
+
+	_, err := r.db.ExecContext(ctx, query, status, id)
+	return err
+}
+
+func (r *fileMetadataRepository) UpdateAccessInfo(ctx context.Context, id string) error {
+	query := `
+		UPDATE file_metadata
+		SET access_count = access_count + 1, last_accessed_at = CURRENT_TIMESTAMP
+		WHERE id = $1
+	`
+
+	_, err := r.db.ExecContext(ctx, query, id)
+	return err
+}
+
+func (r *fileMetadataRepository) UpdateMetadata(ctx context.Context, id string, metadata []byte) error {
+	query := `
+		UPDATE file_metadata
+		SET metadata = $1
+		WHERE id = $2
+	`
+
+	_, err := r.db.ExecContext(ctx, query, metadata, id)
+	return err
+}
+
+func (r *fileMetadataRepository) Delete(ctx context.Context, id string) error {
+	query := `DELETE FROM file_metadata WHERE id = $1`
+	_, err := r.db.ExecContext(ctx, query, id)
+	return err
+}
+
+func (r *fileMetadataRepository) SoftDelete(ctx context.Context, id string) error {
+	query := `
+		UPDATE file_metadata
+		SET upload_status = 'deleted'
+		WHERE id = $1
+	`
+
+	_, err := r.db.ExecContext(ctx, query, id)
+	return err
+}
+
+func (r *fileMetadataRepository) GetStats(ctx context.Context) (*models.FileStats, error) {
+	stats := &models.FileStats{}
+
+	// РћР±С‰Р°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР°
+	totalQuery := `
+		SELECT 
+			COUNT(*) as total_files,
+			COALESCE(SUM(file_size), 0) as total_size,
+			COALESCE(AVG(file_size), 0) as avg_size
+		FROM file_metadata
+		WHERE upload_status != 'deleted'
+	`
+
+	err := r.db.QueryRowContext(ctx, totalQuery).Scan(
+		&stats.TotalFiles,
+		&stats.TotalSize,
+		&stats.AverageFileSize,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// Р¤Р°Р№Р»С‹ Р·Р° СЃРµРіРѕРґРЅСЏ
+	todayQuery := `
+		SELECT COUNT(*)
+		FROM file_metadata
+		WHERE upload_status != 'deleted' 
+		AND DATE(uploaded_at) = CURRENT_DATE
+	`
+
+	err = r.db.QueryRowContext(ctx, todayQuery).Scan(&stats.UploadedToday)
+	if err != nil {
+		return nil, err
+	}
+
+	// РўРѕРї СЂР°СЃС€РёСЂРµРЅРёР№ С„Р°Р№Р»РѕРІ
+	extQuery := `
+		SELECT 
+			file_extension,
+			COUNT(*) as count,
+			SUM(file_size) as total_size
+		FROM file_metadata
+		WHERE upload_status != 'deleted'
+		GROUP BY file_extension
+		ORDER BY count DESC
+		LIMIT 10
+	`
+
+	rows, err := r.db.QueryContext(ctx, extQuery)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var extStat models.FileExtensionStat
+		err := rows.Scan(&extStat.Extension, &extStat.Count, &extStat.TotalSize)
+		if err != nil {
+			return nil, err
+		}
+		stats.TopExtensions = append(stats.TopExtensions, extStat)
+	}
+
+	return stats, nil
+}
+
+func (r *fileMetadataRepository) Exists(ctx context.Context, id string) (bool, error) {
+	query := `SELECT EXISTS(SELECT 1 FROM file_metadata WHERE id = $1 AND upload_status != 'deleted')`
+	var exists bool
+	err := r.db.QueryRowContext(ctx, query, id).Scan(&exists)
+	return exists, err
+}
+
+func (r *fileMetadataRepository) SearchByMetadata(ctx context.Context, key, value string) ([]*models.FileMetadata, error) {
+	query := `
+		SELECT 
+			id, original_name, file_name, file_extension, file_size, mime_type,
+			hash, storage_provider, storage_bucket, storage_path, storage_url,
+			upload_status, uploaded_by, uploaded_at, access_count, 
+			last_accessed_at, metadata
+		FROM file_metadata
+		WHERE upload_status != 'deleted' 
+		AND metadata->>$1 = $2
+		ORDER BY uploaded_at DESC
+	`
+
+	rows, err := r.db.QueryContext(ctx, query, key, value)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var files []*models.FileMetadata
+	for rows.Next() {
+		metadata := &models.FileMetadata{}
+		err := rows.Scan(
+			&metadata.ID,
+			&metadata.OriginalName,
+			&metadata.FileName,
+			&metadata.FileExtension,
+			&metadata.FileSize,
+			&metadata.MimeType,
+			&metadata.Hash,
+			&metadata.StorageProvider,
+			&metadata.StorageBucket,
+			&metadata.StoragePath,
+			&metadata.StorageURL,
+			&metadata.UploadStatus,
+			&metadata.UploadedBy,
+			&metadata.UploadedAt,
+			&metadata.AccessCount,
+			&metadata.LastAccessedAt,
+			&metadata.Metadata,
+		)
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, metadata)
+	}
+
+	return files, nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\repository\minio.go
+================================================================================
+
+package repository
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io"
+	"path/filepath"
+	"time"
+
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/rs/zerolog"
+)
+
+type MinIORepository struct {
+	client *minio.Client
+	bucket string
+	region string
+	logger zerolog.Logger
+}
+
+func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, useSSL bool, logger zerolog.Logger) (*MinIORepository, error) {
+	// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РєР»РёРµРЅС‚Р° MinIO
+	client, err := minio.New(endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
+		Secure: useSSL,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create MinIO client: %w", err)
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃРѕРµРґРёРЅРµРЅРёРµ
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	_, err = client.ListBuckets(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to MinIO: %w", err)
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ Р±Р°РєРµС‚Р°, СЃРѕР·РґР°РµРј РµСЃР»Рё РЅРµС‚
+	exists, err := client.BucketExists(ctx, bucket)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check bucket existence: %w", err)
+	}
+
+	if !exists {
+		err = client.MakeBucket(ctx, bucket, minio.MakeBucketOptions{
+			Region: region,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed to create bucket: %w", err)
+		}
+		logger.Info().Str("bucket", bucket).Msg("Created new bucket")
+	}
+
+	logger.Info().
+		Str("endpoint", endpoint).
+		Str("bucket", bucket).
+		Bool("ssl", useSSL).
+		Msg("Connected to MinIO")
+
+	return &MinIORepository{
+		client: client,
+		bucket: bucket,
+		region: region,
+		logger: logger,
+	}, nil
+}
+
+func (r *MinIORepository) UploadFile(ctx context.Context, bucket, fileName string, file io.Reader, size int64) error {
+	// Р—Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р»
+	uploadInfo, err := r.client.PutObject(ctx, bucket, fileName, file, size, minio.PutObjectOptions{
+		ContentType: "application/octet-stream",
+	})
+	if err != nil {
+		return fmt.Errorf("failed to upload file: %w", err)
+	}
+
+	r.logger.Debug().
+		Str("bucket", bucket).
+		Str("file", fileName).
+		Str("etag", uploadInfo.ETag).
+		Int64("size", size).
+		Msg("File uploaded to MinIO")
+
+	return nil
+}
+
+func (r *MinIORepository) DownloadFile(ctx context.Context, bucket, fileName string) (io.ReadCloser, int64, error) {
+	// РџРѕР»СѓС‡Р°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С„Р°Р№Р»Рµ
+	objInfo, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
+	if err != nil {
+		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
+			return nil, 0, errors.New("file not found")
+		}
+		return nil, 0, fmt.Errorf("failed to stat file: %w", err)
+	}
+
+	// РЎРєР°С‡РёРІР°РµРј С„Р°Р№Р»
+	object, err := r.client.GetObject(ctx, bucket, fileName, minio.GetObjectOptions{})
+	if err != nil {
+		return nil, 0, fmt.Errorf("failed to get file: %w", err)
+	}
+
+	r.logger.Debug().
+		Str("bucket", bucket).
+		Str("file", fileName).
+		Int64("size", objInfo.Size).
+		Msg("File downloaded from MinIO")
+
+	return object, objInfo.Size, nil
+}
+
+func (r *MinIORepository) DeleteFile(ctx context.Context, bucket, fileName string) error {
+	// РЈРґР°Р»СЏРµРј С„Р°Р№Р»
+	err := r.client.RemoveObject(ctx, bucket, fileName, minio.RemoveObjectOptions{})
+	if err != nil {
+		return fmt.Errorf("failed to delete file: %w", err)
+	}
+
+	r.logger.Debug().
+		Str("bucket", bucket).
+		Str("file", fileName).
+		Msg("File deleted from MinIO")
+
+	return nil
+}
+
+func (r *MinIORepository) FileExists(ctx context.Context, bucket, fileName string) (bool, error) {
+	_, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
+	if err != nil {
+		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
+			return false, nil
+		}
+		return false, fmt.Errorf("failed to check file existence: %w", err)
+	}
+
+	return true, nil
+}
+
+func (r *MinIORepository) GetFileInfo(ctx context.Context, bucket, fileName string) (*models.FileInfoResponse, error) {
+	objInfo, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
+	if err != nil {
+		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
+			return nil, errors.New("file not found")
+		}
+		return nil, fmt.Errorf("failed to get file info: %w", err)
+	}
+
+	return &models.FileInfoResponse{
+		FileName:    fileName,
+		FileSize:    objInfo.Size,
+		ContentType: objInfo.ContentType,
+	}, nil
+}
+
+func (r *MinIORepository) GetPresignedURL(ctx context.Context, bucket, fileName string, expiresIn int64) (string, error) {
+	// РЎРѕР·РґР°РµРј РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РїРѕРґРїРёСЃР°РЅРЅС‹Р№ URL
+	url, err := r.client.PresignedGetObject(ctx, bucket, fileName, time.Duration(expiresIn)*time.Second, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to generate presigned URL: %w", err)
+	}
+
+	return url.String(), nil
+}
+
+func (r *MinIORepository) ListFiles(ctx context.Context, bucket, prefix string) ([]string, error) {
+	var files []string
+
+	// РџРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє РѕР±СЉРµРєС‚РѕРІ
+	objectCh := r.client.ListObjects(ctx, bucket, minio.ListObjectsOptions{
+		Prefix:    prefix,
+		Recursive: true,
+	})
+
+	for object := range objectCh {
+		if object.Err != nil {
+			return nil, fmt.Errorf("failed to list objects: %w", object.Err)
+		}
+		files = append(files, object.Key)
+	}
+
+	return files, nil
+}
+
+func (r *MinIORepository) GetBucketStats(ctx context.Context, bucket string) (*models.StorageInfo, error) {
+	var totalSize int64
+	var fileCount int64
+
+	// РџРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє РІСЃРµС… РѕР±СЉРµРєС‚РѕРІ РІ Р±Р°РєРµС‚Рµ
+	objectCh := r.client.ListObjects(ctx, bucket, minio.ListObjectsOptions{
+		Recursive: true,
+	})
+
+	for object := range objectCh {
+		if object.Err != nil {
+			return nil, fmt.Errorf("failed to list objects: %w", object.Err)
+		}
+		totalSize += object.Size
+		fileCount++
+	}
+
+	return &models.StorageInfo{
+		Provider:   "minio",
+		BucketName: bucket,
+		Region:     r.region,
+		UsedSpace:  totalSize,
+		FileCount:  fileCount,
+	}, nil
+}
+
+// GenerateFileName РіРµРЅРµСЂРёСЂСѓРµС‚ СѓРЅРёРєР°Р»СЊРЅРѕРµ РёРјСЏ С„Р°Р№Р»Р°
+func (r *MinIORepository) GenerateFileName(originalName string) string {
+	ext := filepath.Ext(originalName)
+	name := filepath.Base(originalName)
+	name = name[:len(name)-len(ext)]
+
+	timestamp := time.Now().UnixNano()
+	return fmt.Sprintf("%s_%d%s", name, timestamp, ext)
+}
+
+// GenerateStoragePath РіРµРЅРµСЂРёСЂСѓРµС‚ РїСѓС‚СЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С„Р°Р№Р»Р°
+func (r *MinIORepository) GenerateStoragePath(fileName string) string {
+	now := time.Now()
+	return fmt.Sprintf("%d/%02d/%s", now.Year(), now.Month(), fileName)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\repository\postgres.go
+================================================================================
+
+package repository
+
+import (
+	"context"
+	"database/sql"
+	"time"
+
+	_ "github.com/lib/pq"
+	"github.com/rs/zerolog"
+)
+
+type PostgresRepository struct {
+	db     *sql.DB
+	logger zerolog.Logger
+}
+
+func NewPostgresRepository(db *sql.DB, logger zerolog.Logger) *PostgresRepository {
+	return &PostgresRepository{
+		db:     db,
+		logger: logger,
+	}
+}
+
+func (r *PostgresRepository) BeginTx(ctx context.Context) (*sql.Tx, error) {
+	return r.db.BeginTx(ctx, nil)
+}
+
+func (r *PostgresRepository) Ping(ctx context.Context) error {
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	return r.db.PingContext(ctx)
+}
+
+func (r *PostgresRepository) Close() error {
+	return r.db.Close()
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\repository\storage_repository.go
+================================================================================
+
+package repository
+
+import (
+	"context"
+	"io"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/rs/zerolog"
+)
+
+type StorageRepository interface {
+	UploadFile(ctx context.Context, bucket, fileName string, file io.Reader, size int64) error
+	DownloadFile(ctx context.Context, bucket, fileName string) (io.ReadCloser, int64, error)
+	DeleteFile(ctx context.Context, bucket, fileName string) error
+	FileExists(ctx context.Context, bucket, fileName string) (bool, error)
+	GetFileInfo(ctx context.Context, bucket, fileName string) (*models.FileInfoResponse, error)
+	GetPresignedURL(ctx context.Context, bucket, fileName string, expiresIn int64) (string, error)
+	ListFiles(ctx context.Context, bucket, prefix string) ([]string, error)
+	GetBucketStats(ctx context.Context, bucket string) (*models.StorageInfo, error)
+}
+
+type storageRepository struct {
+	provider StorageRepository
+	logger   zerolog.Logger
+}
+
+func NewStorageRepository(provider StorageRepository, logger zerolog.Logger) StorageRepository {
+	return &storageRepository{
+		provider: provider,
+		logger:   logger,
+	}
+}
+
+func (r *storageRepository) UploadFile(ctx context.Context, bucket, fileName string, file io.Reader, size int64) error {
+	return r.provider.UploadFile(ctx, bucket, fileName, file, size)
+}
+
+func (r *storageRepository) DownloadFile(ctx context.Context, bucket, fileName string) (io.ReadCloser, int64, error) {
+	return r.provider.DownloadFile(ctx, bucket, fileName)
+}
+
+func (r *storageRepository) DeleteFile(ctx context.Context, bucket, fileName string) error {
+	return r.provider.DeleteFile(ctx, bucket, fileName)
+}
+
+func (r *storageRepository) FileExists(ctx context.Context, bucket, fileName string) (bool, error) {
+	return r.provider.FileExists(ctx, bucket, fileName)
+}
+
+func (r *storageRepository) GetFileInfo(ctx context.Context, bucket, fileName string) (*models.FileInfoResponse, error) {
+	return r.provider.GetFileInfo(ctx, bucket, fileName)
+}
+
+func (r *storageRepository) GetPresignedURL(ctx context.Context, bucket, fileName string, expiresIn int64) (string, error) {
+	return r.provider.GetPresignedURL(ctx, bucket, fileName, expiresIn)
+}
+
+func (r *storageRepository) ListFiles(ctx context.Context, bucket, prefix string) ([]string, error) {
+	return r.provider.ListFiles(ctx, bucket, prefix)
+}
+
+func (r *storageRepository) GetBucketStats(ctx context.Context, bucket string) (*models.StorageInfo, error) {
+	return r.provider.GetBucketStats(ctx, bucket)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\service\delete_service.go
+================================================================================
+
+package service
+
+import (
+	"context"
+	"errors"
+	"fmt"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
+	"github.com/rs/zerolog"
+)
+
+type DeleteService interface {
+	DeleteFile(ctx context.Context, fileID string, hardDelete bool) (*models.DeleteFileResponse, error)
+	DeleteFileByHash(ctx context.Context, hash string, fileSize int64, hardDelete bool) ([]*models.DeleteFileResponse, error)
+	CleanupExpiredFiles(ctx context.Context, daysOld int) (int, error)
+}
+
+type deleteService struct {
+	metadataRepo repository.FileMetadataRepository
+	storageRepo  repository.StorageRepository
+	logger       zerolog.Logger
+	bucketName   string
+}
+
+func NewDeleteService(
+	metadataRepo repository.FileMetadataRepository,
+	storageRepo repository.StorageRepository,
+	logger zerolog.Logger,
+	bucketName string,
+) DeleteService {
+	return &deleteService{
+		metadataRepo: metadataRepo,
+		storageRepo:  storageRepo,
+		logger:       logger,
+		bucketName:   bucketName,
+	}
+}
+
+func (s *deleteService) DeleteFile(ctx context.Context, fileID string, hardDelete bool) (*models.DeleteFileResponse, error) {
+	// РџРѕР»СѓС‡Р°РµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р°
+	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get file metadata: %w", err)
+	}
+	if metadata == nil {
+		return nil, errors.New("file not found")
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј, РЅРµ СѓРґР°Р»РµРЅ Р»Рё СѓР¶Рµ С„Р°Р№Р»
+	if metadata.UploadStatus == models.FileStatusDeleted.String() {
+		return &models.DeleteFileResponse{
+			FileID:  fileID,
+			Deleted: false,
+			Message: "File already deleted",
+		}, nil
+	}
+
+	if hardDelete {
+		// РџРѕР»РЅРѕРµ СѓРґР°Р»РµРЅРёРµ: СѓРґР°Р»СЏРµРј С„Р°Р№Р» РёР· С…СЂР°РЅРёР»РёС‰Р° Рё РјРµС‚Р°РґР°РЅРЅС‹Рµ РёР· Р‘Р”
+		if err := s.storageRepo.DeleteFile(ctx, s.bucketName, metadata.StoragePath); err != nil {
+			return nil, fmt.Errorf("failed to delete file from storage: %w", err)
+		}
+
+		if err := s.metadataRepo.Delete(ctx, fileID); err != nil {
+			return nil, fmt.Errorf("failed to delete file metadata: %w", err)
+		}
+
+		s.logger.Info().
+			Str("file_id", fileID).
+			Str("storage_path", metadata.StoragePath).
+			Msg("File hard deleted")
+
+		return &models.DeleteFileResponse{
+			FileID:  fileID,
+			Deleted: true,
+			Message: "File permanently deleted",
+		}, nil
+	} else {
+		// РњСЏРіРєРѕРµ СѓРґР°Р»РµРЅРёРµ: С‚РѕР»СЊРєРѕ РјРµРЅСЏРµРј СЃС‚Р°С‚СѓСЃ
+		if err := s.metadataRepo.SoftDelete(ctx, fileID); err != nil {
+			return nil, fmt.Errorf("failed to soft delete file: %w", err)
+		}
+
+		s.logger.Info().
+			Str("file_id", fileID).
+			Msg("File soft deleted")
+
+		return &models.DeleteFileResponse{
+			FileID:  fileID,
+			Deleted: true,
+			Message: "File marked as deleted",
+		}, nil
+	}
+}
+
+func (s *deleteService) DeleteFileByHash(ctx context.Context, hash string, fileSize int64, hardDelete bool) ([]*models.DeleteFileResponse, error) {
+	// РќР°С…РѕРґРёРј С„Р°Р№Р»С‹ РїРѕ С…СЌС€Сѓ
+	files, err := s.metadataRepo.GetByHash(ctx, hash, fileSize)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find files by hash: %w", err)
+	}
+
+	var responses []*models.DeleteFileResponse
+	for _, file := range files {
+		response, err := s.DeleteFile(ctx, file.ID, hardDelete)
+		if err != nil {
+			s.logger.Error().
+				Err(err).
+				Str("file_id", file.ID).
+				Msg("Failed to delete file by hash")
+			continue
+		}
+		responses = append(responses, response)
+	}
+
+	return responses, nil
+}
+
+func (s *deleteService) CleanupExpiredFiles(ctx context.Context, daysOld int) (int, error) {
+	// Р­С‚РѕС‚ РјРµС‚РѕРґ С‚СЂРµР±СѓРµС‚ СЂРµР°Р»РёР·Р°С†РёРё РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР° РІ СЂРµРїРѕР·РёС‚РѕСЂРёРё
+	// РґР»СЏ РїРѕРёСЃРєР° С„Р°Р№Р»РѕРІ СЃС‚Р°СЂС€Рµ СѓРєР°Р·Р°РЅРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РґРЅРµР№
+	// Р’ С‚РµРєСѓС‰РµР№ СЂРµР°Р»РёР·Р°С†РёРё РІРѕР·РІСЂР°С‰Р°РµРј Р·Р°РіР»СѓС€РєСѓ
+
+	s.logger.Warn().
+		Int("days_old", daysOld).
+		Msg("Cleanup expired files not implemented yet")
+
+	return 0, nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\service\download_service.go
+================================================================================
+
+package service
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io"
+	"path/filepath"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
+	"github.com/rs/zerolog"
+)
+
+type DownloadService interface {
+	DownloadFile(ctx context.Context, fileID string) (*models.DownloadFileResponse, error)
+	DownloadFileByHash(ctx context.Context, hash string, fileSize int64) (*models.DownloadFileResponse, error)
+	GetFileInfo(ctx context.Context, fileID string) (*models.FileInfoResponse, error)
+	GetPresignedURL(ctx context.Context, fileID string, expiresIn int64) (string, error)
+}
+
+type downloadService struct {
+	metadataRepo repository.FileMetadataRepository
+	storageRepo  repository.StorageRepository
+	logger       zerolog.Logger
+	bucketName   string
+}
+
+func NewDownloadService(
+	metadataRepo repository.FileMetadataRepository,
+	storageRepo repository.StorageRepository,
+	logger zerolog.Logger,
+	bucketName string,
+) DownloadService {
+	return &downloadService{
+		metadataRepo: metadataRepo,
+		storageRepo:  storageRepo,
+		logger:       logger,
+		bucketName:   bucketName,
+	}
+}
+
+func (s *downloadService) DownloadFile(ctx context.Context, fileID string) (*models.DownloadFileResponse, error) {
+	// РџРѕР»СѓС‡Р°РµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р°
+	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get file metadata: %w", err)
+	}
+	if metadata == nil {
+		return nil, errors.New("file not found")
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃС‚Р°С‚СѓСЃ С„Р°Р№Р»Р°
+	if metadata.UploadStatus == models.FileStatusDeleted.String() {
+		return nil, errors.New("file has been deleted")
+	}
+
+	// РЎРєР°С‡РёРІР°РµРј С„Р°Р№Р» РёР· С…СЂР°РЅРёР»РёС‰Р°
+	fileReader, fileSize, err := s.storageRepo.DownloadFile(ctx, s.bucketName, metadata.StoragePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to download file from storage: %w", err)
+	}
+
+	// РћР±РЅРѕРІР»СЏРµРј СЃС‚Р°С‚РёСЃС‚РёРєСѓ РґРѕСЃС‚СѓРїР°
+	if err := s.metadataRepo.UpdateAccessInfo(ctx, fileID); err != nil {
+		s.logger.Error().Err(err).Str("file_id", fileID).Msg("Failed to update access info")
+	}
+
+	// Р§РёС‚Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
+	fileContent, err := io.ReadAll(fileReader)
+	fileReader.Close()
+	if err != nil {
+		return nil, fmt.Errorf("failed to read file content: %w", err)
+	}
+
+	s.logger.Info().
+		Str("file_id", fileID).
+		Str("file_name", metadata.OriginalName).
+		Int64("size", fileSize).
+		Int("access_count", metadata.AccessCount+1).
+		Msg("File downloaded")
+
+	return &models.DownloadFileResponse{
+		Content:     fileContent,
+		FileName:    metadata.OriginalName,
+		ContentType: metadata.MimeType,
+		FileSize:    fileSize,
+	}, nil
+}
+
+func (s *downloadService) DownloadFileByHash(ctx context.Context, hash string, fileSize int64) (*models.DownloadFileResponse, error) {
+	// РќР°С…РѕРґРёРј С„Р°Р№Р»С‹ РїРѕ С…СЌС€Сѓ
+	files, err := s.metadataRepo.GetByHash(ctx, hash, fileSize)
+	if err != nil {
+		return nil, fmt.Errorf("failed to find files by hash: %w", err)
+	}
+	if len(files) == 0 {
+		return nil, errors.New("file not found")
+	}
+
+	// Р‘РµСЂРµРј РїРµСЂРІС‹Р№ РЅР°Р№РґРµРЅРЅС‹Р№ С„Р°Р№Р»
+	metadata := files[0]
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃС‚Р°С‚СѓСЃ С„Р°Р№Р»Р°
+	if metadata.UploadStatus == models.FileStatusDeleted.String() {
+		return nil, errors.New("file has been deleted")
+	}
+
+	// РЎРєР°С‡РёРІР°РµРј С„Р°Р№Р» РёР· С…СЂР°РЅРёР»РёС‰Р°
+	fileReader, actualFileSize, err := s.storageRepo.DownloadFile(ctx, s.bucketName, metadata.StoragePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to download file from storage: %w", err)
+	}
+
+	// РћР±РЅРѕРІР»СЏРµРј СЃС‚Р°С‚РёСЃС‚РёРєСѓ РґРѕСЃС‚СѓРїР°
+	if err := s.metadataRepo.UpdateAccessInfo(ctx, metadata.ID); err != nil {
+		s.logger.Error().Err(err).Str("file_id", metadata.ID).Msg("Failed to update access info")
+	}
+
+	// Р§РёС‚Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
+	fileContent, err := io.ReadAll(fileReader)
+	fileReader.Close()
+	if err != nil {
+		return nil, fmt.Errorf("failed to read file content: %w", err)
+	}
+
+	s.logger.Info().
+		Str("file_id", metadata.ID).
+		Str("file_name", metadata.OriginalName).
+		Int64("size", actualFileSize).
+		Int("access_count", metadata.AccessCount+1).
+		Msg("File downloaded by hash")
+
+	return &models.DownloadFileResponse{
+		Content:     fileContent,
+		FileName:    metadata.OriginalName,
+		ContentType: metadata.MimeType,
+		FileSize:    actualFileSize,
+	}, nil
+}
+
+func (s *downloadService) GetFileInfo(ctx context.Context, fileID string) (*models.FileInfoResponse, error) {
+	// РџРѕР»СѓС‡Р°РµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р°
+	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get file metadata: %w", err)
+	}
+	if metadata == nil {
+		return nil, errors.New("file not found")
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃС‚Р°С‚СѓСЃ С„Р°Р№Р»Р°
+	if metadata.UploadStatus == models.FileStatusDeleted.String() {
+		return nil, errors.New("file has been deleted")
+	}
+
+	// Р“РµРЅРµСЂРёСЂСѓРµРј URL РґР»СЏ РґРѕСЃС‚СѓРїР°
+	storageURL := fmt.Sprintf("/files/%s", metadata.StoragePath)
+
+	return &models.FileInfoResponse{
+		FileID:         metadata.ID,
+		OriginalName:   metadata.OriginalName,
+		FileSize:       metadata.FileSize,
+		MimeType:       metadata.MimeType,
+		Hash:           metadata.Hash,
+		UploadStatus:   metadata.UploadStatus,
+		UploadedAt:     metadata.UploadedAt,
+		AccessCount:    metadata.AccessCount,
+		LastAccessedAt: metadata.LastAccessedAt,
+		StorageURL:     storageURL,
+		Metadata:       metadata.Metadata,
+	}, nil
+}
+
+func (s *downloadService) GetPresignedURL(ctx context.Context, fileID string, expiresIn int64) (string, error) {
+	// РџРѕР»СѓС‡Р°РµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р°
+	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
+	if err != nil {
+		return "", fmt.Errorf("failed to get file metadata: %w", err)
+	}
+	if metadata == nil {
+		return "", errors.New("file not found")
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃС‚Р°С‚СѓСЃ С„Р°Р№Р»Р°
+	if metadata.UploadStatus == models.FileStatusDeleted.String() {
+		return "", errors.New("file has been deleted")
+	}
+
+	// Р“РµРЅРµСЂРёСЂСѓРµРј РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РїРѕРґРїРёСЃР°РЅРЅС‹Р№ URL
+	url, err := s.storageRepo.GetPresignedURL(ctx, s.bucketName, metadata.StoragePath, expiresIn)
+	if err != nil {
+		return "", fmt.Errorf("failed to generate presigned URL: %w", err)
+	}
+
+	// РћР±РЅРѕРІР»СЏРµРј СЃС‚Р°С‚РёСЃС‚РёРєСѓ РґРѕСЃС‚СѓРїР° (С‚РѕР»СЊРєРѕ РµСЃР»Рё URL Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅ)
+	if err := s.metadataRepo.UpdateAccessInfo(ctx, fileID); err != nil {
+		s.logger.Error().Err(err).Str("file_id", fileID).Msg("Failed to update access info")
+	}
+
+	s.logger.Info().
+		Str("file_id", fileID).
+		Str("url", url).
+		Int64("expires_in", expiresIn).
+		Msg("Generated presigned URL")
+
+	return url, nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\service\hash_service.go
+================================================================================
+
+package service
+
+import (
+	"crypto/md5"
+	"crypto/sha1"
+	"crypto/sha256"
+	"crypto/sha512"
+	"encoding/hex"
+	"fmt"
+	"hash"
+	"strings"
+)
+
+type HashService interface {
+	CalculateHash(data []byte) (string, error)
+	CalculateHashFromString(data string) (string, error)
+	VerifyHash(data []byte, expectedHash string) (bool, error)
+	GetHashAlgorithm() string
+}
+
+type hashService struct {
+	algorithm string
+}
+
+func NewHashService(algorithm string) HashService {
+	return &hashService{
+		algorithm: strings.ToLower(algorithm),
+	}
+}
+
+func (s *hashService) CalculateHash(data []byte) (string, error) {
+	hasher, err := s.getHasher()
+	if err != nil {
+		return "", err
+	}
+
+	hasher.Write(data)
+	hashBytes := hasher.Sum(nil)
+	return hex.EncodeToString(hashBytes), nil
+}
+
+func (s *hashService) CalculateHashFromString(data string) (string, error) {
+	return s.CalculateHash([]byte(data))
+}
+
+func (s *hashService) VerifyHash(data []byte, expectedHash string) (bool, error) {
+	calculatedHash, err := s.CalculateHash(data)
+	if err != nil {
+		return false, err
+	}
+
+	return strings.EqualFold(calculatedHash, expectedHash), nil
+}
+
+func (s *hashService) GetHashAlgorithm() string {
+	return s.algorithm
+}
+
+func (s *hashService) getHasher() (hash.Hash, error) {
+	switch s.algorithm {
+	case "md5":
+		return md5.New(), nil
+	case "sha1":
+		return sha1.New(), nil
+	case "sha256":
+		return sha256.New(), nil
+	case "sha512":
+		return sha512.New(), nil
+	default:
+		return nil, fmt.Errorf("unsupported hash algorithm: %s", s.algorithm)
+	}
+}
+
+// FileHashCalculator СЃРїРµС†РёР°Р»РёР·РёСЂРѕРІР°РЅРЅС‹Р№ СЃРµСЂРІРёСЃ РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ С…СЌС€Р° С„Р°Р№Р»РѕРІ
+type FileHashCalculator struct {
+	hashService HashService
+}
+
+func NewFileHashCalculator(algorithm string) *FileHashCalculator {
+	return &FileHashCalculator{
+		hashService: NewHashService(algorithm),
+	}
+}
+
+func (c *FileHashCalculator) CalculateFileHash(data []byte) (string, error) {
+	return c.hashService.CalculateHash(data)
+}
+
+func (c *FileHashCalculator) GetAlgorithm() string {
+	return c.hashService.GetHashAlgorithm()
+}
+
+// CompareFiles СЃСЂР°РІРЅРёРІР°РµС‚ РґРІР° С„Р°Р№Р»Р° РїРѕ С…СЌС€Сѓ
+func (c *FileHashCalculator) CompareFiles(file1, file2 []byte) (bool, error) {
+	hash1, err := c.CalculateFileHash(file1)
+	if err != nil {
+		return false, err
+	}
+
+	hash2, err := c.CalculateFileHash(file2)
+	if err != nil {
+		return false, err
+	}
+
+	return hash1 == hash2, nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\service\upload_service.go
+================================================================================
+
+package service
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"io"
+	"mime/multipart"
+	"path/filepath"
+	"strings"
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/repository"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/pkg/hash"
+	"github.com/rs/zerolog"
+)
+
+type UploadService interface {
+	UploadFile(ctx context.Context, fileHeader *multipart.FileHeader, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error)
+	UploadFileBytes(ctx context.Context, fileName string, fileBytes []byte, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error)
+	CheckDuplicate(ctx context.Context, fileHash string, fileSize int64) ([]*models.FileMetadata, error)
+}
+
+type uploadService struct {
+	metadataRepo repository.FileMetadataRepository
+	storageRepo  repository.StorageRepository
+	hashService  HashService
+	logger       zerolog.Logger
+	config       UploadConfig
+}
+
+type UploadConfig struct {
+	MaxUploadSize  int64
+	BucketName     string
+	AllowedTypes   []string
+	GenerateHash   bool
+	CheckDuplicate bool
+}
+
+func NewUploadService(
+	metadataRepo repository.FileMetadataRepository,
+	storageRepo repository.StorageRepository,
+	hashService HashService,
+	logger zerolog.Logger,
+	config UploadConfig,
+) UploadService {
+	return &uploadService{
+		metadataRepo: metadataRepo,
+		storageRepo:  storageRepo,
+		hashService:  hashService,
+		logger:       logger,
+		config:       config,
+	}
+}
+
+func (s *uploadService) UploadFile(ctx context.Context, fileHeader *multipart.FileHeader, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error) {
+	// РћС‚РєСЂС‹РІР°РµРј С„Р°Р№Р»
+	file, err := fileHeader.Open()
+	if err != nil {
+		return nil, fmt.Errorf("failed to open file: %w", err)
+	}
+	defer file.Close()
+
+	// Р§РёС‚Р°РµРј СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
+	fileBytes, err := io.ReadAll(file)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read file: %w", err)
+	}
+
+	return s.UploadFileBytes(ctx, fileHeader.Filename, fileBytes, uploadedBy, metadata)
+}
+
+func (s *uploadService) UploadFileBytes(ctx context.Context, fileName string, fileBytes []byte, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error) {
+	// РџСЂРѕРІРµСЂСЏРµРј СЂР°Р·РјРµСЂ С„Р°Р№Р»Р°
+	if int64(len(fileBytes)) > s.config.MaxUploadSize {
+		return nil, fmt.Errorf("file size exceeds limit: %d bytes", s.config.MaxUploadSize)
+	}
+
+	// РћРїСЂРµРґРµР»СЏРµРј MIME С‚РёРї
+	mimeType := s.detectMimeType(fileName, fileBytes)
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЂР°Р·СЂРµС€РµРЅРЅС‹Рµ С‚РёРїС‹ С„Р°Р№Р»РѕРІ
+	if !s.isAllowedType(mimeType, fileName) {
+		return nil, fmt.Errorf("file type not allowed: %s", mimeType)
+	}
+
+	// Р“РµРЅРµСЂРёСЂСѓРµРј С…СЌС€ С„Р°Р№Р»Р°
+	fileHash, err := s.hashService.CalculateHash(fileBytes)
+	if err != nil {
+		return nil, fmt.Errorf("failed to calculate file hash: %w", err)
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј РґСѓР±Р»РёРєР°С‚С‹
+	if s.config.CheckDuplicate {
+		duplicates, err := s.CheckDuplicate(ctx, fileHash, int64(len(fileBytes)))
+		if err != nil {
+			s.logger.Error().Err(err).Msg("Failed to check for duplicates")
+		} else if len(duplicates) > 0 {
+			s.logger.Info().
+				Str("hash", fileHash).
+				Int64("size", int64(len(fileBytes))).
+				Int("duplicates", len(duplicates)).
+				Msg("Duplicate file found")
+
+			// Р’РѕР·РІСЂР°С‰Р°РµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРј С„Р°Р№Р»Рµ
+			return s.createDuplicateResponse(duplicates[0]), nil
+		}
+	}
+
+	// Р“РµРЅРµСЂРёСЂСѓРµРј СѓРЅРёРєР°Р»СЊРЅРѕРµ РёРјСЏ С„Р°Р№Р»Р°
+	uniqueFileName := s.generateUniqueFileName(fileName)
+
+	// Р“РµРЅРµСЂРёСЂСѓРµРј РїСѓС‚СЊ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ
+	storagePath := s.generateStoragePath(uniqueFileName)
+
+	// Р—Р°РіСЂСѓР¶Р°РµРј С„Р°Р№Р» РІ С…СЂР°РЅРёР»РёС‰Рµ
+	if err := s.storageRepo.UploadFile(
+		ctx,
+		s.config.BucketName,
+		storagePath,
+		strings.NewReader(string(fileBytes)),
+		int64(len(fileBytes)),
+	); err != nil {
+		return nil, fmt.Errorf("failed to upload file to storage: %w", err)
+	}
+
+	// РЎРѕР·РґР°РµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р°
+	fileID := uuid.New().String()
+	fileMetadata := &models.FileMetadata{
+		ID:              fileID,
+		OriginalName:    fileName,
+		FileName:        uniqueFileName,
+		FileExtension:   strings.ToLower(filepath.Ext(fileName)),
+		FileSize:        int64(len(fileBytes)),
+		MimeType:        mimeType,
+		Hash:            fileHash,
+		StorageProvider: "minio",
+		StorageBucket:   s.config.BucketName,
+		StoragePath:     storagePath,
+		UploadStatus:    models.FileStatusUploaded.String(),
+		UploadedBy:      uploadedBy,
+		UploadedAt:      time.Now(),
+		Metadata:        metadata,
+	}
+
+	// РЎРѕС…СЂР°РЅСЏРµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ РІ Р‘Р”
+	if err := s.metadataRepo.Create(ctx, fileMetadata); err != nil {
+		// РџС‹С‚Р°РµРјСЃСЏ СѓРґР°Р»РёС‚СЊ С„Р°Р№Р» РёР· С…СЂР°РЅРёР»РёС‰Р° РІ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё
+		s.storageRepo.DeleteFile(ctx, s.config.BucketName, storagePath)
+		return nil, fmt.Errorf("failed to save file metadata: %w", err)
+	}
+
+	// Р“РµРЅРµСЂРёСЂСѓРµРј URL РґР»СЏ РґРѕСЃС‚СѓРїР° Рє С„Р°Р№Р»Сѓ
+	storageURL := s.generateStorageURL(storagePath)
+
+	s.logger.Info().
+		Str("file_id", fileID).
+		Str("original_name", fileName).
+		Str("hash", fileHash).
+		Int64("size", fileMetadata.FileSize).
+		Str("mime_type", mimeType).
+		Msg("File uploaded successfully")
+
+	return &models.UploadFileResponse{
+		FileID:     fileID,
+		FileName:   uniqueFileName,
+		FileSize:   fileMetadata.FileSize,
+		Hash:       fileHash,
+		MimeType:   mimeType,
+		UploadedAt: fileMetadata.UploadedAt,
+		StorageURL: storageURL,
+		Metadata:   metadata,
+	}, nil
+}
+
+func (s *uploadService) CheckDuplicate(ctx context.Context, fileHash string, fileSize int64) ([]*models.FileMetadata, error) {
+	return s.metadataRepo.GetByHash(ctx, fileHash, fileSize)
+}
+
+func (s *uploadService) createDuplicateResponse(existingFile *models.FileMetadata) *models.UploadFileResponse {
+	storageURL := s.generateStorageURL(existingFile.StoragePath)
+
+	return &models.UploadFileResponse{
+		FileID:     existingFile.ID,
+		FileName:   existingFile.FileName,
+		FileSize:   existingFile.FileSize,
+		Hash:       existingFile.Hash,
+		MimeType:   existingFile.MimeType,
+		UploadedAt: existingFile.UploadedAt,
+		StorageURL: storageURL,
+		Metadata:   existingFile.Metadata,
+	}
+}
+
+func (s *uploadService) detectMimeType(fileName string, fileBytes []byte) string {
+	// РћРїСЂРµРґРµР»СЏРµРј MIME С‚РёРї РїРѕ СЂР°СЃС€РёСЂРµРЅРёСЋ С„Р°Р№Р»Р°
+	ext := strings.ToLower(filepath.Ext(fileName))
+
+	mimeTypes := map[string]string{
+		".txt":  "text/plain",
+		".pdf":  "application/pdf",
+		".doc":  "application/msword",
+		".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		".xls":  "application/vnd.ms-excel",
+		".xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		".ppt":  "application/vnd.ms-powerpoint",
+		".pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		".zip":  "application/zip",
+		".rar":  "application/x-rar-compressed",
+		".7z":   "application/x-7z-compressed",
+		".jpg":  "image/jpeg",
+		".jpeg": "image/jpeg",
+		".png":  "image/png",
+		".gif":  "image/gif",
+		".bmp":  "image/bmp",
+		".mp3":  "audio/mpeg",
+		".mp4":  "video/mp4",
+		".avi":  "video/x-msvideo",
+		".mov":  "video/quicktime",
+	}
+
+	if mimeType, ok := mimeTypes[ext]; ok {
+		return mimeType
+	}
+
+	// РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІРѕР·РІСЂР°С‰Р°РµРј binary
+	return "application/octet-stream"
+}
+
+func (s *uploadService) isAllowedType(mimeType, fileName string) bool {
+	if len(s.config.AllowedTypes) == 0 {
+		return true
+	}
+
+	ext := strings.ToLower(filepath.Ext(fileName))
+	for _, allowed := range s.config.AllowedTypes {
+		if strings.HasPrefix(allowed, ".") {
+			// РџСЂРѕРІРµСЂРєР° РїРѕ СЂР°СЃС€РёСЂРµРЅРёСЋ
+			if ext == allowed {
+				return true
+			}
+		} else {
+			// РџСЂРѕРІРµСЂРєР° РїРѕ MIME С‚РёРїСѓ
+			if strings.HasPrefix(mimeType, allowed) {
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
+func (s *uploadService) generateUniqueFileName(originalName string) string {
+	ext := filepath.Ext(originalName)
+	name := strings.TrimSuffix(originalName, ext)
+
+	// РЈРґР°Р»СЏРµРј РЅРµР±РµР·РѕРїР°СЃРЅС‹Рµ СЃРёРјРІРѕР»С‹
+	name = strings.ReplaceAll(name, " ", "_")
+	name = strings.ReplaceAll(name, "..", "")
+
+	timestamp := time.Now().UnixNano()
+	uuid := uuid.New().String()[:8]
+
+	return fmt.Sprintf("%s_%d_%s%s", name, timestamp, uuid, ext)
+}
+
+func (s *uploadService) generateStoragePath(fileName string) string {
+	now := time.Now()
+	return fmt.Sprintf("%d/%02d/%02d/%s", now.Year(), now.Month(), now.Day(), fileName)
+}
+
+func (s *uploadService) generateStorageURL(storagePath string) string {
+	return fmt.Sprintf("/files/%s", storagePath)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\service\storage\minio_service.go
+================================================================================
+
+package storage
+
+import (
+	"context"
+	"fmt"
+	"io"
+	"time"
+
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
+)
+
+// MinIOStorage СЂРµР°Р»РёР·Р°С†РёСЏ StorageInterface РґР»СЏ MinIO
+type MinIOStorage struct {
+	client *minio.Client
+	bucket string
+	region string
+}
+
+// NewMinIOStorage СЃРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ MinIOStorage
+func NewMinIOStorage(config StorageConfig) (*MinIOStorage, error) {
+	client, err := minio.New(config.Endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(config.AccessKey, config.SecretKey, ""),
+		Secure: config.UseSSL,
+		Region: config.Region,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create MinIO client: %w", err)
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃРѕРµРґРёРЅРµРЅРёРµ
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(config.Timeout)*time.Second)
+	defer cancel()
+
+	_, err = client.ListBuckets(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to MinIO: %w", err)
+	}
+
+	// РџСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ Р±Р°РєРµС‚Р°, СЃРѕР·РґР°РµРј РµСЃР»Рё РЅРµС‚
+	exists, err := client.BucketExists(ctx, config.Bucket)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check bucket existence: %w", err)
+	}
+
+	if !exists {
+		err = client.MakeBucket(ctx, config.Bucket, minio.MakeBucketOptions{
+			Region: config.Region,
+		})
+		if err != nil {
+			return nil, fmt.Errorf("failed to create bucket: %w", err)
+		}
+	}
+
+	return &MinIOStorage{
+		client: client,
+		bucket: config.Bucket,
+		region: config.Region,
+	}, nil
+}
+
+func (s *MinIOStorage) Upload(ctx context.Context, bucket, key string, data io.Reader, size int64) error {
+	_, err := s.client.PutObject(ctx, bucket, key, data, size, minio.PutObjectOptions{
+		ContentType: "application/octet-stream",
+	})
+	return err
+}
+
+func (s *MinIOStorage) Download(ctx context.Context, bucket, key string) (io.ReadCloser, int64, error) {
+	obj, err := s.client.GetObject(ctx, bucket, key, minio.GetObjectOptions{})
+	if err != nil {
+		return nil, 0, err
+	}
+
+	stat, err := obj.Stat()
+	if err != nil {
+		obj.Close()
+		return nil, 0, err
+	}
+
+	return obj, stat.Size, nil
+}
+
+func (s *MinIOStorage) Delete(ctx context.Context, bucket, key string) error {
+	return s.client.RemoveObject(ctx, bucket, key, minio.RemoveObjectOptions{})
+}
+
+func (s *MinIOStorage) Exists(ctx context.Context, bucket, key string) (bool, error) {
+	_, err := s.client.StatObject(ctx, bucket, key, minio.StatObjectOptions{})
+	if err != nil {
+		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
+}
+
+func (s *MinIOStorage) GetInfo(ctx context.Context, bucket, key string) (*FileInfo, error) {
+	obj, err := s.client.StatObject(ctx, bucket, key, minio.StatObjectOptions{})
+	if err != nil {
+		return nil, err
+	}
+
+	return &FileInfo{
+		Key:          key,
+		Size:         obj.Size,
+		ContentType:  obj.ContentType,
+		LastModified: obj.LastModified.Unix(),
+		ETag:         obj.ETag,
+		Metadata:     obj.UserMetadata,
+	}, nil
+}
+
+func (s *MinIOStorage) GetURL(bucket, key string) string {
+	return fmt.Sprintf("%s/%s/%s", s.client.EndpointURL(), bucket, key)
+}
+
+func (s *MinIOStorage) List(ctx context.Context, bucket, prefix string) ([]string, error) {
+	var keys []string
+
+	objectCh := s.client.ListObjects(ctx, bucket, minio.ListObjectsOptions{
+		Prefix:    prefix,
+		Recursive: true,
+	})
+
+	for obj := range objectCh {
+		if obj.Err != nil {
+			return nil, obj.Err
+		}
+		keys = append(keys, obj.Key)
+	}
+
+	return keys, nil
+}
+
+func (s *MinIOStorage) Copy(ctx context.Context, srcBucket, srcKey, dstBucket, dstKey string) error {
+	src := minio.CopySrcOptions{
+		Bucket: srcBucket,
+		Object: srcKey,
+	}
+
+	dst := minio.CopyDestOptions{
+		Bucket: dstBucket,
+		Object: dstKey,
+	}
+
+	_, err := s.client.CopyObject(ctx, dst, src)
+	return err
+}
+
+func (s *MinIOStorage) Move(ctx context.Context, srcBucket, srcKey, dstBucket, dstKey string) error {
+	// РљРѕРїРёСЂСѓРµРј С„Р°Р№Р»
+	if err := s.Copy(ctx, srcBucket, srcKey, dstBucket, dstKey); err != nil {
+		return err
+	}
+
+	// РЈРґР°Р»СЏРµРј РѕСЂРёРіРёРЅР°Р»
+	return s.Delete(ctx, srcBucket, srcKey)
+}
+
+func (s *MinIOStorage) GeneratePresignedURL(ctx context.Context, bucket, key string, expiresIn int64) (string, error) {
+	url, err := s.client.PresignedGetObject(ctx, bucket, key, time.Duration(expiresIn)*time.Second, nil)
+	if err != nil {
+		return "", err
+	}
+	return url.String(), nil
+}
+
+func (s *MinIOStorage) SetPublicAccess(ctx context.Context, bucket, key string, public bool) error {
+	// Р’ MinIO РїРѕР»РёС‚РёРєРё РґРѕСЃС‚СѓРїР° РЅР°СЃС‚СЂР°РёРІР°СЋС‚СЃСЏ РЅР° СѓСЂРѕРІРЅРµ Р±Р°РєРµС‚Р°
+	// Р”Р»СЏ РїСЂРѕСЃС‚РѕС‚С‹ РІРѕР·РІСЂР°С‰Р°РµРј nil, С‚Р°Рє РєР°Рє СЌС‚Рѕ РЅРµ РєСЂРёС‚РёС‡РЅР°СЏ С„СѓРЅРєС†РёСЏ
+	return nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\internal\service\storage\storage_interface.go
+================================================================================
+
+package storage
+
+import (
+	"context"
+	"io"
+)
+
+// StorageInterface РѕРїСЂРµРґРµР»СЏРµС‚ РєРѕРЅС‚СЂР°РєС‚ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё С…СЂР°РЅРёР»РёС‰Р°РјРё
+type StorageInterface interface {
+	// РћСЃРЅРѕРІРЅС‹Рµ РѕРїРµСЂР°С†РёРё
+	Upload(ctx context.Context, bucket, key string, data io.Reader, size int64) error
+	Download(ctx context.Context, bucket, key string) (io.ReadCloser, int64, error)
+	Delete(ctx context.Context, bucket, key string) error
+	Exists(ctx context.Context, bucket, key string) (bool, error)
+
+	// РРЅС„РѕСЂРјР°С†РёСЏ
+	GetInfo(ctx context.Context, bucket, key string) (*FileInfo, error)
+	GetURL(bucket, key string) string
+
+	// РЈРїСЂР°РІР»РµРЅРёРµ
+	List(ctx context.Context, bucket, prefix string) ([]string, error)
+	Copy(ctx context.Context, srcBucket, srcKey, dstBucket, dstKey string) error
+	Move(ctx context.Context, srcBucket, srcKey, dstBucket, dstKey string) error
+
+	// РџСЂР°РІР° РґРѕСЃС‚СѓРїР°
+	GeneratePresignedURL(ctx context.Context, bucket, key string, expiresIn int64) (string, error)
+	SetPublicAccess(ctx context.Context, bucket, key string, public bool) error
+}
+
+// FileInfo СЃРѕРґРµСЂР¶РёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С„Р°Р№Р»Рµ РІ С…СЂР°РЅРёР»РёС‰Рµ
+type FileInfo struct {
+	Key          string
+	Size         int64
+	ContentType  string
+	LastModified int64
+	ETag         string
+	Metadata     map[string]string
+}
+
+// StorageConfig СЃРѕРґРµСЂР¶РёС‚ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ С…СЂР°РЅРёР»РёС‰Р°
+type StorageConfig struct {
+	Provider  string
+	Endpoint  string
+	AccessKey string
+	SecretKey string
+	Bucket    string
+	Region    string
+	UseSSL    bool
+	Timeout   int
+}
+
+// StorageFactory СЃРѕР·РґР°РµС‚ СЌРєР·РµРјРїР»СЏСЂС‹ С…СЂР°РЅРёР»РёС‰
+type StorageFactory interface {
+	CreateStorage(config StorageConfig) (StorageInterface, error)
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\migrations\001_create_file_metadata.down.sql
+================================================================================
+
+-- РЈРґР°Р»РµРЅРёРµ С‚СЂРёРіРіРµСЂР°
+DROP TRIGGER IF EXISTS update_file_metadata_access ON file_metadata;
+
+-- РЈРґР°Р»РµРЅРёРµ С„СѓРЅРєС†РёРё
+DROP FUNCTION IF EXISTS update_last_accessed_at();
+
+-- РЈРґР°Р»РµРЅРёРµ С‚Р°Р±Р»РёС† РІ РїСЂР°РІРёР»СЊРЅРѕРј РїРѕСЂСЏРґРєРµ (РёР·-Р·Р° foreign keys)
+DROP TABLE IF EXISTS file_associations;
+DROP TABLE IF EXISTS file_metadata;
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\migrations\001_create_file_metadata.up.sql
+================================================================================
+
+-- РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РјРµС‚Р°РґР°РЅРЅС‹С… С„Р°Р№Р»РѕРІ
+CREATE TABLE IF NOT EXISTS file_metadata (
+                                             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    original_name VARCHAR(255) NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_extension VARCHAR(50) NOT NULL,
+    file_size BIGINT NOT NULL,
+    mime_type VARCHAR(100) NOT NULL,
+    hash VARCHAR(64) NOT NULL,
+    storage_provider VARCHAR(50) NOT NULL DEFAULT 'minio',
+    storage_bucket VARCHAR(255) NOT NULL,
+    storage_path VARCHAR(500) NOT NULL,
+    storage_url VARCHAR(500),
+    upload_status VARCHAR(50) NOT NULL DEFAULT 'uploaded'
+    CHECK (upload_status IN ('uploaded', 'processing', 'failed', 'deleted')),
+
+    -- РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р·Р°РіСЂСѓР·РєРµ
+    uploaded_by VARCHAR(255),
+    uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+    -- РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РґРѕСЃС‚СѓРїРµ
+    access_count INTEGER DEFAULT 0,
+    last_accessed_at TIMESTAMP WITH TIME ZONE,
+
+                                   -- РњРµС‚Р°РґР°РЅРЅС‹Рµ
+                                   metadata JSONB DEFAULT '{}',
+
+                                   -- РРЅРґРµРєСЃС‹
+                                   UNIQUE(hash, file_size),
+    UNIQUE(storage_path)
+    );
+
+-- РРЅРґРµРєСЃС‹ РґР»СЏ РѕРїС‚РёРјРёР·Р°С†РёРё Р·Р°РїСЂРѕСЃРѕРІ
+CREATE INDEX idx_file_metadata_hash ON file_metadata(hash);
+CREATE INDEX idx_file_metadata_uploaded_at ON file_metadata(uploaded_at);
+CREATE INDEX idx_file_metadata_status ON file_metadata(upload_status);
+CREATE INDEX idx_file_metadata_original_name ON file_metadata(original_name);
+CREATE INDEX idx_file_metadata_metadata ON file_metadata USING GIN(metadata);
+
+-- РўСЂРёРіРіРµСЂ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РІСЂРµРјРµРЅРё РїРѕСЃР»РµРґРЅРµРіРѕ РґРѕСЃС‚СѓРїР°
+CREATE OR REPLACE FUNCTION update_last_accessed_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.last_accessed_at = CURRENT_TIMESTAMP;
+    NEW.access_count = COALESCE(OLD.access_count, 0) + 1;
+RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_file_metadata_access
+    BEFORE UPDATE OF access_count ON file_metadata
+    FOR EACH ROW EXECUTE FUNCTION update_last_accessed_at();
+
+-- РўР°Р±Р»РёС†Р° РґР»СЏ СЃРІСЏР·РµР№ С„Р°Р№Р»РѕРІ (РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґР»СЏ СЃРІСЏР·С‹РІР°РЅРёСЏ С„Р°Р№Р»РѕРІ СЃ СЂР°Р±РѕС‚Р°РјРё)
+CREATE TABLE IF NOT EXISTS file_associations (
+                                                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    file_id UUID NOT NULL REFERENCES file_metadata(id) ON DELETE CASCADE,
+    entity_type VARCHAR(50) NOT NULL, -- 'work', 'assignment', 'student', etc.
+    entity_id VARCHAR(255) NOT NULL,
+    association_type VARCHAR(50) NOT NULL DEFAULT 'primary', -- 'primary', 'attachment', 'thumbnail', etc.
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+                                                           UNIQUE(file_id, entity_type, entity_id, association_type)
+    );
+
+-- РРЅРґРµРєСЃС‹ РґР»СЏ С‚Р°Р±Р»РёС†С‹ СЃРІСЏР·РµР№
+CREATE INDEX idx_file_associations_file_id ON file_associations(file_id);
+CREATE INDEX idx_file_associations_entity ON file_associations(entity_type, entity_id);
+CREATE INDEX idx_file_associations_created_at ON file_associations(created_at);
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\pkg\hash\hash.go
+================================================================================
+
+package hash
+
+import (
+	"crypto/md5"
+	"crypto/sha1"
+	"crypto/sha256"
+	"crypto/sha512"
+	"encoding/hex"
+	"fmt"
+	"hash"
+	"io"
+	"os"
+)
+
+// HashAlgorithm С‚РёРї РґР»СЏ Р°Р»РіРѕСЂРёС‚РјРѕРІ С…СЌС€РёСЂРѕРІР°РЅРёСЏ
+type HashAlgorithm string
+
+const (
+	MD5    HashAlgorithm = "md5"
+	SHA1   HashAlgorithm = "sha1"
+	SHA256 HashAlgorithm = "sha256"
+	SHA512 HashAlgorithm = "sha512"
+)
+
+// FileHashResult СЃРѕРґРµСЂР¶РёС‚ СЂРµР·СѓР»СЊС‚Р°С‚ С…СЌС€РёСЂРѕРІР°РЅРёСЏ С„Р°Р№Р»Р°
+type FileHashResult struct {
+	Algorithm HashAlgorithm
+	Hash      string
+	FileSize  int64
+	FileName  string
+}
+
+// Hasher РёРЅС‚РµСЂС„РµР№СЃ РґР»СЏ С…СЌС€РёСЂРѕРІР°РЅРёСЏ
+type Hasher interface {
+	Calculate(data []byte) (string, error)
+	CalculateFile(filePath string) (*FileHashResult, error)
+	CalculateReader(reader io.Reader) (string, error)
+	Verify(data []byte, expectedHash string) (bool, error)
+}
+
+// FileHasher СЂРµР°Р»РёР·Р°С†РёСЏ С…СЌС€РёСЂРѕРІР°РЅРёСЏ С„Р°Р№Р»РѕРІ
+type FileHasher struct {
+	algorithm HashAlgorithm
+}
+
+// NewFileHasher СЃРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ FileHasher
+func NewFileHasher(algorithm HashAlgorithm) *FileHasher {
+	return &FileHasher{
+		algorithm: algorithm,
+	}
+}
+
+// Calculate РІС‹С‡РёСЃР»СЏРµС‚ С…СЌС€ РґР»СЏ РґР°РЅРЅС‹С…
+func (h *FileHasher) Calculate(data []byte) (string, error) {
+	hasher, err := h.getHasher()
+	if err != nil {
+		return "", err
+	}
+
+	hasher.Write(data)
+	return hex.EncodeToString(hasher.Sum(nil)), nil
+}
+
+// CalculateFile РІС‹С‡РёСЃР»СЏРµС‚ С…СЌС€ РґР»СЏ С„Р°Р№Р»Р°
+func (h *FileHasher) CalculateFile(filePath string) (*FileHashResult, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open file: %w", err)
+	}
+	defer file.Close()
+
+	stat, err := file.Stat()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get file stats: %w", err)
+	}
+
+	hashStr, err := h.CalculateReader(file)
+	if err != nil {
+		return nil, err
+	}
+
+	return &FileHashResult{
+		Algorithm: h.algorithm,
+		Hash:      hashStr,
+		FileSize:  stat.Size(),
+		FileName:  stat.Name(),
+	}, nil
+}
+
+// CalculateReader РІС‹С‡РёСЃР»СЏРµС‚ С…СЌС€ РґР»СЏ reader
+func (h *FileHasher) CalculateReader(reader io.Reader) (string, error) {
+	hasher, err := h.getHasher()
+	if err != nil {
+		return "", err
+	}
+
+	if _, err := io.Copy(hasher, reader); err != nil {
+		return "", fmt.Errorf("failed to read data: %w", err)
+	}
+
+	return hex.EncodeToString(hasher.Sum(nil)), nil
+}
+
+// Verify РїСЂРѕРІРµСЂСЏРµС‚ С…СЌС€ РґР°РЅРЅС‹С…
+func (h *FileHasher) Verify(data []byte, expectedHash string) (bool, error) {
+	calculatedHash, err := h.Calculate(data)
+	if err != nil {
+		return false, err
+	}
+
+	return calculatedHash == expectedHash, nil
+}
+
+// getHasher РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ С…СЌС€РµСЂ
+func (h *FileHasher) getHasher() (hash.Hash, error) {
+	switch h.algorithm {
+	case MD5:
+		return md5.New(), nil
+	case SHA1:
+		return sha1.New(), nil
+	case SHA256:
+		return sha256.New(), nil
+	case SHA512:
+		return sha512.New(), nil
+	default:
+		return nil, fmt.Errorf("unsupported hash algorithm: %s", h.algorithm)
+	}
+}
+
+// CompareFiles СЃСЂР°РІРЅРёРІР°РµС‚ РґРІР° С„Р°Р№Р»Р° РїРѕ С…СЌС€Сѓ
+func CompareFiles(file1, file2 string, algorithm HashAlgorithm) (bool, error) {
+	hasher := NewFileHasher(algorithm)
+
+	hash1, err := hasher.CalculateFile(file1)
+	if err != nil {
+		return false, err
+	}
+
+	hash2, err := hasher.CalculateFile(file2)
+	if err != nil {
+		return false, err
+	}
+
+	return hash1.Hash == hash2.Hash, nil
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\pkg\logger\logger.go
+================================================================================
+
+package logger
+
+import (
+	"os"
+	"time"
+
+	"github.com/rs/zerolog"
+)
+
+func New() zerolog.Logger {
+	// РќР°СЃС‚СЂРѕР№РєР° output
+	output := zerolog.ConsoleWriter{
+		Out:        os.Stdout,
+		TimeFormat: time.RFC3339,
+		NoColor:    false,
+	}
+
+	// РЎРѕР·РґР°РЅРёРµ Р»РѕРіРіРµСЂР°
+	logger := zerolog.New(output).
+		With().
+		Timestamp().
+		Caller().
+		Logger()
+
+	// РЈСЂРѕРІРµРЅСЊ Р»РѕРіРёСЂРѕРІР°РЅРёСЏ
+	logger = logger.Level(zerolog.InfoLevel)
+
+	return logger
+}
+
+func NewWithConfig(level string, pretty, noColor bool) zerolog.Logger {
+	var log zerolog.Logger
+
+	if pretty {
+		output := zerolog.ConsoleWriter{
+			Out:        os.Stdout,
+			TimeFormat: time.RFC3339,
+			NoColor:    noColor,
+		}
+		log = zerolog.New(output).With().Timestamp().Logger()
+	} else {
+		log = zerolog.New(os.Stdout).With().Timestamp().Logger()
+	}
+
+	// РЈСЃС‚Р°РЅРѕРІРєР° СѓСЂРѕРІРЅСЏ Р»РѕРіРёСЂРѕРІР°РЅРёСЏ
+	switch level {
+	case "debug":
+		log = log.Level(zerolog.DebugLevel)
+	case "info":
+		log = log.Level(zerolog.InfoLevel)
+	case "warn":
+		log = log.Level(zerolog.WarnLevel)
+	case "error":
+		log = log.Level(zerolog.ErrorLevel)
+	default:
+		log = log.Level(zerolog.InfoLevel)
+	}
+
+	return log
+}
+
+
+
+
+================================================================================
+ФАЙЛ: C:\Users\water\GolandProjects\plagiarism-checker\file-service\pkg\utils\utils.go
+================================================================================
+
+package utils
+
+import (
+	"crypto/md5"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"github.com/google/uuid"
+	"net/http"
+)
+
+// WriteJSON Р·Р°РїРёСЃС‹РІР°РµС‚ JSON РѕС‚РІРµС‚
+func WriteJSON(w http.ResponseWriter, status int, data interface{}) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
+	return json.NewEncoder(w).Encode(data)
+}
+
+// ReadJSON С‡РёС‚Р°РµС‚ JSON РёР· Р·Р°РїСЂРѕСЃР°
+func ReadJSON(r *http.Request, dst interface{}) error {
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	return decoder.Decode(dst)
+}
+
+// ErrorResponse СЃРѕР·РґР°РµС‚ СЃС‚Р°РЅРґР°СЂС‚РёР·РёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РѕР± РѕС€РёР±РєРµ
+func ErrorResponse(w http.ResponseWriter, status int, message string) {
+	WriteJSON(w, status, map[string]string{
+		"error": message,
+	})
+}
+
+// SuccessResponse СЃРѕР·РґР°РµС‚ СЃС‚Р°РЅРґР°СЂС‚РёР·РёСЂРѕРІР°РЅРЅС‹Р№ СѓСЃРїРµС€РЅС‹Р№ РѕС‚РІРµС‚
+func SuccessResponse(w http.ResponseWriter, data interface{}) {
+	response := map[string]interface{}{
+		"success": true,
+		"data":    data,
+	}
+	WriteJSON(w, http.StatusOK, response)
+}
+
+// GenerateUUID РіРµРЅРµСЂРёСЂСѓРµС‚ UUID СЃС‚СЂРѕРєСѓ
+func GenerateUUID() string {
+	return uuid.New().String()
+}
+
+// CalculateHash РІС‹С‡РёСЃР»СЏРµС‚ С…СЌС€ РґР°РЅРЅС‹С…
+func CalculateHash(data []byte, algorithm string) (string, error) {
+	switch algorithm {
+	case "sha256":
+		hash := sha256.Sum256(data)
+		return hex.EncodeToString(hash[:]), nil
+	case "md5":
+		hash := md5.Sum(data)
+		return hex.EncodeToString(hash[:]), nil
+	default:
+		return "", fmt.Errorf("unsupported hash algorithm: %s", algorithm)
+	}
+}
+
+
+

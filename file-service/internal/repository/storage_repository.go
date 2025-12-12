@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
 	"github.com/rs/zerolog"
 )
 

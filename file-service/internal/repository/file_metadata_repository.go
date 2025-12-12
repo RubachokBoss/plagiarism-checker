@@ -3,12 +3,10 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"errors"
 	"fmt"
 	"github.com/rs/zerolog"
-	"time"
 
-	"github.com/plagiarism-checker/file-service/internal/models"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
 )
 
 type FileMetadataRepository interface {

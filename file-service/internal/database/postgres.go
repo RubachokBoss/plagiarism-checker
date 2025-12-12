@@ -7,7 +7,7 @@ import (
 	"time"
 
 	_ "github.com/lib/pq"
-	"github.com/plagiarism-checker/file-service/internal/config"
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
 )
 
 func NewPostgres(cfg config.DatabaseConfig) (*sql.DB, error) {

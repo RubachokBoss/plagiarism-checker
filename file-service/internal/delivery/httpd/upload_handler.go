@@ -1,11 +1,9 @@
-package http
+package httpd
 
 import (
 	"encoding/json"
 	"io"
 	"net/http"
-
-	"github.com/plagiarism-checker/file-service/internal/models"
 )
 
 func (h *Handler) UploadFile(w http.ResponseWriter, r *http.Request) {
