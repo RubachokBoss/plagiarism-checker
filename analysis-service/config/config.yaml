@@ -1,0 +1,73 @@
+server:
+  address: ":8083"
+  read_timeout: 15s
+  write_timeout: 15s
+  idle_timeout: 60s
+  shutdown_timeout: 10s
+
+database:
+  host: "postgres-analysis"
+  port: 5432
+  user: "analysis_user"
+  password: "analysis_password"
+  name: "analysis_db"
+  sslmode: "disable"
+  max_open_conns: 25
+  max_idle_conns: 5
+  conn_max_lifetime: "5m"
+
+services:
+  work:
+    url: "http://work-service:8081"
+    works_endpoint: "/api/v1/works"
+    timeout: 10s
+    retry_count: 3
+    retry_delay: "100ms"
+
+  file:
+    url: "http://file-service:8082"
+    files_endpoint: "/api/v1/files"
+    hash_endpoint: "/api/v1/files/by-hash"
+    timeout: 30s
+    retry_count: 3
+    retry_delay: "100ms"
+
+rabbitmq:
+  url: "amqp://guest:guest@rabbitmq:5672/"
+  exchange: "plagiarism_exchange"
+  routing_key: "work.created"
+  queue_name: "work_created_queue"
+  consumer_tag: "analysis-consumer"
+  prefetch_count: 5
+
+analysis:
+  hash_algorithm: "sha256"
+  similarity_threshold: 100  # Процент совпадения для плагиата (0-100)
+  enable_content_analysis: false  # Более глубокий анализ контента
+  max_workers: 5
+  batch_size: 10
+  timeout: 300s  # 5 минут на анализ
+
+logging:
+  level: "info"
+  pretty: false
+  no_color: false
+
+cors:
+  allowed_origins:
+    - "*"
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers:
+    - "Accept"
+    - "Authorization"
+    - "Content-Type"
+    - "X-CSRF-Token"
+  exposed_headers:
+    - "Link"
+  allow_credentials: true
+  max_age: 300
