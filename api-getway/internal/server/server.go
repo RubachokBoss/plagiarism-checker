@@ -58,31 +58,28 @@ func (s *Server) SetupMiddleware(
 	recoveryMiddleware func(http.Handler) http.Handler,
 	timeoutMiddleware func(http.Handler) http.Handler,
 ) {
-	// Базовые middleware
+	// Базовые middleware от chi
 	s.router.Use(middleware.RequestID)
 	s.router.Use(middleware.RealIP)
-	s.router.Use(middleware.Recoverer)
+	s.router.Use(middleware.StripSlashes)
+	s.router.Use(middleware.CleanPath)
+	s.router.Use(middleware.GetHead)
+	s.router.Use(middleware.Compress(5))
 
-	// Кастомные middleware
-	if recoveryMiddleware != nil {
-		s.router.Use(recoveryMiddleware)
-	}
-
-	if loggerMiddleware != nil {
-		s.router.Use(loggerMiddleware)
-	}
-
+	// Кастомные middleware (в правильном порядке!)
 	if corsMiddleware != nil {
-		s.router.Use(corsMiddleware)
+		s.router.Use(corsMiddleware) // CORS должен быть первым
 	}
 
 	if timeoutMiddleware != nil {
-		s.router.Use(timeoutMiddleware)
+		s.router.Use(timeoutMiddleware) // Таймаут перед логированием
 	}
 
-	// Дополнительные middleware
-	s.router.Use(middleware.Compress(5))
-	s.router.Use(middleware.CleanPath)
-	s.router.Use(middleware.GetHead)
-	s.router.Use(middleware.StripSlashes)
+	if loggerMiddleware != nil {
+		s.router.Use(loggerMiddleware) // Логирование после таймаута
+	}
+
+	if recoveryMiddleware != nil {
+		s.router.Use(recoveryMiddleware) // Recovery последним (ближе к обработчику)
+	}
 }

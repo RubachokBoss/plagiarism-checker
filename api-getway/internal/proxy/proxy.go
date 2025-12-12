@@ -2,8 +2,12 @@ package proxy
 
 import (
 	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"net/http/httputil"
 	"net/url"
 	"strings"
@@ -128,7 +132,8 @@ func (p *Proxy) errorHandler(w http.ResponseWriter, r *http.Request, err error) 
 	w.WriteHeader(http.StatusServiceUnavailable)
 
 	// В реальной реализации здесь должен быть json.NewEncoder
-	w.Write([]byte(`{"error": "Service unavailable"}`))
+	encoder := json.NewEncoder(w)
+	encoder.Encode(errorResponse)
 }
 
 func (p *Proxy) modifyResponse(resp *http.Response) error {
@@ -154,39 +159,72 @@ func (p *Proxy) modifyResponse(resp *http.Response) error {
 func (p *Proxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// Копируем тело запроса для возможности повторных попыток
 	var bodyBytes []byte
+	var err error
+
 	if r.Body != nil {
-		bodyBytes, _ = io.ReadAll(r.Body)
+		bodyBytes, err = io.ReadAll(r.Body)
+		if err != nil {
+			p.errorHandler(w, r, err)
+			return
+		}
 		r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 	}
 
 	// Пытаемся выполнить запрос с retry
-	var lastErr error
-	for i := 0; i < p.retries; i++ {
-		if i > 0 {
+	for attempt := 0; attempt < p.retries; attempt++ {
+		if attempt > 0 {
 			// Восстанавливаем тело запроса для повторной попытки
 			if bodyBytes != nil {
 				r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 			}
 
-			// Ждем перед повторной попыткой
-			time.Sleep(time.Duration(i) * 100 * time.Millisecond)
+			// Exponential backoff
+			waitTime := time.Duration(attempt) * 100 * time.Millisecond
+			time.Sleep(waitTime)
 
 			p.logger.Info().
 				Str("method", r.Method).
 				Str("path", r.URL.Path).
-				Int("attempt", i+1).
+				Int("attempt", attempt+1).
 				Msg("Retrying request")
 		}
 
-		// Выполняем запрос через proxy
-		p.proxy.ServeHTTP(w, r)
+		// Создаем канал для результата
+		resultChan := make(chan error, 1)
+		var recorder *httptest.ResponseRecorder
+		// Запускаем запрос в горутине с таймаутом
+		go func() {
+			// Создаем ResponseRecorder для захвата ответа
+			recorder = httptest.NewRecorder()
+			p.proxy.ServeHTTP(recorder, r)
 
-		// Проверяем статус ответа
-		// В реальной реализации нужно проверять тип ошибки
-		break
+			// Копируем ответ в оригинальный ResponseWriter
+			for k, v := range recorder.Header() {
+				w.Header()[k] = v
+			}
+			w.WriteHeader(recorder.Code)
+			w.Write(recorder.Body.Bytes())
+
+			resultChan <- nil
+		}()
+
+		// Ждем с таймаутом
+		select {
+		case <-resultChan:
+			// Успешно
+			if recorder.Code < 500 {
+				return // Успех
+			}
+			// Если статус 5xx - пробуем снова
+		case <-time.After(p.timeout):
+			// Таймаут
+			if attempt == p.retries-1 {
+				p.errorHandler(w, r, context.DeadlineExceeded)
+				return
+			}
+		}
 	}
 
-	if lastErr != nil {
-		p.errorHandler(w, r, lastErr)
-	}
+	// Если все попытки исчерпаны
+	p.errorHandler(w, r, fmt.Errorf("all %d attempts failed", p.retries))
 }

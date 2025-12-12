@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -54,7 +55,9 @@ func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 		"version":   "1.0.0",
 	}
 
-	writeJSON(w, http.StatusOK, response)
+	if err := writeJSON(w, http.StatusOK, response); err != nil {
+		h.logger.Error().Err(err).Msg("Failed to write JSON response")
+	}
 }
 
 func (h *Handler) ReadyCheck(w http.ResponseWriter, r *http.Request) {
@@ -64,7 +67,9 @@ func (h *Handler) ReadyCheck(w http.ResponseWriter, r *http.Request) {
 		"timestamp": time.Now().UTC(),
 	}
 
-	writeJSON(w, http.StatusOK, response)
+	if err := writeJSON(w, http.StatusOK, response); err != nil {
+		h.logger.Error().Err(err).Msg("Failed to write JSON response")
+	}
 }
 
 func (h *Handler) LiveCheck(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +78,9 @@ func (h *Handler) LiveCheck(w http.ResponseWriter, r *http.Request) {
 		"timestamp": time.Now().UTC(),
 	}
 
-	writeJSON(w, http.StatusOK, response)
+	if err := writeJSON(w, http.StatusOK, response); err != nil {
+		h.logger.Error().Err(err).Msg("Failed to write JSON response")
+	}
 }
 
 func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProxy, error) {
@@ -106,7 +113,7 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 
 		// Добавляем заголовки
 		req.Header.Set("X-Forwarded-Host", req.Host)
-		req.Header.Set("X-Real-IP", r.RemoteAddr)
+		req.Header.Set("X-Real-IP", req.RemoteAddr)
 
 		h.logger.Debug().
 			Str("method", req.Method).
@@ -129,7 +136,9 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 			"code":    "SERVICE_UNAVAILABLE",
 		}
 
-		writeJSON(w, http.StatusServiceUnavailable, errorResponse)
+		if err := writeJSON(w, http.StatusOK, errorResponse); err != nil {
+			h.logger.Error().Err(err).Msg("Failed to write JSON response")
+		}
 	}
 
 	return &ServiceProxy{
@@ -139,13 +148,15 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 	}, nil
 }
 
-func writeJSON(w http.ResponseWriter, status int, data interface{}) {
+func writeJSON(w http.ResponseWriter, status int, data interface{}) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 
-	// В реальной реализации здесь нужно использовать json.NewEncoder
-	// Для простоты оставляем заглушку
-	w.Write([]byte(`{"message": "JSON response"}`))
+	// Используем json.NewEncoder
+	encoder := json.NewEncoder(w)
+	encoder.SetEscapeHTML(false) // Для читаемости JSON
+
+	return encoder.Encode(data)
 }
 
 func (h *Handler) GetRouter() *chi.Mux {
