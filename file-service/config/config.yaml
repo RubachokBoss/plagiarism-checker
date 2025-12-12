@@ -1,0 +1,57 @@
+server:
+  address: ":8082"
+  read_timeout: 30s
+  write_timeout: 30s
+  idle_timeout: 120s
+  shutdown_timeout: 10s
+  max_upload_size: 104857600  # 100MB
+
+database:
+  host: "postgres-file"
+  port: 5432
+  user: "file_user"
+  password: "file_password"
+  name: "file_db"
+  sslmode: "disable"
+  max_open_conns: 25
+  max_idle_conns: 5
+  conn_max_lifetime: "5m"
+
+storage:
+  provider: "minio"
+  bucket_name: "plagiarism-files"
+  region: "us-east-1"
+
+minio:
+  endpoint: "minio:9000"
+  access_key: "minioadmin"
+  secret_key: "minioadmin"
+  use_ssl: false
+  timeout: 30s
+
+hash:
+  algorithm: "sha256"
+
+logging:
+  level: "info"
+  pretty: false
+  no_color: false
+
+cors:
+  allowed_origins:
+    - "*"
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers:
+    - "Accept"
+    - "Authorization"
+    - "Content-Type"
+    - "X-CSRF-Token"
+  exposed_headers:
+    - "Link"
+  allow_credentials: true
+  max_age: 300
