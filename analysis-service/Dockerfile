@@ -32,7 +32,7 @@ EXPOSE 8083
 
 # Ждем готовности зависимостей
 COPY --from=builder /app/scripts/wait-for-it.sh .
-RUN chmod +x wait-for-it.sh
+RUN sed -i 's/\r$//' wait-for-it.sh && chmod +x wait-for-it.sh
 
 # Запускаем приложение
 CMD ["./wait-for-it.sh", "postgres-analysis:5432", "--", "./wait-for-it.sh", "rabbitmq:5672", "--", "./analysis-service"]

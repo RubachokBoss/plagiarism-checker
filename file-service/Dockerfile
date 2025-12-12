@@ -32,7 +32,7 @@ EXPOSE 8082
 
 # Ждем готовности зависимостей
 COPY --from=builder /app/scripts/wait-for-it.sh .
-RUN chmod +x wait-for-it.sh
+RUN sed -i 's/\r$//' wait-for-it.sh && chmod +x wait-for-it.sh
 
 # Запускаем приложение
 CMD ["./wait-for-it.sh", "postgres-file:5432", "--", "./wait-for-it.sh", "minio:9000", "--", "./file-service"]

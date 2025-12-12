@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -24,13 +26,32 @@ func main() {
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "migrate":
-			var direction string
+			// Legacy style:
+			//   analysis-service migrate up
+			//   analysis-service migrate down
+			//   analysis-service migrate force <version>
+			sub := "up"
 			if len(os.Args) > 2 {
-				direction = os.Args[2]
-			} else {
-				direction = "up"
+				sub = os.Args[2]
 			}
-			runMigrations(direction)
+			switch sub {
+			case "up", "down":
+				runMigrations(sub)
+			case "force":
+				if len(os.Args) < 4 {
+					fmt.Fprintln(os.Stderr, "usage: analysis-service migrate force <version>")
+					os.Exit(2)
+				}
+				v, err := strconv.Atoi(os.Args[3])
+				if err != nil {
+					fmt.Fprintln(os.Stderr, "invalid version:", os.Args[3])
+					os.Exit(2)
+				}
+				runMigrationsForce(v)
+			default:
+				fmt.Fprintln(os.Stderr, "unknown migrate subcommand:", sub)
+				os.Exit(2)
+			}
 			return
 		case "worker":
 			runWorker()
@@ -40,11 +61,16 @@ func main() {
 	// Парсинг аргументов командной строки
 	migrateCmd := flag.NewFlagSet("migrate", flag.ExitOnError)
 	migrateDirection := migrateCmd.String("direction", "up", "direction of migration (up/down)")
+	migrateForce := migrateCmd.Int("force", -1, "force version (dangerous). Example: -force 1")
 
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "migrate":
 			migrateCmd.Parse(os.Args[2:])
+			if *migrateForce >= 0 {
+				runMigrationsForce(*migrateForce)
+				return
+			}
 			runMigrations(*migrateDirection)
 			return
 		case "worker":
@@ -139,6 +165,21 @@ func runMigrations(direction string) {
 	default:
 		log.Fatal().Msg("Invalid migration direction. Use 'up' or 'down'")
 	}
+}
+
+func runMigrationsForce(version int) {
+	log := logger.New()
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to load configuration")
+	}
+
+	migrator := database.NewMigrator(cfg.Database)
+	if err := migrator.Force(version); err != nil {
+		log.Fatal().Err(err).Msg("Failed to force migration version")
+	}
+
+	log.Info().Int("version", version).Msg("Migration version forced successfully")
 }
 
 func runWorker() {

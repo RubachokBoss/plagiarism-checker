@@ -27,7 +27,6 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 	if err != nil {
 		panic(fmt.Sprintf("failed to open database: %v", err))
 	}
-	defer db.Close()
 
 	// Проверка соединения с контекстом
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -60,6 +59,7 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 }
 
 func (m *Migrator) Up() error {
+	defer func() { _, _ = m.migrate.Close() }()
 	if err := m.migrate.Up(); err != nil && err != migrate.ErrNoChange {
 		return fmt.Errorf("failed to apply migrations: %w", err)
 	}
@@ -67,8 +67,17 @@ func (m *Migrator) Up() error {
 }
 
 func (m *Migrator) Down() error {
+	defer func() { _, _ = m.migrate.Close() }()
 	if err := m.migrate.Down(); err != nil && err != migrate.ErrNoChange {
 		return fmt.Errorf("failed to rollback migrations: %w", err)
+	}
+	return nil
+}
+
+func (m *Migrator) Force(version int) error {
+	defer func() { _, _ = m.migrate.Close() }()
+	if err := m.migrate.Force(version); err != nil {
+		return fmt.Errorf("failed to force migration version to %d: %w", version, err)
 	}
 	return nil
 }

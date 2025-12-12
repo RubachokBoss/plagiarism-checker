@@ -32,7 +32,7 @@ EXPOSE 8081
 
 # Ждем готовности зависимостей и запускаем миграции
 COPY --from=builder /app/scripts/wait-for-it.sh .
-RUN chmod +x wait-for-it.sh
+RUN sed -i 's/\r$//' wait-for-it.sh && chmod +x wait-for-it.sh
 
 # Запускаем приложение
 CMD ["./wait-for-it.sh", "postgres-work:5432", "--", "./work-service"]

@@ -25,7 +25,6 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 	if err != nil {
 		panic(fmt.Sprintf("failed to open database: %v", err))
 	}
-	defer db.Close()
 
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
 	if err != nil {
@@ -51,6 +50,7 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 }
 
 func (m *Migrator) Up() error {
+	defer func() { _, _ = m.migrate.Close() }()
 	if err := m.migrate.Up(); err != nil && err != migrate.ErrNoChange {
 		return fmt.Errorf("failed to apply migrations: %w", err)
 	}
@@ -58,6 +58,7 @@ func (m *Migrator) Up() error {
 }
 
 func (m *Migrator) Down() error {
+	defer func() { _, _ = m.migrate.Close() }()
 	if err := m.migrate.Down(); err != nil && err != migrate.ErrNoChange {
 		return fmt.Errorf("failed to rollback migrations: %w", err)
 	}

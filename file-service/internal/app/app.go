@@ -3,9 +3,10 @@ package app
 import (
 	"context"
 	"database/sql"
-	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/delivery/httpd"
 	"net/http"
 	"time"
+
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/delivery/httpd"
 
 	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/config"
 
@@ -33,6 +34,7 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		cfg.Storage.BucketName,
 		cfg.Storage.Region,
 		cfg.MinIO.UseSSL,
+		cfg.MinIO.Timeout,
 		log,
 	)
 	if err != nil {

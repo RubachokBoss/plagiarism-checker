@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
@@ -19,9 +20,12 @@ type MinIORepository struct {
 	bucket string
 	region string
 	logger zerolog.Logger
+
+	ensureMu      sync.Mutex
+	bucketEnsured bool
 }
 
-func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, useSSL bool, logger zerolog.Logger) (*MinIORepository, error) {
+func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, useSSL bool, connectTimeout time.Duration, logger zerolog.Logger) (*MinIORepository, error) {
 	// Инициализация клиента MinIO
 	client, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
@@ -31,29 +35,28 @@ func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, u
 		return nil, fmt.Errorf("failed to create MinIO client: %w", err)
 	}
 
-	// Проверяем соединение
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	repo := &MinIORepository{
+		client: client,
+		bucket: bucket,
+		region: region,
+		logger: logger,
+	}
+
+	// Best-effort bootstrap: на старте НЕ валим весь сервис, если MinIO ещё не готов.
+	// Это особенно важно при запуске всего docker-compose или при нехватке места на диске.
+	if connectTimeout <= 0 {
+		connectTimeout = 30 * time.Second
+	}
+	if connectTimeout < 2*time.Minute {
+		connectTimeout = 2 * time.Minute
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), connectTimeout)
 	defer cancel()
-
-	_, err = client.ListBuckets(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("failed to connect to MinIO: %w", err)
-	}
-
-	// Проверяем существование бакета, создаем если нет
-	exists, err := client.BucketExists(ctx, bucket)
-	if err != nil {
-		return nil, fmt.Errorf("failed to check bucket existence: %w", err)
-	}
-
-	if !exists {
-		err = client.MakeBucket(ctx, bucket, minio.MakeBucketOptions{
-			Region: region,
-		})
-		if err != nil {
-			return nil, fmt.Errorf("failed to create bucket: %w", err)
-		}
-		logger.Info().Str("bucket", bucket).Msg("Created new bucket")
+	if err := repo.ensureBucket(ctx); err != nil {
+		logger.Error().Err(err).
+			Str("endpoint", endpoint).
+			Str("bucket", bucket).
+			Msg("MinIO not ready during startup; file-service will keep running and retry on demand")
 	}
 
 	logger.Info().
@@ -62,15 +65,52 @@ func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, u
 		Bool("ssl", useSSL).
 		Msg("Connected to MinIO")
 
-	return &MinIORepository{
-		client: client,
-		bucket: bucket,
-		region: region,
-		logger: logger,
-	}, nil
+	return repo, nil
+}
+
+func (r *MinIORepository) ensureBucket(ctx context.Context) error {
+	r.ensureMu.Lock()
+	defer r.ensureMu.Unlock()
+	if r.bucketEnsured {
+		return nil
+	}
+
+	// Если MinIO ещё не отвечает — ретраим до дедлайна ctx.
+	backoff := 500 * time.Millisecond
+	for {
+		if err := ctx.Err(); err != nil {
+			return fmt.Errorf("minio not ready: %w", err)
+		}
+
+		// API readiness check
+		if _, err := r.client.ListBuckets(ctx); err != nil {
+			time.Sleep(backoff)
+			continue
+		}
+
+		exists, err := r.client.BucketExists(ctx, r.bucket)
+		if err != nil {
+			time.Sleep(backoff)
+			continue
+		}
+
+		if !exists {
+			if err := r.client.MakeBucket(ctx, r.bucket, minio.MakeBucketOptions{Region: r.region}); err != nil {
+				time.Sleep(backoff)
+				continue
+			}
+			r.logger.Info().Str("bucket", r.bucket).Msg("Created new bucket")
+		}
+
+		r.bucketEnsured = true
+		return nil
+	}
 }
 
 func (r *MinIORepository) UploadFile(ctx context.Context, bucket, fileName string, file io.Reader, size int64) error {
+	if err := r.ensureBucket(ctx); err != nil {
+		return err
+	}
 	// Загружаем файл
 	uploadInfo, err := r.client.PutObject(ctx, bucket, fileName, file, size, minio.PutObjectOptions{
 		ContentType: "application/octet-stream",
@@ -90,6 +130,9 @@ func (r *MinIORepository) UploadFile(ctx context.Context, bucket, fileName strin
 }
 
 func (r *MinIORepository) DownloadFile(ctx context.Context, bucket, fileName string) (io.ReadCloser, int64, error) {
+	if err := r.ensureBucket(ctx); err != nil {
+		return nil, 0, err
+	}
 	// Получаем информацию о файле
 	objInfo, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
 	if err != nil {
@@ -115,6 +158,9 @@ func (r *MinIORepository) DownloadFile(ctx context.Context, bucket, fileName str
 }
 
 func (r *MinIORepository) DeleteFile(ctx context.Context, bucket, fileName string) error {
+	if err := r.ensureBucket(ctx); err != nil {
+		return err
+	}
 	// Удаляем файл
 	err := r.client.RemoveObject(ctx, bucket, fileName, minio.RemoveObjectOptions{})
 	if err != nil {
@@ -130,6 +176,9 @@ func (r *MinIORepository) DeleteFile(ctx context.Context, bucket, fileName strin
 }
 
 func (r *MinIORepository) FileExists(ctx context.Context, bucket, fileName string) (bool, error) {
+	if err := r.ensureBucket(ctx); err != nil {
+		return false, err
+	}
 	_, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
 	if err != nil {
 		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
@@ -142,6 +191,9 @@ func (r *MinIORepository) FileExists(ctx context.Context, bucket, fileName strin
 }
 
 func (r *MinIORepository) GetFileInfo(ctx context.Context, bucket, fileName string) (*models.FileInfoResponse, error) {
+	if err := r.ensureBucket(ctx); err != nil {
+		return nil, err
+	}
 	objInfo, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
 	if err != nil {
 		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
@@ -158,6 +210,9 @@ func (r *MinIORepository) GetFileInfo(ctx context.Context, bucket, fileName stri
 }
 
 func (r *MinIORepository) GetPresignedURL(ctx context.Context, bucket, fileName string, expiresIn int64) (string, error) {
+	if err := r.ensureBucket(ctx); err != nil {
+		return "", err
+	}
 	// Создаем предварительно подписанный URL
 	url, err := r.client.PresignedGetObject(ctx, bucket, fileName, time.Duration(expiresIn)*time.Second, nil)
 	if err != nil {
@@ -168,6 +223,9 @@ func (r *MinIORepository) GetPresignedURL(ctx context.Context, bucket, fileName 
 }
 
 func (r *MinIORepository) ListFiles(ctx context.Context, bucket, prefix string) ([]string, error) {
+	if err := r.ensureBucket(ctx); err != nil {
+		return nil, err
+	}
 	var files []string
 
 	// Получаем список объектов
@@ -187,6 +245,9 @@ func (r *MinIORepository) ListFiles(ctx context.Context, bucket, prefix string) 
 }
 
 func (r *MinIORepository) GetBucketStats(ctx context.Context, bucket string) (*models.StorageInfo, error) {
+	if err := r.ensureBucket(ctx); err != nil {
+		return nil, err
+	}
 	var totalSize int64
 	var fileCount int64
 
