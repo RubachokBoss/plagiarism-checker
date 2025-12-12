@@ -11,6 +11,12 @@ import (
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/app"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/config"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/database"
+	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/repository"
+	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service"
+	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service/analyzer"
+	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service/integration"
+	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/worker"
+	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/worker/queue"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/pkg/logger"
 )
 
@@ -142,6 +148,131 @@ func runWorker() {
 		log.Fatal().Err(err).Msg("Failed to load configuration")
 	}
 
-	log.Info().Msg("Starting standalone worker...")
-	// Здесь можно запустить только воркер без HTTP сервера
+	// Init database
+	db, err := database.NewPostgres(cfg.Database)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to connect to database")
+	}
+	defer db.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := db.PingContext(ctx); err != nil {
+		log.Fatal().Err(err).Msg("Failed to ping database")
+	}
+
+	// Init RabbitMQ
+	rabbitMQRepo, err := repository.NewRabbitMQRepository(cfg.RabbitMQ.URL, log)
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to connect to RabbitMQ")
+	}
+	defer rabbitMQRepo.Close()
+
+	if err := rabbitMQRepo.SetupQueue(
+		cfg.RabbitMQ.Exchange,
+		cfg.RabbitMQ.QueueName,
+		cfg.RabbitMQ.RoutingKey,
+	); err != nil {
+		log.Fatal().Err(err).Msg("Failed to setup RabbitMQ queue")
+	}
+
+	// Create publishers/consumers
+	rabbitMQPublisher := queue.NewRabbitMQPublisher(rabbitMQRepo.Channel(), log)
+	rabbitMQConsumer := queue.NewRabbitMQConsumer(
+		rabbitMQRepo.Channel(),
+		cfg.RabbitMQ.QueueName,
+		cfg.RabbitMQ.ConsumerTag,
+		log,
+	)
+
+	// Repositories
+	reportRepo := repository.NewReportRepository(db, log)
+	plagiarismRepo := repository.NewPlagiarismRepository(db, log)
+
+	// Integration clients
+	workClient := integration.NewWorkClient(
+		cfg.Services.Work.URL,
+		cfg.Services.Work.Timeout,
+		cfg.Services.Work.RetryCount,
+		cfg.Services.Work.RetryDelay,
+		log,
+	)
+
+	fileClient := integration.NewFileClient(
+		cfg.Services.File.URL,
+		cfg.Services.File.Timeout,
+		cfg.Services.File.RetryCount,
+		cfg.Services.File.RetryDelay,
+		log,
+	)
+
+	// Analyzers
+	hashComparator := analyzer.NewHashComparator(cfg.Analysis.HashAlgorithm)
+	plagiarismChecker := analyzer.NewPlagiarismChecker(
+		workClient,
+		fileClient,
+		hashComparator,
+		log,
+		analyzer.PlagiarismCheckerConfig{
+			HashAlgorithm:       cfg.Analysis.HashAlgorithm,
+			SimilarityThreshold: cfg.Analysis.SimilarityThreshold,
+			EnableDeepAnalysis:  cfg.Analysis.EnableContentAnalysis,
+			Timeout:             cfg.Analysis.Timeout,
+			MaxRetries:          cfg.Services.Work.RetryCount,
+		},
+	)
+
+	messageHandler := queue.NewMessageHandler(log)
+
+	// Services
+	analysisService := service.NewAnalysisService(
+		reportRepo,
+		plagiarismRepo,
+		workClient,
+		fileClient,
+		plagiarismChecker,
+		messageHandler,
+		rabbitMQPublisher,
+		log,
+		service.AnalysisConfig{
+			HashAlgorithm:       cfg.Analysis.HashAlgorithm,
+			SimilarityThreshold: cfg.Analysis.SimilarityThreshold,
+			EnableDeepAnalysis:  cfg.Analysis.EnableContentAnalysis,
+			Timeout:             cfg.Analysis.Timeout,
+			MaxRetries:          cfg.Services.Work.RetryCount,
+			BatchSize:           cfg.Analysis.BatchSize,
+		},
+	)
+
+	// Worker
+	workerPool := worker.NewWorkerPool(cfg.Analysis.MaxWorkers, log)
+	analysisWorker := worker.NewAnalysisWorker(
+		workerPool,
+		rabbitMQConsumer,
+		reportRepo,
+		analysisService,
+		log,
+	)
+
+	ctxRun, stop := signal.NotifyContext(context.Background(),
+		syscall.SIGINT,
+		syscall.SIGTERM,
+	)
+	defer stop()
+
+	log.Info().
+		Str("rabbitmq_url", cfg.RabbitMQ.URL).
+		Str("queue", cfg.RabbitMQ.QueueName).
+		Msg("Starting standalone analysis worker")
+
+	if err := analysisWorker.Start(ctxRun); err != nil {
+		log.Fatal().Err(err).Msg("Failed to start analysis worker")
+	}
+
+	<-ctxRun.Done()
+	log.Info().Msg("Shutting down standalone worker...")
+
+	if err := analysisWorker.Stop(); err != nil {
+		log.Error().Err(err).Msg("Failed to stop analysis worker gracefully")
+	}
 }

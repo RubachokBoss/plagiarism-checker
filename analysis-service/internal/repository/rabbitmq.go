@@ -6,25 +6,26 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/rabbitmq/amqp091-go"
+	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog"
 )
 
 type RabbitMQRepository interface {
 	Publish(ctx context.Context, exchange, routingKey string, message []byte) error
-	Consume(ctx context.Context, queue, consumer string) (<-chan amqp091.Delivery, error)
+	Consume(ctx context.Context, queue, consumer string) (<-chan amqp.Delivery, error)
 	SetupQueue(exchange, queue, routingKey string) error
 	Close() error
+	Channel() *amqp.Channel
 }
 
 type rabbitMQRepository struct {
-	conn    *amqp091.Connection
-	channel *amqp091.Channel
+	conn    *amqp.Connection
+	channel *amqp.Channel
 	logger  zerolog.Logger
 }
 
 func NewRabbitMQRepository(url string, logger zerolog.Logger) (RabbitMQRepository, error) {
-	conn, err := amqp091.Dial(url)
+	conn, err := amqp.Dial(url)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to RabbitMQ: %w", err)
 	}
@@ -44,7 +45,6 @@ func NewRabbitMQRepository(url string, logger zerolog.Logger) (RabbitMQRepositor
 	}, nil
 }
 
-// Замените методы Publish и Consume
 func (r *rabbitMQRepository) Publish(ctx context.Context, exchange, routingKey string, message []byte) error {
 	return r.channel.PublishWithContext(
 		ctx,
@@ -71,8 +71,7 @@ func (r *rabbitMQRepository) Consume(ctx context.Context, queue, consumer string
 		return nil, fmt.Errorf("failed to set QoS: %w", err)
 	}
 
-	return r.channel.ConsumeWithContext(
-		ctx,
+	deliveries, err := r.channel.Consume(
 		queue,
 		consumer,
 		false, // auto-ack
@@ -81,6 +80,17 @@ func (r *rabbitMQRepository) Consume(ctx context.Context, queue, consumer string
 		false, // no-wait
 		nil,   // args
 	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to start consuming: %w", err)
+	}
+
+	// Respect context cancellation by closing channel when done
+	go func() {
+		<-ctx.Done()
+		_ = r.channel.Cancel(consumer, false)
+	}()
+
+	return deliveries, nil
 }
 
 func (r *rabbitMQRepository) SetupQueue(exchange, queue, routingKey string) error {
@@ -166,4 +176,8 @@ func (r *rabbitMQRepository) PublishAnalysisCompleted(ctx context.Context, event
 	}
 
 	return r.Publish(ctx, "plagiarism_exchange", "analysis.completed", message)
+}
+
+func (r *rabbitMQRepository) Channel() *amqp.Channel {
+	return r.channel
 }

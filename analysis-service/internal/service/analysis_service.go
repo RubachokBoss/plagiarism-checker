@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -81,6 +82,33 @@ func (s *analysisService) AnalyzeWork(ctx context.Context, workID, fileID, assig
 		return nil, fmt.Errorf("failed to check existing report: %w", err)
 	}
 
+	existingStatus := ""
+	if existingReport != nil {
+		existingStatus = existingReport.Status
+	}
+
+	// #region agent log
+	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
+		payload := map[string]interface{}{
+			"sessionId":    "debug-session",
+			"runId":        "pre-fix",
+			"hypothesisId": "H1",
+			"location":     "analysis_service.go:AnalyzeWork:existingReport",
+			"message":      "Existing report state before analysis",
+			"data": map[string]interface{}{
+				"workID":         workID,
+				"hasExisting":    existingReport != nil,
+				"existingStatus": existingStatus,
+			},
+			"timestamp": time.Now().UnixMilli(),
+		}
+		if b, merr := json.Marshal(payload); merr == nil {
+			_, _ = f.Write(append(b, '\n'))
+		}
+		_ = f.Close()
+	}
+	// #endregion
+
 	if existingReport != nil && existingReport.Status == models.ReportStatusCompleted.String() {
 		s.logger.Info().Str("work_id", workID).Msg("Analysis already completed, returning cached result")
 		return s.convertReportToResult(existingReport), nil
@@ -120,6 +148,29 @@ func (s *analysisService) AnalyzeWork(ctx context.Context, workID, fileID, assig
 	}
 
 	// Perform plagiarism check
+	// #region agent log
+	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
+		payload := map[string]interface{}{
+			"sessionId":    "debug-session",
+			"runId":        "pre-fix",
+			"hypothesisId": "H1",
+			"location":     "analysis_service.go:AnalyzeWork:beforeCheck",
+			"message":      "Starting plagiarism check",
+			"data": map[string]interface{}{
+				"workID":       workID,
+				"reportID":     report.ID,
+				"status":       report.Status,
+				"assignmentID": assignmentID,
+			},
+			"timestamp": time.Now().UnixMilli(),
+		}
+		if b, merr := json.Marshal(payload); merr == nil {
+			_, _ = f.Write(append(b, '\n'))
+		}
+		_ = f.Close()
+	}
+	// #endregion
+
 	result, err := s.plagiarismChecker.CheckPlagiarism(ctx, workID, fileID, assignmentID, studentID)
 	if err != nil {
 		// Update report with failure
@@ -133,6 +184,27 @@ func (s *analysisService) AnalyzeWork(ctx context.Context, workID, fileID, assig
 		if updateErr := s.workClient.UpdateWorkStatus(ctx, workID, "failed"); updateErr != nil {
 			s.logger.Error().Err(updateErr).Msg("Failed to update work status to failed")
 		}
+
+		// #region agent log
+		if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
+			payload := map[string]interface{}{
+				"sessionId":    "debug-session",
+				"runId":        "pre-fix",
+				"hypothesisId": "H2",
+				"location":     "analysis_service.go:AnalyzeWork:checkError",
+				"message":      "Plagiarism check failed",
+				"data": map[string]interface{}{
+					"workID": workID,
+					"error":  err.Error(),
+				},
+				"timestamp": time.Now().UnixMilli(),
+			}
+			if b, merr := json.Marshal(payload); merr == nil {
+				_, _ = f.Write(append(b, '\n'))
+			}
+			_ = f.Close()
+		}
+		// #endregion
 
 		return nil, fmt.Errorf("plagiarism check failed: %w", err)
 	}
@@ -200,6 +272,31 @@ func (s *analysisService) AnalyzeWork(ctx context.Context, workID, fileID, assig
 			s.logger.Error().Err(err).Msg("Failed to publish analysis completed event")
 		}
 	}
+
+	// #region agent log
+	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
+		payload := map[string]interface{}{
+			"sessionId":    "debug-session",
+			"runId":        "pre-fix",
+			"hypothesisId": "H3",
+			"location":     "analysis_service.go:AnalyzeWork:completed",
+			"message":      "Analysis completed before response",
+			"data": map[string]interface{}{
+				"workID":          workID,
+				"reportID":        report.ID,
+				"plagiarism":      result.PlagiarismFlag,
+				"matchPercentage": result.MatchPercentage,
+				"comparedWith":    result.ComparedWithCount,
+				"originalWorkID":  result.OriginalWorkID,
+			},
+			"timestamp": time.Now().UnixMilli(),
+		}
+		if b, merr := json.Marshal(payload); merr == nil {
+			_, _ = f.Write(append(b, '\n'))
+		}
+		_ = f.Close()
+	}
+	// #endregion
 
 	s.logger.Info().
 		Str("work_id", workID).
@@ -366,12 +463,6 @@ func (s *analysisService) GetServiceStatus(ctx context.Context) (*models.HealthC
 	// Check external services (simplified)
 	workServiceOK := true
 	fileServiceOK := true
-
-	// Get statistics
-	stats, err := s.reportRepo.GetStats(ctx)
-	if err != nil {
-		s.logger.Error().Err(err).Msg("Failed to get service statistics")
-	}
 
 	response := &models.HealthCheckResponse{
 		Status:        "healthy",

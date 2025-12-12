@@ -15,6 +15,7 @@ type AnalysisResult struct {
 	FileHash          string        `json:"file_hash"`
 	ProcessingTimeMs  int           `json:"processing_time_ms"`
 	AnalyzedAt        time.Time     `json:"analyzed_at"`
+	Details           []byte        `json:"details,omitempty"`
 }
 
 type SimilarWork struct {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/models"
@@ -71,6 +72,30 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		return nil, fmt.Errorf("failed to get current file hash: %w", err)
 	}
 
+	// #region agent log
+	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
+		payload := map[string]interface{}{
+			"sessionId":    "debug-session",
+			"runId":        "pre-fix",
+			"hypothesisId": "H2",
+			"location":     "plagiarism_checker.go:CheckPlagiarism:fileHash",
+			"message":      "Fetched current file hash",
+			"data": map[string]interface{}{
+				"workID":       workID,
+				"fileID":       fileID,
+				"fileHash":     currentFileHash,
+				"fileSize":     currentFileSize,
+				"assignmentID": assignmentID,
+			},
+			"timestamp": time.Now().UnixMilli(),
+		}
+		if b, merr := json.Marshal(payload); merr == nil {
+			_, _ = f.Write(append(b, '\n'))
+		}
+		_ = f.Close()
+	}
+	// #endregion
+
 	c.logger.Debug().
 		Str("work_id", workID).
 		Str("file_hash", currentFileHash).
@@ -82,6 +107,28 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 	if err != nil {
 		return nil, fmt.Errorf("failed to get previous works: %w", err)
 	}
+
+	// #region agent log
+	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
+		payload := map[string]interface{}{
+			"sessionId":    "debug-session",
+			"runId":        "pre-fix",
+			"hypothesisId": "H2",
+			"location":     "plagiarism_checker.go:CheckPlagiarism:previousWorks",
+			"message":      "Fetched previous works for comparison",
+			"data": map[string]interface{}{
+				"workID":             workID,
+				"assignmentID":       assignmentID,
+				"previousWorksCount": len(previousWorks),
+			},
+			"timestamp": time.Now().UnixMilli(),
+		}
+		if b, merr := json.Marshal(payload); merr == nil {
+			_, _ = f.Write(append(b, '\n'))
+		}
+		_ = f.Close()
+	}
+	// #endregion
 
 	c.logger.Debug().
 		Str("work_id", workID).
@@ -119,14 +166,11 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 	comparedHashes := make([]string, 0, len(previousWorks))
 
 	for _, prevWork := range previousWorks {
-		// Get previous file hash
-		prevFileHash, prevFileSize, err := c.fileClient.GetFileHash(ctx, prevWork.FileID)
-		if err != nil {
-			c.logger.Error().
-				Err(err).
-				Str("prev_work_id", prevWork.ID).
-				Str("prev_file_id", prevWork.FileID).
-				Msg("Failed to get previous file hash")
+		prevFileHash := prevWork.FileHash
+		if prevFileHash == "" {
+			c.logger.Warn().
+				Str("prev_work_id", prevWork.WorkID).
+				Msg("Previous work missing file hash, skipping")
 			continue
 		}
 
@@ -135,7 +179,7 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		if err != nil {
 			c.logger.Error().
 				Err(err).
-				Str("prev_work_id", prevWork.ID).
+				Str("prev_work_id", prevWork.WorkID).
 				Msg("Failed to compare hashes")
 			continue
 		}
@@ -144,11 +188,11 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 
 		// Record similarity
 		similarWork := models.SimilarWork{
-			WorkID:          prevWork.ID,
+			WorkID:          prevWork.WorkID,
 			StudentID:       prevWork.StudentID,
 			MatchPercentage: matchPercentage,
 			FileHash:        prevFileHash,
-			SubmittedAt:     prevWork.CreatedAt,
+			SubmittedAt:     prevWork.SubmittedAt,
 		}
 		similarWorks = append(similarWorks, similarWork)
 
@@ -158,13 +202,13 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 
 			// If match is 100% and from different student, mark as plagiarism
 			if matchPercentage == 100 && prevWork.StudentID != studentID {
-				originalWorkID = &prevWork.ID
+				originalWorkID = &prevWork.WorkID
 			}
 		}
 
 		c.logger.Debug().
 			Str("work_id", workID).
-			Str("prev_work_id", prevWork.ID).
+			Str("prev_work_id", prevWork.WorkID).
 			Int("match_percentage", matchPercentage).
 			Msg("Compared with previous work")
 	}

@@ -1,7 +1,6 @@
 package analyzer
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"strings"

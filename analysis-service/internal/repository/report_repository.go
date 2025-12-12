@@ -3,11 +3,11 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"errors"
 	"fmt"
-	"github.com/rs/zerolog"
 	"strings"
 	"time"
+
+	"github.com/rs/zerolog"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/models"
 	"github.com/lib/pq"
@@ -31,6 +31,7 @@ type ReportRepository interface {
 	GetRecentReports(ctx context.Context, limit int) ([]models.Report, error)
 	GetReportsByStatus(ctx context.Context, status string, limit int) ([]models.Report, error)
 	Exists(ctx context.Context, workID string) (bool, error)
+	Ping(ctx context.Context) error
 }
 
 type reportRepository struct {
@@ -736,6 +737,10 @@ func (r *reportRepository) Exists(ctx context.Context, workID string) (bool, err
 	var exists bool
 	err := r.db.QueryRowContext(ctx, query, workID).Scan(&exists)
 	return exists, err
+}
+
+func (r *reportRepository) Ping(ctx context.Context) error {
+	return r.PostgresRepository.Ping(ctx)
 }
 
 func (r *reportRepository) scanReport(rows *sql.Rows) (*models.Report, error) {

@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/config"
-	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/database"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/delivery/httpd"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/repository"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service"
@@ -15,7 +14,6 @@ import (
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service/integration"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/worker"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/worker/queue"
-	"github.com/RubachokBoss/plagiarism-checker/analysis-service/pkg/logger"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -48,9 +46,9 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 	}
 
 	// Create RabbitMQ publisher and consumer
-	rabbitMQPublisher := queue.NewRabbitMQPublisher(rabbitMQRepo.Channel, log)
+	rabbitMQPublisher := queue.NewRabbitMQPublisher(rabbitMQRepo.Channel(), log)
 	rabbitMQConsumer := queue.NewRabbitMQConsumer(
-		rabbitMQRepo.Channel,
+		rabbitMQRepo.Channel(),
 		cfg.RabbitMQ.QueueName,
 		cfg.RabbitMQ.ConsumerTag,
 		log,

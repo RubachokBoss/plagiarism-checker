@@ -111,18 +111,6 @@ func (h *Handler) GetStudentStats(w http.ResponseWriter, r *http.Request) {
 	writeSuccess(w, stats)
 }
 
-func (h *Handler) GetAllStats(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	stats, err := h.reportService.GetAllStats(ctx)
-	if err != nil {
-		h.logger.Error().Err(err).Msg("Failed to get all stats")
-		writeError(w, http.StatusInternalServerError, "Failed to get statistics")
-		return
-	}
-
-	writeSuccess(w, stats)
-}
-
 func (h *Handler) ExportReports(w http.ResponseWriter, r *http.Request) {
 	// Parse query parameters
 	format := r.URL.Query().Get("format")
@@ -170,18 +158,6 @@ func (h *Handler) ExportReports(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Disposition", "attachment; filename=\"reports."+format+"\"")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
-}
-
-func (h *Handler) GetServiceStatus(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	status, err := h.analysisService.GetServiceStatus(ctx)
-	if err != nil {
-		h.logger.Error().Err(err).Msg("Failed to get service status")
-		writeError(w, http.StatusInternalServerError, "Failed to get service status")
-		return
-	}
-
-	writeSuccess(w, status)
 }
 
 func (h *Handler) handleReportError(w http.ResponseWriter, err error) {

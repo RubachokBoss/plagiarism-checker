@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"fmt"
+
 	"github.com/rs/zerolog"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/models"

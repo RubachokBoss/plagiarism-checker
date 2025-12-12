@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service"
 	"github.com/go-chi/chi/v5"
@@ -53,16 +52,6 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 		r.Get("/student/{student_id}", h.GetStudentStats)
 		r.Get("/export", h.ExportReports)
 	})
-}
-
-func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request) {
-	response := map[string]interface{}{
-		"status":    "healthy",
-		"service":   "analysis-service",
-		"timestamp": time.Now().UTC(),
-	}
-
-	writeJSON(w, http.StatusOK, response)
 }
 
 // Вспомогательные функции
