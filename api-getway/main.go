@@ -6,9 +6,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/plagiarism-checker/api-gateway/internal/app"
-	"github.com/plagiarism-checker/api-gateway/internal/config"
-	"github.com/plagiarism-checker/api-gateway/pkg/logger"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/internal/app"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/internal/config"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/pkg/logger"
 )
 
 func main() {

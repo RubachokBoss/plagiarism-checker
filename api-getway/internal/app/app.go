@@ -3,11 +3,10 @@ package app
 import (
 	"context"
 
-	"github.com/plagiarism-checker/api-gateway/internal/config"
-	"github.com/plagiarism-checker/api-gateway/internal/handler"
-	"github.com/plagiarism-checker/api-gateway/internal/middleware"
-	"github.com/plagiarism-checker/api-gateway/internal/server"
-	"github.com/plagiarism-checker/api-gateway/pkg/logger"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/internal/config"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/internal/handler"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/internal/middleware"
+	"github.com/RubachokBoss/plagiarism-checker/api-gateway/internal/server"
 	"github.com/rs/zerolog"
 )
 

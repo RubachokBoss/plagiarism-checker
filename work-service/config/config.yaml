@@ -1,0 +1,62 @@
+server:
+  address: ":8081"
+  read_timeout: 15s
+  write_timeout: 15s
+  idle_timeout: 60s
+  shutdown_timeout: 10s
+
+database:
+  host: "postgres-work"
+  port: 5432
+  user: "work_user"
+  password: "work_password"
+  name: "work_db"
+  sslmode: "disable"
+  max_open_conns: 25
+  max_idle_conns: 5
+  conn_max_lifetime: "5m"
+
+services:
+  file:
+    url: "http://file-service:8082"
+    upload_endpoint: "/api/v1/upload"
+    timeout: 30s
+    retry_count: 3
+    retry_delay: "100ms"
+
+  analysis:
+    url: "http://analysis-service:8083"
+    reports_endpoint: "/api/v1/reports"
+    timeout: 10s
+    retry_count: 3
+    retry_delay: "100ms"
+
+rabbitmq:
+  url: "amqp://guest:guest@rabbitmq:5672/"
+  exchange: "plagiarism_exchange"
+  routing_key: "work.created"
+  queue_name: "work_created_queue"
+
+logging:
+  level: "info"
+  pretty: false
+  no_color: false
+
+cors:
+  allowed_origins:
+    - "*"
+  allowed_methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "OPTIONS"
+  allowed_headers:
+    - "Accept"
+    - "Authorization"
+    - "Content-Type"
+    - "X-CSRF-Token"
+  exposed_headers:
+    - "Link"
+  allow_credentials: true
+  max_age: 300

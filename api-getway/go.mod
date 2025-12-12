@@ -1,4 +1,4 @@
-module github.com/plagiarism-checker/api-gateway
+module github.com/RubachokBoss/plagiarism-checker/api-gateway
 
 go 1.24.0
 
