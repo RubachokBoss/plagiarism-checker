@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	"github.com/RubachokBoss/plagiarism-checker/file-service/internal/models"
 	"github.com/rs/zerolog"
 )
 
@@ -151,9 +151,9 @@ func (r *MinIORepository) GetFileInfo(ctx context.Context, bucket, fileName stri
 	}
 
 	return &models.FileInfoResponse{
-		FileName:    fileName,
-		FileSize:    objInfo.Size,
-		ContentType: objInfo.ContentType,
+		OriginalName: fileName,
+		FileSize:     objInfo.Size,
+		MimeType:     objInfo.ContentType,
 	}, nil
 }
 

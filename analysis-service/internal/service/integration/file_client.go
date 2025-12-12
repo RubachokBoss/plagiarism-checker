@@ -48,7 +48,7 @@ func NewFileClient(baseURL string, timeout time.Duration, retryCount int, retryD
 }
 
 func (c *fileClient) GetFileHash(ctx context.Context, fileID string) (string, int64, error) {
-	url := fmt.Sprintf("%s/files/%s/info", c.baseURL, fileID)
+	url := fmt.Sprintf("%s/api/v1/files/%s/info", c.baseURL, fileID)
 
 	var fileInfo *FileInfoResponse
 	var lastErr error
@@ -105,7 +105,7 @@ func (c *fileClient) GetFileHash(ctx context.Context, fileID string) (string, in
 }
 
 func (c *fileClient) GetFileContent(ctx context.Context, fileID string) ([]byte, error) {
-	url := fmt.Sprintf("%s/files/%s", c.baseURL, fileID)
+	url := fmt.Sprintf("%s/api/v1/files/%s", c.baseURL, fileID)
 
 	var lastErr error
 
@@ -160,7 +160,7 @@ func (c *fileClient) GetFileContent(ctx context.Context, fileID string) ([]byte,
 }
 
 func (c *fileClient) GetFileInfo(ctx context.Context, fileID string) (*FileInfoResponse, error) {
-	url := fmt.Sprintf("%s/files/%s/info", c.baseURL, fileID)
+	url := fmt.Sprintf("%s/api/v1/files/%s/info", c.baseURL, fileID)
 
 	var fileInfo *FileInfoResponse
 	var lastErr error

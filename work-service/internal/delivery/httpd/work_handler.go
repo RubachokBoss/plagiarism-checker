@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/models"
 	"github.com/go-chi/chi/v5"
@@ -12,7 +13,7 @@ import (
 
 func (h *Handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 	// Проверяем Content-Type
-	if r.Header.Get("Content-Type") == "multipart/form-data" {
+	if strings.HasPrefix(r.Header.Get("Content-Type"), "multipart/form-data") {
 		h.UploadWork(w, r)
 		return
 	}
@@ -165,6 +166,35 @@ func (h *Handler) DeleteWork(w http.ResponseWriter, r *http.Request) {
 
 	writeSuccess(w, map[string]interface{}{
 		"message": "Work deleted successfully",
+	})
+}
+
+func (h *Handler) UpdateWorkStatus(w http.ResponseWriter, r *http.Request) {
+	workID := chi.URLParam(r, "id")
+	if workID == "" {
+		writeError(w, http.StatusBadRequest, "Work ID is required")
+		return
+	}
+
+	var req models.UpdateWorkStatusRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+	if req.Status == "" {
+		writeError(w, http.StatusBadRequest, "status is required")
+		return
+	}
+
+	if err := h.workService.UpdateWorkStatus(r.Context(), workID, req.Status); err != nil {
+		h.handleServiceError(w, err)
+		return
+	}
+
+	writeSuccess(w, map[string]interface{}{
+		"message": "Work status updated successfully",
+		"id":      workID,
+		"status":  req.Status,
 	})
 }
 

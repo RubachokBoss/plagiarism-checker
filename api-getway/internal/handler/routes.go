@@ -15,22 +15,43 @@ func (h *Handler) SetupProxyRoutes(workProxy, fileProxy, analysisProxy *ServiceP
 			r.Post("/", workProxy.ServeHTTP)
 			r.Get("/{id}/reports", workProxy.ServeHTTP)
 			r.Get("/{id}", workProxy.ServeHTTP) // Для отладки
+			r.Put("/{id}/status", workProxy.ServeHTTP)
 		})
 
 		// Files endpoints (работают с file-service)
 		r.Route("/files", func(r chi.Router) {
+			r.Post("/upload", fileProxy.ServeHTTP)
+			r.Post("/upload/bytes", fileProxy.ServeHTTP)
 			r.Get("/{id}", fileProxy.ServeHTTP)
-			r.Get("/{id}/download", fileProxy.ServeHTTP) // Альтернативный путь
+			r.Get("/{id}/info", fileProxy.ServeHTTP)
+			r.Get("/{id}/url", fileProxy.ServeHTTP)
+			r.Delete("/{id}", fileProxy.ServeHTTP)
+			r.Get("/download/by-hash", fileProxy.ServeHTTP)
 		})
 
 		// Analysis endpoints (работают с analysis-service)
 		r.Route("/analysis", func(r chi.Router) {
-			r.Get("/reports/{id}", analysisProxy.ServeHTTP)
+			r.Post("/", analysisProxy.ServeHTTP)
+			r.Post("/batch", analysisProxy.ServeHTTP)
+			r.Post("/async", analysisProxy.ServeHTTP)
+			r.Get("/{work_id}", analysisProxy.ServeHTTP)
+			r.Post("/retry", analysisProxy.ServeHTTP)
+		})
+
+		// Reports endpoints (работают с analysis-service)
+		r.Route("/reports", func(r chi.Router) {
+			r.Get("/", analysisProxy.ServeHTTP)
+			r.Get("/{report_id}", analysisProxy.ServeHTTP)
+			r.Get("/work/{work_id}", analysisProxy.ServeHTTP)
+			r.Get("/assignment/{assignment_id}", analysisProxy.ServeHTTP)
+			r.Get("/student/{student_id}", analysisProxy.ServeHTTP)
+			r.Get("/export", analysisProxy.ServeHTTP)
 		})
 
 		// Assignments endpoints (работают с work-service)
 		r.Route("/assignments", func(r chi.Router) {
 			r.Get("/", workProxy.ServeHTTP)
+			r.Post("/", workProxy.ServeHTTP)
 			r.Get("/{id}", workProxy.ServeHTTP)
 			r.Get("/{id}/works", workProxy.ServeHTTP)
 		})

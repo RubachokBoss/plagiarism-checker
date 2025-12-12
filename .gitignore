@@ -1,0 +1,25 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.cursor/
+
+# Env / secrets
+.env
+
+# Go
+**/bin/
+**/*.exe
+**/*.dll
+**/*.so
+**/*.dylib
+**/*.test
+**/*.out
+**/coverage.*
+vendor/
+
+# Logs
+*.log
+
+

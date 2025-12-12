@@ -44,11 +44,11 @@ docker-run:
 
 migrate-up:
 	@echo "Применение миграций..."
-	go run main.go migrate up
+	go run main.go migrate -direction up
 
 migrate-down:
 	@echo "Откат миграций..."
-	go run main.go migrate down
+	go run main.go migrate -direction down
 
 lint:
 	@echo "Проверка кода..."

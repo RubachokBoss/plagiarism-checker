@@ -39,7 +39,7 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 
 	driver, err := postgres.WithInstance(db, &postgres.Config{})
 	if err != nil {
-		panic(fmt.Sprintf("failed to create migration driver: %w", err))
+		panic(fmt.Sprintf("failed to create migration driver: %v", err))
 	}
 
 	// Получаем путь к миграциям
@@ -53,7 +53,7 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 		"postgres", driver,
 	)
 	if err != nil {
-		panic(fmt.Sprintf("failed to create migrator: %w", err))
+		panic(fmt.Sprintf("failed to create migrator: %v", err))
 	}
 
 	return &Migrator{migrate: m}

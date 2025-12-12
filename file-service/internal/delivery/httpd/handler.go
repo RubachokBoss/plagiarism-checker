@@ -45,24 +45,27 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 	router.Get("/ready", h.ReadyCheck)
 	router.Get("/stats", h.GetStats)
 
-	// File operations
-	router.Route("/files", func(r chi.Router) {
-		r.Post("/upload", h.UploadFile)
-		r.Post("/upload/bytes", h.UploadBytes) // Новый эндпоинт
-		r.Get("/{file_id}", h.DownloadFile)
-		r.Get("/{file_id}/info", h.GetFileInfo)
-		r.Get("/{file_id}/url", h.GetFileURL)
-		r.Delete("/{file_id}", h.DeleteFile)
-		r.Get("/download/by-hash", h.DownloadByHash) // Новый эндпоинт
-	})
+	// Versioned API
+	router.Route("/api/v1", func(api chi.Router) {
+		// File operations
+		api.Route("/files", func(r chi.Router) {
+			r.Post("/upload", h.UploadFile)
+			r.Post("/upload/bytes", h.UploadBytes) // Новый эндпоинт
+			r.Get("/{file_id}", h.DownloadFile)
+			r.Get("/{file_id}/info", h.GetFileInfo)
+			r.Get("/{file_id}/url", h.GetFileURL)
+			r.Delete("/{file_id}", h.DeleteFile)
+			r.Get("/download/by-hash", h.DownloadByHash) // Новый эндпоинт
+		})
 
-	// Admin operations
-	router.Route("/admin/files", func(r chi.Router) {
-		r.Get("/", h.ListFiles)
-		r.Get("/search", h.SearchFiles)
-		r.Delete("/cleanup", h.CleanupFiles)
-		r.Get("/associations/{file_id}", h.GetFileAssociations) // Новый эндпоинт
-		r.Post("/associate", h.AssociateFile)                   // Новый эндпоинт
+		// Admin operations
+		api.Route("/admin/files", func(r chi.Router) {
+			r.Get("/", h.ListFiles)
+			r.Get("/search", h.SearchFiles)
+			r.Delete("/cleanup", h.CleanupFiles)
+			r.Get("/associations/{file_id}", h.GetFileAssociations) // Новый эндпоинт
+			r.Post("/associate", h.AssociateFile)                   // Новый эндпоинт
+		})
 	})
 }
 

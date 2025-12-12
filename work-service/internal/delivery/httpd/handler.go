@@ -2,10 +2,11 @@ package httpd
 
 import (
 	"encoding/json"
-	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/service"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/service"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog"
@@ -39,34 +40,38 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 	// Health check
 	router.Get("/health", h.HealthCheck)
 
-	// Works routes
-	router.Route("/works", func(r chi.Router) {
-		r.Post("/", h.CreateWork)
-		r.Get("/", h.GetAllWorks)
-		r.Get("/{id}", h.GetWorkByID)
-		r.Delete("/{id}", h.DeleteWork)
-		r.Get("/{id}/reports", h.GetWorkReport)
-	})
+	// Versioned API
+	router.Route("/api/v1", func(api chi.Router) {
+		// Works routes
+		api.Route("/works", func(r chi.Router) {
+			r.Post("/", h.CreateWork)
+			r.Get("/", h.GetAllWorks)
+			r.Get("/{id}", h.GetWorkByID)
+			r.Delete("/{id}", h.DeleteWork)
+			r.Get("/{id}/reports", h.GetWorkReport)
+			r.Put("/{id}/status", h.UpdateWorkStatus)
+		})
 
-	// Assignments routes
-	router.Route("/assignments", func(r chi.Router) {
-		r.Post("/", h.CreateAssignment)
-		r.Get("/", h.GetAllAssignments)
-		r.Get("/{id}", h.GetAssignmentByID)
-		r.Put("/{id}", h.UpdateAssignment)
-		r.Delete("/{id}", h.DeleteAssignment)
-		r.Get("/{id}/works", h.GetWorksByAssignment)
-	})
+		// Assignments routes
+		api.Route("/assignments", func(r chi.Router) {
+			r.Post("/", h.CreateAssignment)
+			r.Get("/", h.GetAllAssignments)
+			r.Get("/{id}", h.GetAssignmentByID)
+			r.Put("/{id}", h.UpdateAssignment)
+			r.Delete("/{id}", h.DeleteAssignment)
+			r.Get("/{id}/works", h.GetWorksByAssignment)
+		})
 
-	// Students routes
-	router.Route("/students", func(r chi.Router) {
-		r.Post("/", h.CreateStudent)
-		r.Get("/", h.GetAllStudents)
-		r.Get("/{id}", h.GetStudentByID)
-		r.Get("/email/{email}", h.GetStudentByEmail)
-		r.Put("/{id}", h.UpdateStudent)
-		r.Delete("/{id}", h.DeleteStudent)
-		r.Get("/{id}/works", h.GetWorksByStudent)
+		// Students routes
+		api.Route("/students", func(r chi.Router) {
+			r.Post("/", h.CreateStudent)
+			r.Get("/", h.GetAllStudents)
+			r.Get("/{id}", h.GetStudentByID)
+			r.Get("/email/{email}", h.GetStudentByEmail)
+			r.Put("/{id}", h.UpdateStudent)
+			r.Delete("/{id}", h.DeleteStudent)
+			r.Get("/{id}/works", h.GetWorksByStudent)
+		})
 	})
 }
 

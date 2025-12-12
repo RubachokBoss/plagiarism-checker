@@ -121,14 +121,14 @@ func setDefaults() {
 
 	// File service defaults
 	viper.SetDefault("services.file.url", "http://file-service:8082")
-	viper.SetDefault("services.file.upload_endpoint", "/api/v1/upload")
+	viper.SetDefault("services.file.upload_endpoint", "/api/v1/files/upload")
 	viper.SetDefault("services.file.timeout", "30s")
 	viper.SetDefault("services.file.retry_count", 3)
 	viper.SetDefault("services.file.retry_delay", "100ms")
 
 	// Analysis service defaults
 	viper.SetDefault("services.analysis.url", "http://analysis-service:8083")
-	viper.SetDefault("services.analysis.reports_endpoint", "/api/v1/reports")
+	viper.SetDefault("services.analysis.reports_endpoint", "/api/v1/reports/work")
 	viper.SetDefault("services.analysis.timeout", "10s")
 	viper.SetDefault("services.analysis.retry_count", 3)
 	viper.SetDefault("services.analysis.retry_delay", "100ms")

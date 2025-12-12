@@ -55,7 +55,7 @@ func (c *workClient) GetPreviousWorks(ctx context.Context, assignmentID, exclude
 }
 
 func (c *workClient) GetWorkInfo(ctx context.Context, workID string) (*models.SimilarWork, error) {
-	url := fmt.Sprintf("%s/works/%s", c.baseURL, workID)
+	url := fmt.Sprintf("%s/api/v1/works/%s", c.baseURL, workID)
 
 	var workInfo *models.SimilarWork
 	var lastErr error
@@ -105,7 +105,7 @@ func (c *workClient) GetWorkInfo(ctx context.Context, workID string) (*models.Si
 }
 
 func (c *workClient) UpdateWorkStatus(ctx context.Context, workID, status string) error {
-	url := fmt.Sprintf("%s/works/%s/status", c.baseURL, workID)
+	url := fmt.Sprintf("%s/api/v1/works/%s/status", c.baseURL, workID)
 
 	updateReq := map[string]string{
 		"status": status,

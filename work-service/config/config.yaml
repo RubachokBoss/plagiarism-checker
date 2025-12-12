@@ -19,14 +19,14 @@ database:
 services:
   file:
     url: "http://file-service:8082"
-    upload_endpoint: "/api/v1/upload"
+    upload_endpoint: "/api/v1/files/upload"
     timeout: 30s
     retry_count: 3
     retry_delay: "100ms"
 
   analysis:
     url: "http://analysis-service:8083"
-    reports_endpoint: "/api/v1/reports"
+    reports_endpoint: "/api/v1/reports/work"
     timeout: 10s
     retry_count: 3
     retry_delay: "100ms"

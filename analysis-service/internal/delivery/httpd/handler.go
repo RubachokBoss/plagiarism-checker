@@ -34,23 +34,26 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 	router.Get("/status", h.GetServiceStatus)
 	router.Get("/stats", h.GetAllStats)
 
-	// Analysis endpoints
-	router.Route("/analysis", func(r chi.Router) {
-		r.Post("/", h.AnalyzeWork)
-		r.Post("/batch", h.BatchAnalyze)
-		r.Post("/async", h.AnalyzeWorkAsync)
-		r.Get("/{work_id}", h.GetAnalysisResult)
-		r.Post("/retry", h.RetryFailedAnalyses)
-	})
+	// Versioned API
+	router.Route("/api/v1", func(api chi.Router) {
+		// Analysis endpoints
+		api.Route("/analysis", func(r chi.Router) {
+			r.Post("/", h.AnalyzeWork)
+			r.Post("/batch", h.BatchAnalyze)
+			r.Post("/async", h.AnalyzeWorkAsync)
+			r.Get("/{work_id}", h.GetAnalysisResult)
+			r.Post("/retry", h.RetryFailedAnalyses)
+		})
 
-	// Report endpoints
-	router.Route("/reports", func(r chi.Router) {
-		r.Get("/", h.SearchReports)
-		r.Get("/{report_id}", h.GetReport)
-		r.Get("/work/{work_id}", h.GetReportByWorkID)
-		r.Get("/assignment/{assignment_id}", h.GetAssignmentStats)
-		r.Get("/student/{student_id}", h.GetStudentStats)
-		r.Get("/export", h.ExportReports)
+		// Report endpoints
+		api.Route("/reports", func(r chi.Router) {
+			r.Get("/", h.SearchReports)
+			r.Get("/{report_id}", h.GetReport)
+			r.Get("/work/{work_id}", h.GetReportByWorkID)
+			r.Get("/assignment/{assignment_id}", h.GetAssignmentStats)
+			r.Get("/student/{student_id}", h.GetStudentStats)
+			r.Get("/export", h.ExportReports)
+		})
 	})
 }
 

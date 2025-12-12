@@ -121,7 +121,7 @@ func (c *fileClient) UploadFile(ctx context.Context, fileContent []byte, fileNam
 }
 
 func (c *fileClient) GetFile(ctx context.Context, fileID string) ([]byte, error) {
-	url := fmt.Sprintf("%s/files/%s", c.baseURL, fileID)
+	url := fmt.Sprintf("%s/api/v1/files/%s", c.baseURL, fileID)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
@@ -142,7 +142,7 @@ func (c *fileClient) GetFile(ctx context.Context, fileID string) ([]byte, error)
 }
 
 func (c *fileClient) DeleteFile(ctx context.Context, fileID string) error {
-	url := fmt.Sprintf("%s/files/%s", c.baseURL, fileID)
+	url := fmt.Sprintf("%s/api/v1/files/%s", c.baseURL, fileID)
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
 	if err != nil {

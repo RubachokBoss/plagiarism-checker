@@ -1,0 +1,178 @@
+services:
+  # --- Infrastructure ---
+  postgres-work:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${WORK_DB_USER:-work_user}
+      POSTGRES_PASSWORD: ${WORK_DB_PASSWORD:-work_password}
+      POSTGRES_DB: ${WORK_DB_NAME:-work_db}
+    volumes:
+      - postgres_work_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  postgres-file:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${FILE_DB_USER:-file_user}
+      POSTGRES_PASSWORD: ${FILE_DB_PASSWORD:-file_password}
+      POSTGRES_DB: ${FILE_DB_NAME:-file_db}
+    volumes:
+      - postgres_file_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  postgres-analysis:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${ANALYSIS_DB_USER:-analysis_user}
+      POSTGRES_PASSWORD: ${ANALYSIS_DB_PASSWORD:-analysis_password}
+      POSTGRES_DB: ${ANALYSIS_DB_NAME:-analysis_db}
+    volumes:
+      - postgres_analysis_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 30
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  # --- One-shot migrations (run before app services) ---
+  work-migrate:
+    build:
+      context: ./work-service
+    depends_on:
+      postgres-work:
+        condition: service_healthy
+    restart: "no"
+    command: ["/bin/sh", "-c", "./wait-for-it.sh postgres-work:5432 -- ./work-service migrate -direction up"]
+
+  file-migrate:
+    build:
+      context: ./file-service
+    depends_on:
+      postgres-file:
+        condition: service_healthy
+    restart: "no"
+    command: ["/bin/sh", "-c", "./wait-for-it.sh postgres-file:5432 -- ./file-service migrate -direction up"]
+
+  analysis-migrate:
+    build:
+      context: ./analysis-service
+    depends_on:
+      postgres-analysis:
+        condition: service_healthy
+    restart: "no"
+    command: ["/bin/sh", "-c", "./wait-for-it.sh postgres-analysis:5432 -- ./analysis-service migrate up"]
+
+  # --- App services ---
+  file-service:
+    build:
+      context: ./file-service
+    depends_on:
+      file-migrate:
+        condition: service_completed_successfully
+      minio:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8082/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  work-service:
+    build:
+      context: ./work-service
+    depends_on:
+      work-migrate:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
+      file-service:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  analysis-service:
+    build:
+      context: ./analysis-service
+    depends_on:
+      analysis-migrate:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
+      work-service:
+        condition: service_healthy
+      file-service:
+        condition: service_healthy
+    ports:
+      - "8083:8083"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8083/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  api-gateway:
+    build:
+      context: ./api-getway
+    depends_on:
+      work-service:
+        condition: service_healthy
+      file-service:
+        condition: service_healthy
+      analysis-service:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  postgres_work_data:
+  postgres_file_data:
+  postgres_analysis_data:
+  minio_data:
+
+
