@@ -2,87 +2,88 @@ package config
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Server   ServerConfig
-	Database DatabaseConfig
-	Services ServicesConfig
-	RabbitMQ RabbitMQConfig
-	Analysis AnalysisConfig
-	Logging  LoggingConfig
-	CORS     CORSConfig
+	Server   ServerConfig   `mapstructure:"server"`
+	Database DatabaseConfig `mapstructure:"database"`
+	Services ServicesConfig `mapstructure:"services"`
+	RabbitMQ RabbitMQConfig `mapstructure:"rabbitmq"`
+	Analysis AnalysisConfig `mapstructure:"analysis"`
+	Logging  LoggingConfig  `mapstructure:"logging"`
+	CORS     CORSConfig     `mapstructure:"cors"`
 }
 
 type ServerConfig struct {
-	Address         string
-	ReadTimeout     time.Duration
-	WriteTimeout    time.Duration
-	IdleTimeout     time.Duration
-	ShutdownTimeout time.Duration
+	Address         string        `mapstructure:"address"`
+	ReadTimeout     time.Duration `mapstructure:"read_timeout"`
+	WriteTimeout    time.Duration `mapstructure:"write_timeout"`
+	IdleTimeout     time.Duration `mapstructure:"idle_timeout"`
+	ShutdownTimeout time.Duration `mapstructure:"shutdown_timeout"`
 }
 
 type DatabaseConfig struct {
-	Host            string
-	Port            int
-	User            string
-	Password        string
-	Name            string
-	SSLMode         string
-	MaxOpenConns    int
-	MaxIdleConns    int
-	ConnMaxLifetime time.Duration
+	Host            string        `mapstructure:"host"`
+	Port            int           `mapstructure:"port"`
+	User            string        `mapstructure:"user"`
+	Password        string        `mapstructure:"password"`
+	Name            string        `mapstructure:"name"`
+	SSLMode         string        `mapstructure:"sslmode"`
+	MaxOpenConns    int           `mapstructure:"max_open_conns"`
+	MaxIdleConns    int           `mapstructure:"max_idle_conns"`
+	ConnMaxLifetime time.Duration `mapstructure:"conn_max_lifetime"`
 }
 
 type ServiceConfig struct {
-	URL           string
-	WorksEndpoint string
-	FilesEndpoint string
-	HashEndpoint  string
-	Timeout       time.Duration
-	RetryCount    int
-	RetryDelay    time.Duration
+	URL           string        `mapstructure:"url"`
+	WorksEndpoint string        `mapstructure:"works_endpoint"`
+	FilesEndpoint string        `mapstructure:"files_endpoint"`
+	HashEndpoint  string        `mapstructure:"hash_endpoint"`
+	Timeout       time.Duration `mapstructure:"timeout"`
+	RetryCount    int           `mapstructure:"retry_count"`
+	RetryDelay    time.Duration `mapstructure:"retry_delay"`
 }
 
 type ServicesConfig struct {
-	Work ServiceConfig
-	File ServiceConfig
+	Work ServiceConfig `mapstructure:"work"`
+	File ServiceConfig `mapstructure:"file"`
 }
 
 type RabbitMQConfig struct {
-	URL           string
-	Exchange      string
-	RoutingKey    string
-	QueueName     string
-	ConsumerTag   string
-	PrefetchCount int
+	URL           string `mapstructure:"url"`
+	Exchange      string `mapstructure:"exchange"`
+	RoutingKey    string `mapstructure:"routing_key"`
+	QueueName     string `mapstructure:"queue_name"`
+	ConsumerTag   string `mapstructure:"consumer_tag"`
+	PrefetchCount int    `mapstructure:"prefetch_count"`
 }
 
 type AnalysisConfig struct {
-	HashAlgorithm         string
-	SimilarityThreshold   int
-	EnableContentAnalysis bool
-	MaxWorkers            int
-	BatchSize             int
-	Timeout               time.Duration
+	HashAlgorithm         string        `mapstructure:"hash_algorithm"`
+	SimilarityThreshold   int           `mapstructure:"similarity_threshold"`
+	EnableContentAnalysis bool          `mapstructure:"enable_content_analysis"`
+	MaxWorkers            int           `mapstructure:"max_workers"`
+	BatchSize             int           `mapstructure:"batch_size"`
+	Timeout               time.Duration `mapstructure:"timeout"`
 }
 
 type LoggingConfig struct {
-	Level   string
-	Pretty  bool
-	NoColor bool
+	Level   string `mapstructure:"level"`
+	Pretty  bool   `mapstructure:"pretty"`
+	NoColor bool   `mapstructure:"no_color"`
 }
 
 type CORSConfig struct {
-	AllowedOrigins   []string
-	AllowedMethods   []string
-	AllowedHeaders   []string
-	ExposedHeaders   []string
-	AllowCredentials bool
-	MaxAge           int
+	AllowedOrigins   []string `mapstructure:"allowed_origins"`
+	AllowedMethods   []string `mapstructure:"allowed_methods"`
+	AllowedHeaders   []string `mapstructure:"allowed_headers"`
+	ExposedHeaders   []string `mapstructure:"exposed_headers"`
+	AllowCredentials bool     `mapstructure:"allow_credentials"`
+	MaxAge           int      `mapstructure:"max_age"`
 }
 
 func Load() (*Config, error) {
@@ -91,20 +92,17 @@ func Load() (*Config, error) {
 	viper.AddConfigPath("./config")
 	viper.AddConfigPath(".")
 
-	// Установка значений по умолчанию
 	setDefaults()
 
-	// Чтение конфигурации
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			return nil, fmt.Errorf("failed to read config: %w", err)
 		}
 	}
 
-	// Привязка переменных окружения
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.AutomaticEnv()
 
-	// Загрузка конфигурации в структуру
 	var cfg Config
 	if err := viper.Unmarshal(&cfg); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
@@ -114,14 +112,12 @@ func Load() (*Config, error) {
 }
 
 func setDefaults() {
-	// Server defaults
 	viper.SetDefault("server.address", ":8083")
 	viper.SetDefault("server.read_timeout", "15s")
 	viper.SetDefault("server.write_timeout", "15s")
 	viper.SetDefault("server.idle_timeout", "60s")
 	viper.SetDefault("server.shutdown_timeout", "10s")
 
-	// Database defaults
 	viper.SetDefault("database.host", "localhost")
 	viper.SetDefault("database.port", 5432)
 	viper.SetDefault("database.user", "analysis_user")
@@ -132,14 +128,12 @@ func setDefaults() {
 	viper.SetDefault("database.max_idle_conns", 5)
 	viper.SetDefault("database.conn_max_lifetime", "5m")
 
-	// Work service defaults
 	viper.SetDefault("services.work.url", "http://work-service:8081")
 	viper.SetDefault("services.work.works_endpoint", "/api/v1/works")
 	viper.SetDefault("services.work.timeout", "10s")
 	viper.SetDefault("services.work.retry_count", 3)
 	viper.SetDefault("services.work.retry_delay", "100ms")
 
-	// File service defaults
 	viper.SetDefault("services.file.url", "http://file-service:8082")
 	viper.SetDefault("services.file.files_endpoint", "/api/v1/files")
 	viper.SetDefault("services.file.hash_endpoint", "/api/v1/files/by-hash")
@@ -147,7 +141,6 @@ func setDefaults() {
 	viper.SetDefault("services.file.retry_count", 3)
 	viper.SetDefault("services.file.retry_delay", "100ms")
 
-	// RabbitMQ defaults
 	viper.SetDefault("rabbitmq.url", "amqp://guest:guest@localhost:5672/")
 	viper.SetDefault("rabbitmq.exchange", "plagiarism_exchange")
 	viper.SetDefault("rabbitmq.routing_key", "work.created")
@@ -155,7 +148,6 @@ func setDefaults() {
 	viper.SetDefault("rabbitmq.consumer_tag", "analysis-consumer")
 	viper.SetDefault("rabbitmq.prefetch_count", 5)
 
-	// Analysis defaults
 	viper.SetDefault("analysis.hash_algorithm", "sha256")
 	viper.SetDefault("analysis.similarity_threshold", 100)
 	viper.SetDefault("analysis.enable_content_analysis", false)
@@ -163,12 +155,10 @@ func setDefaults() {
 	viper.SetDefault("analysis.batch_size", 10)
 	viper.SetDefault("analysis.timeout", "300s")
 
-	// Logging defaults
 	viper.SetDefault("logging.level", "info")
 	viper.SetDefault("logging.pretty", false)
 	viper.SetDefault("logging.no_color", false)
 
-	// CORS defaults
 	viper.SetDefault("cors.allowed_origins", []string{"*"})
 	viper.SetDefault("cors.allowed_methods", []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
 	viper.SetDefault("cors.allowed_headers", []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"})

@@ -15,7 +15,6 @@ import (
 	"github.com/rs/zerolog"
 )
 
-// Добавим в интерфейс UploadService
 type UploadService interface {
 	UploadFile(ctx context.Context, fileHeader *multipart.FileHeader, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error)
 	UploadFileBytes(ctx context.Context, fileName string, fileBytes []byte, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error)
@@ -23,7 +22,6 @@ type UploadService interface {
 	GetConfig() UploadConfig // Новый метод
 }
 
-// Добавим метод в uploadService структуру
 func (s *uploadService) GetConfig() UploadConfig {
 	return s.config
 }
@@ -61,14 +59,12 @@ func NewUploadService(
 }
 
 func (s *uploadService) UploadFile(ctx context.Context, fileHeader *multipart.FileHeader, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error) {
-	// Открываем файл
 	file, err := fileHeader.Open()
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
 	defer file.Close()
 
-	// Читаем содержимое файла
 	fileBytes, err := io.ReadAll(file)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read file: %w", err)
@@ -78,26 +74,25 @@ func (s *uploadService) UploadFile(ctx context.Context, fileHeader *multipart.Fi
 }
 
 func (s *uploadService) UploadFileBytes(ctx context.Context, fileName string, fileBytes []byte, uploadedBy string, metadata []byte) (*models.UploadFileResponse, error) {
-	// Проверяем размер файла
+	if len(metadata) == 0 {
+		metadata = []byte("{}")
+	}
+
 	if int64(len(fileBytes)) > s.config.MaxUploadSize {
 		return nil, fmt.Errorf("file size exceeds limit: %d bytes", s.config.MaxUploadSize)
 	}
 
-	// Определяем MIME тип
 	mimeType := s.detectMimeType(fileName, fileBytes)
 
-	// Проверяем разрешенные типы файлов
 	if !s.isAllowedType(mimeType, fileName) {
 		return nil, fmt.Errorf("file type not allowed: %s", mimeType)
 	}
 
-	// Генерируем хэш файла
 	fileHash, err := s.hashService.CalculateHash(fileBytes)
 	if err != nil {
 		return nil, fmt.Errorf("failed to calculate file hash: %w", err)
 	}
 
-	// Проверяем дубликаты
 	if s.config.CheckDuplicate {
 		duplicates, err := s.CheckDuplicate(ctx, fileHash, int64(len(fileBytes)))
 		if err != nil {
@@ -109,18 +104,14 @@ func (s *uploadService) UploadFileBytes(ctx context.Context, fileName string, fi
 				Int("duplicates", len(duplicates)).
 				Msg("Duplicate file found")
 
-			// Возвращаем информацию о существующем файле
 			return s.createDuplicateResponse(duplicates[0]), nil
 		}
 	}
 
-	// Генерируем уникальное имя файла
 	uniqueFileName := s.generateUniqueFileName(fileName)
 
-	// Генерируем путь для хранения
 	storagePath := s.generateStoragePath(uniqueFileName)
 
-	// Загружаем файл в хранилище
 	if err := s.storageRepo.UploadFile(
 		ctx,
 		s.config.BucketName,
@@ -131,7 +122,6 @@ func (s *uploadService) UploadFileBytes(ctx context.Context, fileName string, fi
 		return nil, fmt.Errorf("failed to upload file to storage: %w", err)
 	}
 
-	// Создаем метаданные файла
 	fileID := uuid.New().String()
 	fileMetadata := &models.FileMetadata{
 		ID:              fileID,
@@ -150,14 +140,11 @@ func (s *uploadService) UploadFileBytes(ctx context.Context, fileName string, fi
 		Metadata:        metadata,
 	}
 
-	// Сохраняем метаданные в БД
 	if err := s.metadataRepo.Create(ctx, fileMetadata); err != nil {
-		// Пытаемся удалить файл из хранилища в случае ошибки
 		s.storageRepo.DeleteFile(ctx, s.config.BucketName, storagePath)
 		return nil, fmt.Errorf("failed to save file metadata: %w", err)
 	}
 
-	// Генерируем URL для доступа к файлу
 	storageURL := s.generateStorageURL(storagePath)
 
 	s.logger.Info().
@@ -200,7 +187,6 @@ func (s *uploadService) createDuplicateResponse(existingFile *models.FileMetadat
 }
 
 func (s *uploadService) detectMimeType(fileName string, fileBytes []byte) string {
-	// Определяем MIME тип по расширению файла
 	ext := strings.ToLower(filepath.Ext(fileName))
 
 	mimeTypes := map[string]string{
@@ -230,7 +216,6 @@ func (s *uploadService) detectMimeType(fileName string, fileBytes []byte) string
 		return mimeType
 	}
 
-	// По умолчанию возвращаем binary
 	return "application/octet-stream"
 }
 
@@ -242,12 +227,10 @@ func (s *uploadService) isAllowedType(mimeType, fileName string) bool {
 	ext := strings.ToLower(filepath.Ext(fileName))
 	for _, allowed := range s.config.AllowedTypes {
 		if strings.HasPrefix(allowed, ".") {
-			// Проверка по расширению
 			if ext == allowed {
 				return true
 			}
 		} else {
-			// Проверка по MIME типу
 			if strings.HasPrefix(mimeType, allowed) {
 				return true
 			}
@@ -261,7 +244,6 @@ func (s *uploadService) generateUniqueFileName(originalName string) string {
 	ext := filepath.Ext(originalName)
 	name := strings.TrimSuffix(originalName, ext)
 
-	// Удаляем небезопасные символы
 	name = strings.ReplaceAll(name, " ", "_")
 	name = strings.ReplaceAll(name, "..", "")
 

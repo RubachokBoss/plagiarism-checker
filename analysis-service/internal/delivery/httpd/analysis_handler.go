@@ -22,7 +22,6 @@ func (h *Handler) AnalyzeWork(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate required fields
 	if req.WorkID == "" || req.FileID == "" || req.AssignmentID == "" || req.StudentID == "" {
 		writeError(w, http.StatusBadRequest, "All fields (work_id, file_id, assignment_id, student_id) are required")
 		return
@@ -51,7 +50,6 @@ func (h *Handler) AnalyzeWorkAsync(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate required fields
 	if req.WorkID == "" || req.FileID == "" || req.AssignmentID == "" || req.StudentID == "" {
 		writeError(w, http.StatusBadRequest, "All fields (work_id, file_id, assignment_id, student_id) are required")
 		return

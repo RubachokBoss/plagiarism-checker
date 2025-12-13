@@ -43,7 +43,6 @@ func (h *Handler) GetReportByWorkID(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) SearchReports(w http.ResponseWriter, r *http.Request) {
-	// Parse query parameters
 	workID := r.URL.Query().Get("work_id")
 	assignmentID := r.URL.Query().Get("assignment_id")
 	studentID := r.URL.Query().Get("student_id")
@@ -54,7 +53,6 @@ func (h *Handler) SearchReports(w http.ResponseWriter, r *http.Request) {
 	page := getIntQueryParam(r, "page", 1)
 	limit := getIntQueryParam(r, "limit", 20)
 
-	// Build request
 	req := models.SearchReportsRequest{
 		WorkID:         stringOrNil(workID),
 		AssignmentID:   stringOrNil(assignmentID),
@@ -112,7 +110,6 @@ func (h *Handler) GetStudentStats(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) ExportReports(w http.ResponseWriter, r *http.Request) {
-	// Parse query parameters
 	format := r.URL.Query().Get("format")
 	if format == "" {
 		format = "json"
@@ -123,7 +120,6 @@ func (h *Handler) ExportReports(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Build filters
 	filters := make(map[string]interface{})
 
 	if workID := r.URL.Query().Get("work_id"); workID != "" {
@@ -153,7 +149,6 @@ func (h *Handler) ExportReports(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Set appropriate headers
 	w.Header().Set("Content-Type", getContentType(format))
 	w.Header().Set("Content-Disposition", "attachment; filename=\"reports."+format+"\"")
 	w.WriteHeader(http.StatusOK)

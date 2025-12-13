@@ -22,22 +22,17 @@ func NewHashComparator(algorithm string) HashComparator {
 }
 
 func (c *hashComparator) CompareHashes(hash1, hash2 string) (int, error) {
-	// Normalize hashes (remove any whitespace, convert to lowercase)
 	hash1 = strings.ToLower(strings.TrimSpace(hash1))
 	hash2 = strings.ToLower(strings.TrimSpace(hash2))
 
-	// Check hash lengths
 	if len(hash1) != len(hash2) {
 		return 0, fmt.Errorf("hash lengths don't match: %d vs %d", len(hash1), len(hash2))
 	}
 
-	// For exact comparison (binary comparison)
 	if hash1 == hash2 {
 		return 100, nil
 	}
 
-	// For partial comparison (character by character)
-	// This is a simple implementation - for real use, you might want more sophisticated comparison
 	matchingChars := 0
 	for i := 0; i < len(hash1); i++ {
 		if hash1[i] == hash2[i] {
@@ -45,7 +40,6 @@ func (c *hashComparator) CompareHashes(hash1, hash2 string) (int, error) {
 		}
 	}
 
-	// Calculate percentage
 	percentage := (matchingChars * 100) / len(hash1)
 	return percentage, nil
 }
@@ -68,7 +62,6 @@ func (c *hashComparator) GetAlgorithm() string {
 	return c.algorithm
 }
 
-// AdvancedHashComparator provides more sophisticated hash comparison
 type AdvancedHashComparator struct {
 	hashComparator HashComparator
 	threshold      int
@@ -116,6 +109,5 @@ func (c *AdvancedHashComparator) GetSimilarityScore(hash1, hash2 string) (float6
 		return 0, err
 	}
 
-	// Convert to float for more precise calculations
 	return float64(percentage) / 100.0, nil
 }

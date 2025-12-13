@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/models"
@@ -66,35 +65,10 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		Str("assignment_id", assignmentID).
 		Msg("Starting plagiarism check")
 
-	// Get current file hash
 	currentFileHash, currentFileSize, err := c.fileClient.GetFileHash(ctx, fileID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get current file hash: %w", err)
 	}
-
-	// #region agent log
-	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
-		payload := map[string]interface{}{
-			"sessionId":    "debug-session",
-			"runId":        "pre-fix",
-			"hypothesisId": "H2",
-			"location":     "plagiarism_checker.go:CheckPlagiarism:fileHash",
-			"message":      "Fetched current file hash",
-			"data": map[string]interface{}{
-				"workID":       workID,
-				"fileID":       fileID,
-				"fileHash":     currentFileHash,
-				"fileSize":     currentFileSize,
-				"assignmentID": assignmentID,
-			},
-			"timestamp": time.Now().UnixMilli(),
-		}
-		if b, merr := json.Marshal(payload); merr == nil {
-			_, _ = f.Write(append(b, '\n'))
-		}
-		_ = f.Close()
-	}
-	// #endregion
 
 	c.logger.Debug().
 		Str("work_id", workID).
@@ -102,40 +76,16 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		Int64("file_size", currentFileSize).
 		Msg("Got current file hash")
 
-	// Get previous works for this assignment
 	previousWorks, err := c.workClient.GetPreviousWorks(ctx, assignmentID, workID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get previous works: %w", err)
 	}
-
-	// #region agent log
-	if f, ferr := os.OpenFile(`c:\Users\water\plagiarism-checker\.cursor\debug.log`, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); ferr == nil {
-		payload := map[string]interface{}{
-			"sessionId":    "debug-session",
-			"runId":        "pre-fix",
-			"hypothesisId": "H2",
-			"location":     "plagiarism_checker.go:CheckPlagiarism:previousWorks",
-			"message":      "Fetched previous works for comparison",
-			"data": map[string]interface{}{
-				"workID":             workID,
-				"assignmentID":       assignmentID,
-				"previousWorksCount": len(previousWorks),
-			},
-			"timestamp": time.Now().UnixMilli(),
-		}
-		if b, merr := json.Marshal(payload); merr == nil {
-			_, _ = f.Write(append(b, '\n'))
-		}
-		_ = f.Close()
-	}
-	// #endregion
 
 	c.logger.Debug().
 		Str("work_id", workID).
 		Int("previous_works_count", len(previousWorks)).
 		Msg("Got previous works")
 
-	// Prepare results
 	result := &models.AnalysisResult{
 		WorkID:            workID,
 		Status:            "processing",
@@ -144,7 +94,6 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		AnalyzedAt:        time.Now(),
 	}
 
-	// If no previous works, return immediately
 	if len(previousWorks) == 0 {
 		result.Status = "completed"
 		result.PlagiarismFlag = false
@@ -158,12 +107,9 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		return result, nil
 	}
 
-	// Compare with each previous work
 	var similarWorks []models.SimilarWork
 	var highestMatch int = 0
 	var originalWorkID *string
-
-	comparedHashes := make([]string, 0, len(previousWorks))
 
 	for _, prevWork := range previousWorks {
 		prevFileHash := prevWork.FileHash
@@ -174,7 +120,6 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 			continue
 		}
 
-		// Compare hashes
 		matchPercentage, err := c.hashComparator.CompareHashes(currentFileHash, prevFileHash)
 		if err != nil {
 			c.logger.Error().
@@ -184,9 +129,6 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 			continue
 		}
 
-		comparedHashes = append(comparedHashes, prevFileHash)
-
-		// Record similarity
 		similarWork := models.SimilarWork{
 			WorkID:          prevWork.WorkID,
 			StudentID:       prevWork.StudentID,
@@ -196,11 +138,9 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 		}
 		similarWorks = append(similarWorks, similarWork)
 
-		// Update highest match
 		if matchPercentage > highestMatch {
 			highestMatch = matchPercentage
 
-			// If match is 100% and from different student, mark as plagiarism
 			if matchPercentage == 100 && prevWork.StudentID != studentID {
 				originalWorkID = &prevWork.WorkID
 			}
@@ -213,16 +153,13 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 			Msg("Compared with previous work")
 	}
 
-	// Determine if plagiarism is detected
 	plagiarismDetected := false
 	if highestMatch >= c.config.SimilarityThreshold {
-		// Only flag as plagiarism if the match is with a different student
 		if originalWorkID != nil {
 			plagiarismDetected = true
 		}
 	}
 
-	// Prepare result details
 	details := models.ReportDetails{
 		ComparisonResults: make([]models.ComparisonResult, 0, len(similarWorks)),
 		FileInfo: models.FileInfo{
@@ -250,7 +187,6 @@ func (c *plagiarismChecker) CheckPlagiarism(ctx context.Context, workID, fileID,
 
 	detailsJSON, _ := json.Marshal(details)
 
-	// Complete result
 	result.Status = "completed"
 	result.PlagiarismFlag = plagiarismDetected
 	result.OriginalWorkID = originalWorkID
@@ -281,7 +217,6 @@ func (c *plagiarismChecker) BatchCheck(ctx context.Context, requests []models.Pl
 				Str("work_id", req.WorkID).
 				Msg("Failed to check plagiarism in batch")
 
-			// Create failed result
 			failedResult := &models.AnalysisResult{
 				WorkID:     req.WorkID,
 				Status:     "failed",

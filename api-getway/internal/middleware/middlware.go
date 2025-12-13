@@ -2,25 +2,23 @@ package middleware
 
 import (
 	"context"
-	"github.com/go-chi/cors"
 	"net/http"
 	"time"
+
+	"github.com/go-chi/cors"
 
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/rs/zerolog"
 )
 
-// RequestLogger - логирование HTTP запросов
 func RequestLogger(log zerolog.Logger) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
-			// Получаем request ID
 			reqID := middleware.GetReqID(r.Context())
 			if reqID == "" {
 				reqID = "unknown"
 			}
 
-			// Создаем логгер с request ID
 			requestLog := log.With().
 				Str("request_id", reqID).
 				Logger()
@@ -28,7 +26,6 @@ func RequestLogger(log zerolog.Logger) func(next http.Handler) http.Handler {
 			ww := middleware.NewWrapResponseWriter(w, r.ProtoMajor)
 			start := time.Now()
 
-			// Добавляем логгер в контекст
 			ctx := context.WithValue(r.Context(), "logger", requestLog)
 			r = r.WithContext(ctx)
 
@@ -51,7 +48,6 @@ func RequestLogger(log zerolog.Logger) func(next http.Handler) http.Handler {
 	}
 }
 
-// Recovery - обработка паник
 func Recovery(log zerolog.Logger) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
@@ -75,14 +71,12 @@ func Recovery(log zerolog.Logger) func(next http.Handler) http.Handler {
 	}
 }
 
-// Timeout - middleware с таймаутом (используем стандартный http.TimeoutHandler)
 func Timeout(timeout time.Duration) func(next http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.TimeoutHandler(next, timeout, "Request timeout")
 	}
 }
 
-// CORS middleware (оставляем как есть из cors.go)
 func NewCORS(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders []string,
 	allowCredentials bool, maxAge int) func(http.Handler) http.Handler {
 
@@ -96,10 +90,9 @@ func NewCORS(allowedOrigins, allowedMethods, allowedHeaders, exposedHeaders []st
 	})
 }
 
-// GetLoggerFromContext - вспомогательная функция для получения логгера из контекста
 func GetLoggerFromContext(ctx context.Context) zerolog.Logger {
 	if logger, ok := ctx.Value("logger").(zerolog.Logger); ok {
 		return logger
 	}
-	return zerolog.Nop() // Возвращаем "пустой" логгер если не найден
+	return zerolog.Nop() // возвращаем пустой логгер если не найден
 }

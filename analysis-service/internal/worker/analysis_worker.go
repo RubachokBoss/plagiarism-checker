@@ -3,7 +3,9 @@ package worker
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -11,6 +13,7 @@ import (
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/repository"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/service"
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/worker/queue"
+	"github.com/google/uuid"
 	"github.com/rs/zerolog"
 )
 
@@ -61,18 +64,15 @@ func NewAnalysisWorker(
 func (w *analysisWorker) Start(ctx context.Context) error {
 	w.logger.Info().Msg("Starting analysis worker...")
 
-	// Start worker pool
 	if err := w.workerPool.Start(ctx); err != nil {
 		return fmt.Errorf("failed to start worker pool: %w", err)
 	}
 
-	// Start consuming messages
 	msgs, err := w.queueConsumer.Consume(ctx)
 	if err != nil {
 		return fmt.Errorf("failed to start consuming messages: %w", err)
 	}
 
-	// Start message processing loop
 	go w.processMessages(ctx, msgs)
 
 	w.logger.Info().Msg("Analysis worker started successfully")
@@ -82,12 +82,10 @@ func (w *analysisWorker) Start(ctx context.Context) error {
 func (w *analysisWorker) Stop() error {
 	w.logger.Info().Msg("Stopping analysis worker...")
 
-	// Stop worker pool
 	if err := w.workerPool.Stop(); err != nil {
 		w.logger.Error().Err(err).Msg("Failed to stop worker pool")
 	}
 
-	// Close queue consumer
 	if err := w.queueConsumer.Close(); err != nil {
 		w.logger.Error().Err(err).Msg("Failed to close queue consumer")
 	}
@@ -113,27 +111,29 @@ func (w *analysisWorker) processMessages(ctx context.Context, msgs <-chan queue.
 				return
 			}
 
-			// Process message in worker pool
 			w.workerPool.Submit(func() {
 				if err := w.processMessage(ctx, msg); err != nil {
 					w.logger.Error().Err(err).Msg("Failed to process message")
 
-					// Update stats
 					w.statsMutex.Lock()
 					w.stats.FailedJobs++
 					w.statsMutex.Unlock()
 
-					// Nack the message (requeue)
-					if err := msg.Nack(false, true); err != nil {
-						w.logger.Error().Err(err).Msg("Failed to nack message")
+					if isPermanentError(err) {
+						if ackErr := msg.Ack(false); ackErr != nil {
+							w.logger.Error().Err(ackErr).Msg("Failed to ack message")
+						}
+						return
+					}
+
+					if nackErr := msg.Nack(false, true); nackErr != nil {
+						w.logger.Error().Err(nackErr).Msg("Failed to nack message")
 					}
 				} else {
-					// Ack the message
 					if err := msg.Ack(false); err != nil {
 						w.logger.Error().Err(err).Msg("Failed to ack message")
 					}
 
-					// Update stats
 					w.statsMutex.Lock()
 					w.stats.TotalProcessed++
 					if time.Since(msg.Timestamp).Hours() < 24 {
@@ -147,10 +147,16 @@ func (w *analysisWorker) processMessages(ctx context.Context, msgs <-chan queue.
 }
 
 func (w *analysisWorker) processMessage(ctx context.Context, msg queue.RabbitMQMessage) error {
-	// Parse work created event
 	var event models.WorkCreatedEvent
 	if err := json.Unmarshal(msg.Body, &event); err != nil {
-		return fmt.Errorf("failed to unmarshal event: %w", err)
+		return permanent(fmt.Errorf("failed to unmarshal event: %w", err))
+	}
+
+	if strings.TrimSpace(event.WorkID) == "" {
+		return permanent(errors.New("empty work_id"))
+	}
+	if strings.TrimSpace(event.FileID) == "" {
+		return permanent(errors.New("empty file_id"))
 	}
 
 	w.logger.Info().
@@ -159,14 +165,12 @@ func (w *analysisWorker) processMessage(ctx context.Context, msg queue.RabbitMQM
 		Str("assignment_id", event.AssignmentID).
 		Msg("Processing work analysis")
 
-	// Process the work
 	return w.ProcessWork(ctx, event.WorkID, event.FileID, event.AssignmentID, event.StudentID)
 }
 
 func (w *analysisWorker) ProcessWork(ctx context.Context, workID, fileID, assignmentID, studentID string) error {
 	startTime := time.Now()
 
-	// Check if report already exists
 	exists, err := w.reportRepo.Exists(ctx, workID)
 	if err != nil {
 		return fmt.Errorf("failed to check if report exists: %w", err)
@@ -179,9 +183,8 @@ func (w *analysisWorker) ProcessWork(ctx context.Context, workID, fileID, assign
 		return nil
 	}
 
-	// Create initial report
 	report := &models.Report{
-		ID:           fmt.Sprintf("report_%s", workID),
+		ID:           uuid.New().String(),
 		WorkID:       workID,
 		FileID:       fileID,
 		AssignmentID: assignmentID,
@@ -196,10 +199,8 @@ func (w *analysisWorker) ProcessWork(ctx context.Context, workID, fileID, assign
 		return fmt.Errorf("failed to create report: %w", err)
 	}
 
-	// Perform plagiarism check
 	result, err := w.analysisService.AnalyzeWork(ctx, workID, fileID, assignmentID, studentID)
 	if err != nil {
-		// Update report with failure
 		report.Status = models.ReportStatusFailed.String()
 		report.UpdatedAt = time.Now()
 		if updateErr := w.reportRepo.Update(ctx, report); updateErr != nil {
@@ -209,7 +210,6 @@ func (w *analysisWorker) ProcessWork(ctx context.Context, workID, fileID, assign
 		return fmt.Errorf("failed to analyze work: %w", err)
 	}
 
-	// Update report with results
 	completedAt := time.Now()
 	processingTime := int(completedAt.Sub(startTime).Milliseconds())
 
@@ -223,12 +223,10 @@ func (w *analysisWorker) ProcessWork(ctx context.Context, workID, fileID, assign
 	report.CompletedAt = &completedAt
 	report.UpdatedAt = completedAt
 
-	// Convert details to JSON
 	if result.Details != nil {
 		report.Details = result.Details
 	}
 
-	// Save updated report
 	if err := w.reportRepo.Update(ctx, report); err != nil {
 		return fmt.Errorf("failed to update report with results: %w", err)
 	}
@@ -248,7 +246,6 @@ func (w *analysisWorker) GetStats() WorkerStats {
 	w.statsMutex.RLock()
 	defer w.statsMutex.RUnlock()
 
-	// Get current queue length
 	queueLength, err := w.queueConsumer.GetQueueLength()
 	if err != nil {
 		w.logger.Error().Err(err).Msg("Failed to get queue length")
@@ -256,8 +253,23 @@ func (w *analysisWorker) GetStats() WorkerStats {
 		w.stats.QueueLength = queueLength
 	}
 
-	// Get active workers
 	w.stats.ActiveWorkers = w.workerPool.GetActiveWorkers()
 
 	return w.stats
+}
+
+type permanentError struct {
+	err error
+}
+
+func (e permanentError) Error() string { return e.err.Error() }
+func (e permanentError) Unwrap() error { return e.err }
+
+func permanent(err error) error {
+	return permanentError{err: err}
+}
+
+func isPermanentError(err error) bool {
+	var p permanentError
+	return errors.As(err, &p)
 }

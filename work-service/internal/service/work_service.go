@@ -4,8 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/service/integration"
 	"time"
+
+	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/service/integration"
 
 	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/models"
 	"github.com/RubachokBoss/plagiarism-checker/work-service/internal/repository"
@@ -53,7 +54,6 @@ func NewWorkService(
 }
 
 func (s *workService) CreateWork(ctx context.Context, req *models.CreateWorkRequest) (*models.CreateWorkResponse, error) {
-	// Проверяем существование студента
 	studentExists, err := s.studentRepo.Exists(ctx, req.StudentID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to check student existence: %w", err)
@@ -62,7 +62,6 @@ func (s *workService) CreateWork(ctx context.Context, req *models.CreateWorkRequ
 		return nil, errors.New("student not found")
 	}
 
-	// Проверяем существование задания
 	assignmentExists, err := s.assignmentRepo.Exists(ctx, req.AssignmentID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to check assignment existence: %w", err)
@@ -71,7 +70,6 @@ func (s *workService) CreateWork(ctx context.Context, req *models.CreateWorkRequ
 		return nil, errors.New("assignment not found")
 	}
 
-	// Проверяем, не сдавал ли уже студент работу по этому заданию
 	existingWork, err := s.workRepo.GetByStudentAndAssignment(ctx, req.StudentID, req.AssignmentID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to check existing work: %w", err)
@@ -80,7 +78,6 @@ func (s *workService) CreateWork(ctx context.Context, req *models.CreateWorkRequ
 		return nil, errors.New("work already submitted for this assignment")
 	}
 
-	// Создаем работу с временным file_id (будет обновлен позже)
 	workID := uuid.New().String()
 	work := &models.Work{
 		ID:           workID,
@@ -92,7 +89,6 @@ func (s *workService) CreateWork(ctx context.Context, req *models.CreateWorkRequ
 		UpdatedAt:    time.Now(),
 	}
 
-	// Сохраняем работу в БД
 	if err := s.workRepo.Create(ctx, work); err != nil {
 		return nil, fmt.Errorf("failed to create work: %w", err)
 	}
@@ -111,7 +107,6 @@ func (s *workService) CreateWork(ctx context.Context, req *models.CreateWorkRequ
 }
 
 func (s *workService) UploadWork(ctx context.Context, req *models.UploadWorkRequest) (*models.CreateWorkResponse, error) {
-	// Сначала создаем запись работы
 	createReq := &models.CreateWorkRequest{
 		StudentID:    req.StudentID,
 		AssignmentID: req.AssignmentID,
@@ -122,23 +117,22 @@ func (s *workService) UploadWork(ctx context.Context, req *models.UploadWorkRequ
 		return nil, err
 	}
 
-	// Загружаем файл в File Service
 	uploadResp, err := s.fileClient.UploadFile(ctx, req.FileContent, req.FileName)
 	if err != nil {
-		// Если загрузка файла не удалась, нужно удалить созданную запись работы
 		s.workRepo.Delete(ctx, workResponse.ID)
 		return nil, fmt.Errorf("failed to upload file: %w", err)
 	}
+	if uploadResp == nil || uploadResp.FileID == "" {
+		s.workRepo.Delete(ctx, workResponse.ID)
+		return nil, errors.New("file service returned empty file_id")
+	}
 
-	// Обновляем работу с полученным file_id
 	if err := s.workRepo.UpdateFileID(ctx, workResponse.ID, uploadResp.FileID); err != nil {
-		// Если не удалось обновить, удаляем запись и файл
 		s.workRepo.Delete(ctx, workResponse.ID)
 		s.fileClient.DeleteFile(ctx, uploadResp.FileID)
 		return nil, fmt.Errorf("failed to update work with file id: %w", err)
 	}
 
-	// Отправляем событие в RabbitMQ для запуска анализа
 	event := &models.WorkCreatedEvent{
 		WorkID:       workResponse.ID,
 		FileID:       uploadResp.FileID,
@@ -149,10 +143,8 @@ func (s *workService) UploadWork(ctx context.Context, req *models.UploadWorkRequ
 
 	if err := s.rabbitmqClient.PublishWorkCreated(ctx, event); err != nil {
 		s.logger.Error().Err(err).Msg("Failed to publish work created event")
-		// Не прерываем выполнение, только логируем ошибку
 	}
 
-	// Обновляем статус работы на "analyzing"
 	if err := s.workRepo.UpdateStatus(ctx, workResponse.ID, models.WorkStatusAnalyzing.String()); err != nil {
 		s.logger.Error().Err(err).Msg("Failed to update work status to analyzing")
 	}
@@ -175,7 +167,6 @@ func (s *workService) GetWorkByID(ctx context.Context, id string) (*models.WorkW
 		return nil, errors.New("work not found")
 	}
 
-	// Получаем детальную информацию
 	works, _, err := s.workRepo.GetAll(ctx, 1, 0)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get work details: %w", err)
@@ -276,14 +267,12 @@ func (s *workService) DeleteWork(ctx context.Context, id string) error {
 		return errors.New("work not found")
 	}
 
-	// Удаляем файл из File Service
 	if work.FileID != "" && work.FileID != "pending" {
 		if err := s.fileClient.DeleteFile(ctx, work.FileID); err != nil {
 			s.logger.Error().Err(err).Str("file_id", work.FileID).Msg("Failed to delete file")
 		}
 	}
 
-	// Удаляем запись из БД
 	return s.workRepo.Delete(ctx, id)
 }
 

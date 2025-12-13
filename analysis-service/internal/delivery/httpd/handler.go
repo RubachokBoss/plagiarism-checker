@@ -29,14 +29,11 @@ func NewHandler(
 }
 
 func (h *Handler) RegisterRoutes(router chi.Router) {
-	// Health check
 	router.Get("/health", h.HealthCheck)
 	router.Get("/status", h.GetServiceStatus)
 	router.Get("/stats", h.GetAllStats)
 
-	// Versioned API
 	router.Route("/api/v1", func(api chi.Router) {
-		// Analysis endpoints
 		api.Route("/analysis", func(r chi.Router) {
 			r.Post("/", h.AnalyzeWork)
 			r.Post("/batch", h.BatchAnalyze)
@@ -45,7 +42,6 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 			r.Post("/retry", h.RetryFailedAnalyses)
 		})
 
-		// Report endpoints
 		api.Route("/reports", func(r chi.Router) {
 			r.Get("/", h.SearchReports)
 			r.Get("/{report_id}", h.GetReport)
@@ -57,7 +53,6 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 	})
 }
 
-// Вспомогательные функции
 func getIntQueryParam(r *http.Request, key string, defaultValue int) int {
 	value := r.URL.Query().Get(key)
 	if value == "" {

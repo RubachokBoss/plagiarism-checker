@@ -36,12 +36,14 @@ func NewHandler(logger zerolog.Logger, proxyConfig ProxyConfig) *Handler {
 		proxyConfig: proxyConfig,
 	}
 
-	h.setupRoutes()
 	return h
 }
 
+func (h *Handler) SetupBaseRoutes() {
+	h.setupRoutes()
+}
+
 func (h *Handler) setupRoutes() {
-	// Health check
 	h.router.Get("/health", h.HealthCheck)
 	h.router.Get("/ready", h.ReadyCheck)
 	h.router.Get("/live", h.LiveCheck)
@@ -61,7 +63,6 @@ func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) ReadyCheck(w http.ResponseWriter, r *http.Request) {
-	// Здесь можно добавить проверку зависимостей
 	response := map[string]interface{}{
 		"status":    "ready",
 		"timestamp": time.Now().UTC(),
@@ -91,7 +92,6 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
-	// Настраиваем транспорт
 	transport := &http.Transport{
 		MaxIdleConns:       h.proxyConfig.MaxIdleConns,
 		IdleConnTimeout:    h.proxyConfig.IdleConnTimeout,
@@ -100,18 +100,15 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 
 	proxy.Transport = transport
 
-	// Модифицируем запрос
 	proxy.Director = func(req *http.Request) {
 		req.URL.Scheme = target.Scheme
 		req.URL.Host = target.Host
 		req.Host = target.Host
 
-		// Убираем префикс API Gateway
 		if pathPrefix != "" {
 			req.URL.Path = req.URL.Path[len(pathPrefix):]
 		}
 
-		// Добавляем заголовки
 		req.Header.Set("X-Forwarded-Host", req.Host)
 		req.Header.Set("X-Real-IP", req.RemoteAddr)
 
@@ -122,7 +119,6 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 			Msg("Proxying request")
 	}
 
-	// Обработка ошибок прокси
 	proxy.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err error) {
 		h.logger.Error().
 			Err(err).

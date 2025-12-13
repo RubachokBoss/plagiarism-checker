@@ -28,7 +28,6 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 		panic(fmt.Sprintf("failed to open database: %v", err))
 	}
 
-	// Проверка соединения с контекстом
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -41,7 +40,6 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 		panic(fmt.Sprintf("failed to create migration driver: %v", err))
 	}
 
-	// Получаем путь к миграциям
 	migrationPath := "file://migrations"
 	if _, err := os.Stat("migrations"); os.IsNotExist(err) {
 		migrationPath = "file://./migrations"

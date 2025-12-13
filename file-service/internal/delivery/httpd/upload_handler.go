@@ -7,20 +7,17 @@ import (
 )
 
 func (h *Handler) UploadFile(w http.ResponseWriter, r *http.Request) {
-	// Проверяем Content-Type
 	contentType := r.Header.Get("Content-Type")
 	if contentType != "multipart/form-data" && !contains(contentType, "multipart/form-data") {
 		writeError(w, http.StatusBadRequest, "Content-Type must be multipart/form-data")
 		return
 	}
 
-	// Парсим multipart форму
 	if err := r.ParseMultipartForm(32 << 20); err != nil { // 32MB
 		writeError(w, http.StatusBadRequest, "Failed to parse form data")
 		return
 	}
 
-	// Получаем файл
 	file, fileHeader, err := r.FormFile("file")
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "File is required")
@@ -28,14 +25,12 @@ func (h *Handler) UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	// Читаем содержимое файла
 	fileBytes, err := io.ReadAll(file)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "Failed to read file")
 		return
 	}
 
-	// Получаем дополнительные параметры
 	uploadedBy := r.FormValue("uploaded_by")
 	metadataStr := r.FormValue("metadata")
 
@@ -48,8 +43,10 @@ func (h *Handler) UploadFile(w http.ResponseWriter, r *http.Request) {
 		}
 		metadata, _ = json.Marshal(metadataMap)
 	}
+	if len(metadata) == 0 {
+		metadata = []byte("{}")
+	}
 
-	// Загружаем файл
 	ctx := r.Context()
 	response, err := h.uploadService.UploadFileBytes(ctx, fileHeader.Filename, fileBytes, uploadedBy, metadata)
 	if err != nil {
@@ -87,7 +84,6 @@ func contains(s, substr string) bool {
 	return len(s) >= len(substr) && (s == substr || len(s) > len(substr) && (s[:len(substr)] == substr || contains(s[1:], substr)))
 }
 
-// UploadBytesHandler для загрузки файлов из байтов (используется другими сервисами)
 func (h *Handler) UploadBytes(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		FileName   string          `json:"file_name"`

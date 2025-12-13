@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/rs/zerolog"
 
 	"github.com/RubachokBoss/plagiarism-checker/analysis-service/internal/models"
@@ -45,6 +46,12 @@ func NewReportRepository(db *sql.DB, logger zerolog.Logger) ReportRepository {
 }
 
 func (r *reportRepository) Create(ctx context.Context, report *models.Report) error {
+	if report.ID == "" {
+		report.ID = uuid.New().String()
+	} else if _, err := uuid.Parse(report.ID); err != nil {
+		report.ID = uuid.New().String()
+	}
+
 	query := `
 		INSERT INTO reports (
 			id, work_id, file_id, assignment_id, student_id, status,
@@ -124,7 +131,6 @@ func (r *reportRepository) GetByID(ctx context.Context, id string) (*models.Repo
 		return nil, err
 	}
 
-	// Convert nullable fields
 	if originalWorkID.Valid {
 		report.OriginalWorkID = &originalWorkID.String
 	}
@@ -134,7 +140,6 @@ func (r *reportRepository) GetByID(ctx context.Context, id string) (*models.Repo
 		report.ProcessingTimeMs = &timeMs
 	}
 
-	// Convert compared hashes
 	for _, hash := range comparedHashes {
 		if hash.Valid {
 			report.ComparedHashes = append(report.ComparedHashes, hash.String)
@@ -188,7 +193,6 @@ func (r *reportRepository) GetByWorkID(ctx context.Context, workID string) (*mod
 		return nil, err
 	}
 
-	// Convert nullable fields
 	if originalWorkID.Valid {
 		report.OriginalWorkID = &originalWorkID.String
 	}
@@ -198,7 +202,6 @@ func (r *reportRepository) GetByWorkID(ctx context.Context, workID string) (*mod
 		report.ProcessingTimeMs = &timeMs
 	}
 
-	// Convert compared hashes
 	for _, hash := range comparedHashes {
 		if hash.Valid {
 			report.ComparedHashes = append(report.ComparedHashes, hash.String)
@@ -209,7 +212,6 @@ func (r *reportRepository) GetByWorkID(ctx context.Context, workID string) (*mod
 }
 
 func (r *reportRepository) GetByAssignmentID(ctx context.Context, assignmentID string, limit, offset int) ([]models.Report, int, error) {
-	// Get total count
 	countQuery := `SELECT COUNT(*) FROM reports WHERE assignment_id = $1`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery, assignmentID).Scan(&total)
@@ -217,7 +219,6 @@ func (r *reportRepository) GetByAssignmentID(ctx context.Context, assignmentID s
 		return nil, 0, err
 	}
 
-	// Get reports
 	query := `
 		SELECT 
 			id, work_id, file_id, assignment_id, student_id, status,
@@ -249,7 +250,6 @@ func (r *reportRepository) GetByAssignmentID(ctx context.Context, assignmentID s
 }
 
 func (r *reportRepository) GetByStudentID(ctx context.Context, studentID string, limit, offset int) ([]models.Report, int, error) {
-	// Get total count
 	countQuery := `SELECT COUNT(*) FROM reports WHERE student_id = $1`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery, studentID).Scan(&total)
@@ -257,7 +257,6 @@ func (r *reportRepository) GetByStudentID(ctx context.Context, studentID string,
 		return nil, 0, err
 	}
 
-	// Get reports
 	query := `
 		SELECT 
 			id, work_id, file_id, assignment_id, student_id, status,
@@ -289,7 +288,6 @@ func (r *reportRepository) GetByStudentID(ctx context.Context, studentID string,
 }
 
 func (r *reportRepository) GetAll(ctx context.Context, limit, offset int) ([]models.Report, int, error) {
-	// Get total count
 	countQuery := `SELECT COUNT(*) FROM reports`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery).Scan(&total)
@@ -297,7 +295,6 @@ func (r *reportRepository) GetAll(ctx context.Context, limit, offset int) ([]mod
 		return nil, 0, err
 	}
 
-	// Get reports
 	query := `
 		SELECT 
 			id, work_id, file_id, assignment_id, student_id, status,
@@ -410,7 +407,6 @@ func (r *reportRepository) Delete(ctx context.Context, id string) error {
 }
 
 func (r *reportRepository) Search(ctx context.Context, filters map[string]interface{}, limit, offset int) ([]models.Report, int, error) {
-	// Build WHERE clause
 	whereClauses := []string{}
 	args := []interface{}{}
 	argCount := 1
@@ -438,13 +434,11 @@ func (r *reportRepository) Search(ctx context.Context, filters map[string]interf
 		}
 	}
 
-	// Build query
 	whereSQL := ""
 	if len(whereClauses) > 0 {
 		whereSQL = "WHERE " + strings.Join(whereClauses, " AND ")
 	}
 
-	// Get total count
 	countQuery := fmt.Sprintf("SELECT COUNT(*) FROM reports %s", whereSQL)
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery, args...).Scan(&total)
@@ -452,7 +446,6 @@ func (r *reportRepository) Search(ctx context.Context, filters map[string]interf
 		return nil, 0, err
 	}
 
-	// Get reports
 	query := fmt.Sprintf(`
 		SELECT 
 			id, work_id, file_id, assignment_id, student_id, status,
@@ -488,7 +481,6 @@ func (r *reportRepository) Search(ctx context.Context, filters map[string]interf
 func (r *reportRepository) GetStats(ctx context.Context) (*models.AnalysisStats, error) {
 	stats := &models.AnalysisStats{}
 
-	// Basic stats
 	query := `
 		SELECT 
 			COUNT(*) as total_reports,
@@ -510,7 +502,6 @@ func (r *reportRepository) GetStats(ctx context.Context) (*models.AnalysisStats,
 		return nil, err
 	}
 
-	// Top assignments
 	assignmentQuery := `
 		SELECT 
 			assignment_id,
@@ -544,7 +535,6 @@ func (r *reportRepository) GetStats(ctx context.Context) (*models.AnalysisStats,
 		stats.TopAssignments = append(stats.TopAssignments, stat)
 	}
 
-	// Top students
 	studentQuery := `
 		SELECT 
 			student_id,
@@ -578,7 +568,6 @@ func (r *reportRepository) GetStats(ctx context.Context) (*models.AnalysisStats,
 		stats.TopStudents = append(stats.TopStudents, stat)
 	}
 
-	// Recent activity
 	recentQuery := `
 		SELECT 
 			id, work_id, file_id, assignment_id, student_id, status,
@@ -774,7 +763,6 @@ func (r *reportRepository) scanReport(rows *sql.Rows) (*models.Report, error) {
 		return nil, err
 	}
 
-	// Convert nullable fields
 	if originalWorkID.Valid {
 		report.OriginalWorkID = &originalWorkID.String
 	}
@@ -784,7 +772,6 @@ func (r *reportRepository) scanReport(rows *sql.Rows) (*models.Report, error) {
 		report.ProcessingTimeMs = &timeMs
 	}
 
-	// Convert compared hashes
 	for _, hash := range comparedHashes {
 		if hash.Valid {
 			report.ComparedHashes = append(report.ComparedHashes, hash.String)

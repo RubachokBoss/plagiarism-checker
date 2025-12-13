@@ -26,10 +26,6 @@ func main() {
 	if len(os.Args) > 1 {
 		switch os.Args[1] {
 		case "migrate":
-			// Legacy style:
-			//   analysis-service migrate up
-			//   analysis-service migrate down
-			//   analysis-service migrate force <version>
 			sub := "up"
 			if len(os.Args) > 2 {
 				sub = os.Args[2]
@@ -58,7 +54,6 @@ func main() {
 			return
 		}
 	}
-	// Парсинг аргументов командной строки
 	migrateCmd := flag.NewFlagSet("migrate", flag.ExitOnError)
 	migrateDirection := migrateCmd.String("direction", "up", "direction of migration (up/down)")
 	migrateForce := migrateCmd.Int("force", -1, "force version (dangerous). Example: -force 1")
@@ -79,23 +74,19 @@ func main() {
 		}
 	}
 
-	// Инициализация логгера
 	log := logger.New()
 
-	// Загрузка конфигурации
 	cfg, err := config.Load()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to load configuration")
 	}
 
-	// Инициализация базы данных
 	db, err := database.NewPostgres(cfg.Database)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
 	defer db.Close()
 
-	// Проверка соединения с БД
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -105,20 +96,17 @@ func main() {
 
 	log.Info().Msg("Database connection established")
 
-	// Создание приложения
 	application, err := app.New(cfg, log, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to create application")
 	}
 
-	// Контекст для graceful shutdown
 	ctx, stop := signal.NotifyContext(context.Background(),
 		syscall.SIGINT,
 		syscall.SIGTERM,
 	)
 	defer stop()
 
-	// Запуск сервера в горутине
 	go func() {
 		if err := application.Run(); err != nil {
 			log.Fatal().Err(err).Msg("Failed to run application")
@@ -127,11 +115,9 @@ func main() {
 
 	log.Info().Msgf("Analysis Service started on %s", cfg.Server.Address)
 
-	// Ожидание сигнала завершения
 	<-ctx.Done()
 	log.Info().Msg("Shutting down Analysis Service...")
 
-	// Graceful shutdown
 	shutdownCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
@@ -189,7 +175,6 @@ func runWorker() {
 		log.Fatal().Err(err).Msg("Failed to load configuration")
 	}
 
-	// Init database
 	db, err := database.NewPostgres(cfg.Database)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
@@ -202,7 +187,6 @@ func runWorker() {
 		log.Fatal().Err(err).Msg("Failed to ping database")
 	}
 
-	// Init RabbitMQ
 	rabbitMQRepo, err := repository.NewRabbitMQRepository(cfg.RabbitMQ.URL, log)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to RabbitMQ")
@@ -217,7 +201,6 @@ func runWorker() {
 		log.Fatal().Err(err).Msg("Failed to setup RabbitMQ queue")
 	}
 
-	// Create publishers/consumers
 	rabbitMQPublisher := queue.NewRabbitMQPublisher(rabbitMQRepo.Channel(), log)
 	rabbitMQConsumer := queue.NewRabbitMQConsumer(
 		rabbitMQRepo.Channel(),
@@ -226,18 +209,8 @@ func runWorker() {
 		log,
 	)
 
-	// Repositories
 	reportRepo := repository.NewReportRepository(db, log)
 	plagiarismRepo := repository.NewPlagiarismRepository(db, log)
-
-	// Integration clients
-	workClient := integration.NewWorkClient(
-		cfg.Services.Work.URL,
-		cfg.Services.Work.Timeout,
-		cfg.Services.Work.RetryCount,
-		cfg.Services.Work.RetryDelay,
-		log,
-	)
 
 	fileClient := integration.NewFileClient(
 		cfg.Services.File.URL,
@@ -247,7 +220,15 @@ func runWorker() {
 		log,
 	)
 
-	// Analyzers
+	workClient := integration.NewWorkClient(
+		cfg.Services.Work.URL,
+		cfg.Services.Work.Timeout,
+		cfg.Services.Work.RetryCount,
+		cfg.Services.Work.RetryDelay,
+		fileClient,
+		log,
+	)
+
 	hashComparator := analyzer.NewHashComparator(cfg.Analysis.HashAlgorithm)
 	plagiarismChecker := analyzer.NewPlagiarismChecker(
 		workClient,
@@ -265,7 +246,6 @@ func runWorker() {
 
 	messageHandler := queue.NewMessageHandler(log)
 
-	// Services
 	analysisService := service.NewAnalysisService(
 		reportRepo,
 		plagiarismRepo,
@@ -285,7 +265,6 @@ func runWorker() {
 		},
 	)
 
-	// Worker
 	workerPool := worker.NewWorkerPool(cfg.Analysis.MaxWorkers, log)
 	analysisWorker := worker.NewAnalysisWorker(
 		workerPool,

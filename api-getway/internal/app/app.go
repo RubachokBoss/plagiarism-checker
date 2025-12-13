@@ -17,36 +17,14 @@ type App struct {
 }
 
 func New(cfg *config.Config, log zerolog.Logger) (*App, error) {
-	// Создаем обработчик
 	h := handler.NewHandler(log, handler.ProxyConfig{
 		Timeout:         cfg.Proxy.Timeout,
 		MaxIdleConns:    cfg.Proxy.MaxIdleConns,
 		IdleConnTimeout: cfg.Proxy.IdleConnTimeout,
 	})
 
-	// Создаем прокси для сервисов
-	workProxy, err := h.CreateServiceProxy(cfg.Services.Work.URL, "/api/v1/works")
-	if err != nil {
-		return nil, err
-	}
-
-	fileProxy, err := h.CreateServiceProxy(cfg.Services.File.URL, "/api/v1/files")
-	if err != nil {
-		return nil, err
-	}
-
-	analysisProxy, err := h.CreateServiceProxy(cfg.Services.Analysis.URL, "/api/v1/analysis")
-	if err != nil {
-		return nil, err
-	}
-
-	// Настраиваем маршруты прокси
-	h.SetupProxyRoutes(workProxy, fileProxy, analysisProxy)
-
-	// Получаем router
 	router := h.GetRouter()
 
-	// Создаем сервер
 	srv := server.NewServer(server.ServerConfig{
 		Address:         cfg.Server.Address,
 		ReadTimeout:     cfg.Server.ReadTimeout,
@@ -69,6 +47,27 @@ func New(cfg *config.Config, log zerolog.Logger) (*App, error) {
 		middleware.Recovery(log),
 		middleware.Timeout(cfg.Proxy.Timeout),
 	)
+
+	// важно: middleware должны быть навешаны до регистрации роутов
+	h.SetupBaseRoutes()
+
+	workProxy, err := h.CreateServiceProxy(cfg.Services.Work.URL, "")
+	if err != nil {
+		return nil, err
+	}
+
+	fileProxy, err := h.CreateServiceProxy(cfg.Services.File.URL, "")
+	if err != nil {
+		return nil, err
+	}
+
+	analysisProxy, err := h.CreateServiceProxy(cfg.Services.Analysis.URL, "")
+	if err != nil {
+		return nil, err
+	}
+
+	// Настраиваем маршруты прокси
+	h.SetupProxyRoutes(workProxy, fileProxy, analysisProxy)
 
 	return &App{
 		server: srv,

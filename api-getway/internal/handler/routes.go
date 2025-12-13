@@ -8,17 +8,16 @@ import (
 )
 
 func (h *Handler) SetupProxyRoutes(workProxy, fileProxy, analysisProxy *ServiceProxy) {
-	// API версионирование
 	h.router.Route("/api/v1", func(r chi.Router) {
-		// Works endpoints (работают с work-service)
 		r.Route("/works", func(r chi.Router) {
 			r.Post("/", workProxy.ServeHTTP)
+			r.Get("/", workProxy.ServeHTTP)
 			r.Get("/{id}/reports", workProxy.ServeHTTP)
-			r.Get("/{id}", workProxy.ServeHTTP) // Для отладки
+			r.Get("/{id}", workProxy.ServeHTTP) // для отладки
 			r.Put("/{id}/status", workProxy.ServeHTTP)
+			r.Delete("/{id}", workProxy.ServeHTTP)
 		})
 
-		// Files endpoints (работают с file-service)
 		r.Route("/files", func(r chi.Router) {
 			r.Post("/upload", fileProxy.ServeHTTP)
 			r.Post("/upload/bytes", fileProxy.ServeHTTP)
@@ -29,7 +28,6 @@ func (h *Handler) SetupProxyRoutes(workProxy, fileProxy, analysisProxy *ServiceP
 			r.Get("/download/by-hash", fileProxy.ServeHTTP)
 		})
 
-		// Analysis endpoints (работают с analysis-service)
 		r.Route("/analysis", func(r chi.Router) {
 			r.Post("/", analysisProxy.ServeHTTP)
 			r.Post("/batch", analysisProxy.ServeHTTP)
@@ -38,7 +36,6 @@ func (h *Handler) SetupProxyRoutes(workProxy, fileProxy, analysisProxy *ServiceP
 			r.Post("/retry", analysisProxy.ServeHTTP)
 		})
 
-		// Reports endpoints (работают с analysis-service)
 		r.Route("/reports", func(r chi.Router) {
 			r.Get("/", analysisProxy.ServeHTTP)
 			r.Get("/{report_id}", analysisProxy.ServeHTTP)
@@ -48,24 +45,26 @@ func (h *Handler) SetupProxyRoutes(workProxy, fileProxy, analysisProxy *ServiceP
 			r.Get("/export", analysisProxy.ServeHTTP)
 		})
 
-		// Assignments endpoints (работают с work-service)
 		r.Route("/assignments", func(r chi.Router) {
 			r.Get("/", workProxy.ServeHTTP)
 			r.Post("/", workProxy.ServeHTTP)
 			r.Get("/{id}", workProxy.ServeHTTP)
+			r.Put("/{id}", workProxy.ServeHTTP)
+			r.Delete("/{id}", workProxy.ServeHTTP)
 			r.Get("/{id}/works", workProxy.ServeHTTP)
 		})
 
-		// Students endpoints (работают с work-service)
 		r.Route("/students", func(r chi.Router) {
 			r.Get("/", workProxy.ServeHTTP)
 			r.Post("/", workProxy.ServeHTTP)
 			r.Get("/{id}", workProxy.ServeHTTP)
+			r.Get("/email/{email}", workProxy.ServeHTTP)
+			r.Put("/{id}", workProxy.ServeHTTP)
+			r.Delete("/{id}", workProxy.ServeHTTP)
 			r.Get("/{id}/works", workProxy.ServeHTTP)
 		})
 	})
 
-	// Admin endpoints (для мониторинга)
 	h.router.Route("/admin", func(r chi.Router) {
 		r.Get("/metrics", h.adminMetrics)
 		r.Get("/services", h.adminServices)

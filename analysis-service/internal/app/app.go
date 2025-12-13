@@ -30,13 +30,11 @@ type App struct {
 }
 
 func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
-	// Create RabbitMQ repository
 	rabbitMQRepo, err := repository.NewRabbitMQRepository(cfg.RabbitMQ.URL, log)
 	if err != nil {
 		return nil, err
 	}
 
-	// Setup RabbitMQ queue
 	if err := rabbitMQRepo.SetupQueue(
 		cfg.RabbitMQ.Exchange,
 		cfg.RabbitMQ.QueueName,
@@ -45,7 +43,6 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		return nil, err
 	}
 
-	// Create RabbitMQ publisher and consumer
 	rabbitMQPublisher := queue.NewRabbitMQPublisher(rabbitMQRepo.Channel(), log)
 	rabbitMQConsumer := queue.NewRabbitMQConsumer(
 		rabbitMQRepo.Channel(),
@@ -54,18 +51,8 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Create repositories
 	reportRepo := repository.NewReportRepository(db, log)
 	plagiarismRepo := repository.NewPlagiarismRepository(db, log)
-
-	// Create integration clients
-	workClient := integration.NewWorkClient(
-		cfg.Services.Work.URL,
-		cfg.Services.Work.Timeout,
-		cfg.Services.Work.RetryCount,
-		cfg.Services.Work.RetryDelay,
-		log,
-	)
 
 	fileClient := integration.NewFileClient(
 		cfg.Services.File.URL,
@@ -75,7 +62,15 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Create analyzers
+	workClient := integration.NewWorkClient(
+		cfg.Services.Work.URL,
+		cfg.Services.Work.Timeout,
+		cfg.Services.Work.RetryCount,
+		cfg.Services.Work.RetryDelay,
+		fileClient,
+		log,
+	)
+
 	hashComparator := analyzer.NewHashComparator(cfg.Analysis.HashAlgorithm)
 
 	plagiarismChecker := analyzer.NewPlagiarismChecker(
@@ -92,10 +87,8 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		},
 	)
 
-	// Create message handler
 	messageHandler := queue.NewMessageHandler(log)
 
-	// Create services
 	analysisService := service.NewAnalysisService(
 		reportRepo,
 		plagiarismRepo,
@@ -121,10 +114,8 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Create worker pool
 	workerPool := worker.NewWorkerPool(cfg.Analysis.MaxWorkers, log)
 
-	// Create analysis worker
 	analysisWorker := worker.NewAnalysisWorker(
 		workerPool,
 		rabbitMQConsumer,
@@ -133,24 +124,20 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Create HTTP handlers
 	handler := httpd.NewHandler(
 		analysisService,
 		reportService,
 		log,
 	)
 
-	// Create router
 	router := chi.NewRouter()
 
-	// Setup middleware
 	router.Use(middleware.RequestID)
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.Timeout(60 * time.Second))
 
-	// Setup CORS
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   cfg.CORS.AllowedOrigins,
 		AllowedMethods:   cfg.CORS.AllowedMethods,
@@ -160,10 +147,8 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		MaxAge:           cfg.CORS.MaxAge,
 	}))
 
-	// Register routes
 	handler.RegisterRoutes(router)
 
-	// Create HTTP server
 	server := &http.Server{
 		Addr:         cfg.Server.Address,
 		Handler:      router,
@@ -183,14 +168,12 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 }
 
 func (a *App) Run() error {
-	// Start analysis worker
 	ctx := context.Background()
 	if err := a.analysisWorker.Start(ctx); err != nil {
 		a.logger.Error().Err(err).Msg("Failed to start analysis worker")
 		return err
 	}
 
-	// Start HTTP server
 	a.logger.Info().Msgf("Starting analysis service on %s", a.config.Server.Address)
 	return a.server.ListenAndServe()
 }
@@ -198,26 +181,22 @@ func (a *App) Run() error {
 func (a *App) Shutdown(ctx context.Context) error {
 	a.logger.Info().Msg("Shutting down analysis service...")
 
-	// Stop analysis worker
 	if err := a.analysisWorker.Stop(); err != nil {
 		a.logger.Error().Err(err).Msg("Failed to stop analysis worker")
 	}
 
-	// Close RabbitMQ connection
 	if a.rabbitMQRepo != nil {
 		if err := a.rabbitMQRepo.Close(); err != nil {
 			a.logger.Error().Err(err).Msg("Failed to close RabbitMQ connection")
 		}
 	}
 
-	// Close database connection
 	if a.db != nil {
 		if err := a.db.Close(); err != nil {
 			a.logger.Error().Err(err).Msg("Failed to close database connection")
 		}
 	}
 
-	// Shutdown HTTP server
 	if err := a.server.Shutdown(ctx); err != nil {
 		a.logger.Error().Err(err).Msg("Failed to shutdown HTTP server")
 		return err

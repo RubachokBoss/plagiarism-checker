@@ -30,9 +30,9 @@ type fileClient struct {
 }
 
 type UploadResponse struct {
-	FileID string `json:"file_id"`
-	Hash   string `json:"hash"`
-	Size   int64  `json:"size"`
+	FileID string
+	Hash   string
+	Size   int64
 }
 
 func NewFileClient(baseURL, uploadEndpoint string, timeout time.Duration, retryCount int, retryDelay time.Duration, logger zerolog.Logger) FileClient {
@@ -50,11 +50,9 @@ func NewFileClient(baseURL, uploadEndpoint string, timeout time.Duration, retryC
 }
 
 func (c *fileClient) UploadFile(ctx context.Context, fileContent []byte, fileName string) (*UploadResponse, error) {
-	// Создаем multipart запрос
 	var buf bytes.Buffer
 	writer := multipart.NewWriter(&buf)
 
-	// Добавляем файл
 	part, err := writer.CreateFormFile("file", fileName)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create form file: %w", err)
@@ -64,17 +62,13 @@ func (c *fileClient) UploadFile(ctx context.Context, fileContent []byte, fileNam
 		return nil, fmt.Errorf("failed to copy file content: %w", err)
 	}
 
-	writer.Close()
-
-	// Создаем запрос
-	req, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+c.uploadEndpoint, &buf)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create request: %w", err)
+	if err := writer.Close(); err != nil {
+		return nil, fmt.Errorf("failed to close multipart writer: %w", err)
 	}
 
-	req.Header.Set("Content-Type", writer.FormDataContentType())
+	body := buf.Bytes()
+	contentType := writer.FormDataContentType()
 
-	// Выполняем запрос с повторными попытками
 	var resp *http.Response
 	var lastErr error
 
@@ -84,19 +78,31 @@ func (c *fileClient) UploadFile(ctx context.Context, fileContent []byte, fileNam
 			time.Sleep(c.retryDelay * time.Duration(i))
 		}
 
+		req, err := http.NewRequestWithContext(ctx, "POST", c.baseURL+c.uploadEndpoint, bytes.NewReader(body))
+		if err != nil {
+			return nil, fmt.Errorf("failed to create request: %w", err)
+		}
+		req.Header.Set("Content-Type", contentType)
+
 		resp, err = c.client.Do(req)
 		if err == nil && resp.StatusCode == http.StatusOK {
 			break
 		}
 
 		if resp != nil {
+			_, _ = io.Copy(io.Discard, resp.Body)
 			resp.Body.Close()
+			lastErr = fmt.Errorf("file service returned status %d", resp.StatusCode)
+		} else {
+			lastErr = err
 		}
-		lastErr = err
 	}
 
-	if lastErr != nil {
-		return nil, fmt.Errorf("failed to upload file after %d attempts: %w", c.retryCount+1, lastErr)
+	if resp == nil || resp.StatusCode != http.StatusOK {
+		if lastErr != nil {
+			return nil, fmt.Errorf("failed to upload file after %d attempts: %w", c.retryCount+1, lastErr)
+		}
+		return nil, fmt.Errorf("failed to upload file after %d attempts", c.retryCount+1)
 	}
 	defer resp.Body.Close()
 
@@ -105,10 +111,22 @@ func (c *fileClient) UploadFile(ctx context.Context, fileContent []byte, fileNam
 		return nil, fmt.Errorf("file service returned status %d: %s", resp.StatusCode, string(body))
 	}
 
-	// Парсим ответ
-	var uploadResp UploadResponse
-	if err := json.NewDecoder(resp.Body).Decode(&uploadResp); err != nil {
+	var envelope struct {
+		Data struct {
+			FileID   string `json:"file_id"`
+			Hash     string `json:"hash"`
+			FileSize int64  `json:"file_size"`
+		} `json:"data"`
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(&envelope); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
+	}
+
+	uploadResp := UploadResponse{
+		FileID: envelope.Data.FileID,
+		Hash:   envelope.Data.Hash,
+		Size:   envelope.Data.FileSize,
 	}
 
 	c.logger.Info().

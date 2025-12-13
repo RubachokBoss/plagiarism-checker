@@ -30,7 +30,7 @@ type ErrorResponse struct {
 	Code    string `json:"code"`
 }
 
-// NewErrorResponse создает стандартизированный ответ об ошибке
+// формирует единообразный ответ об ошибке
 func NewErrorResponse(status int, message, code string) (int, ErrorResponse) {
 	return status, ErrorResponse{
 		Error:   http.StatusText(status),
@@ -39,7 +39,7 @@ func NewErrorResponse(status int, message, code string) (int, ErrorResponse) {
 	}
 }
 
-// ServiceUnavailableResponse создает ответ "Сервис недоступен"
+// возвращает заготовку для ответа о недоступности сервиса
 func ServiceUnavailableResponse(serviceName string) (int, ErrorResponse) {
 	return http.StatusServiceUnavailable, ErrorResponse{
 		Error:   "Service Unavailable",
