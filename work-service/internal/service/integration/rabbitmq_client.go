@@ -37,7 +37,6 @@ func NewRabbitMQClient(url, exchange, routingKey, queueName string, logger zerol
 		return nil, fmt.Errorf("failed to open channel: %w", err)
 	}
 
-	// Объявляем exchange
 	err = channel.ExchangeDeclare(
 		exchange, // name
 		"direct", // type
@@ -53,7 +52,6 @@ func NewRabbitMQClient(url, exchange, routingKey, queueName string, logger zerol
 		return nil, fmt.Errorf("failed to declare exchange: %w", err)
 	}
 
-	// Объявляем очередь
 	queue, err := channel.QueueDeclare(
 		queueName, // name
 		true,      // durable
@@ -68,7 +66,6 @@ func NewRabbitMQClient(url, exchange, routingKey, queueName string, logger zerol
 		return nil, fmt.Errorf("failed to declare queue: %w", err)
 	}
 
-	// Привязываем очередь к exchange
 	err = channel.QueueBind(
 		queue.Name, // queue name
 		routingKey, // routing key
@@ -104,7 +101,6 @@ func (c *rabbitMQClient) PublishWorkCreated(ctx context.Context, event *models.W
 		return fmt.Errorf("failed to marshal event: %w", err)
 	}
 
-	// Устанавливаем таймаут для публикации
 	publishCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 

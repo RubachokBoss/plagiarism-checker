@@ -195,7 +195,6 @@ func (r *fileMetadataRepository) GetByFileName(ctx context.Context, fileName str
 }
 
 func (r *fileMetadataRepository) GetAll(ctx context.Context, limit, offset int, status string) ([]*models.FileMetadata, int, error) {
-	// Получаем общее количество
 	countQuery := `SELECT COUNT(*) FROM file_metadata WHERE upload_status != 'deleted'`
 	var countArgs []interface{}
 
@@ -210,7 +209,6 @@ func (r *fileMetadataRepository) GetAll(ctx context.Context, limit, offset int, 
 		return nil, 0, err
 	}
 
-	// Получаем файлы
 	query := `
 		SELECT 
 			id, original_name, file_name, file_extension, file_size, mime_type,
@@ -323,7 +321,6 @@ func (r *fileMetadataRepository) SoftDelete(ctx context.Context, id string) erro
 func (r *fileMetadataRepository) GetStats(ctx context.Context) (*models.FileStats, error) {
 	stats := &models.FileStats{}
 
-	// Общая статистика
 	totalQuery := `
 		SELECT 
 			COUNT(*) as total_files,
@@ -342,7 +339,6 @@ func (r *fileMetadataRepository) GetStats(ctx context.Context) (*models.FileStat
 		return nil, err
 	}
 
-	// Файлы за сегодня
 	todayQuery := `
 		SELECT COUNT(*)
 		FROM file_metadata
@@ -355,7 +351,6 @@ func (r *fileMetadataRepository) GetStats(ctx context.Context) (*models.FileStat
 		return nil, err
 	}
 
-	// Топ расширений файлов
 	extQuery := `
 		SELECT 
 			file_extension,

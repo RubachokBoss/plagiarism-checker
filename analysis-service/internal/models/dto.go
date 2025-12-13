@@ -2,7 +2,6 @@ package models
 
 import "time"
 
-// Data Transfer Objects
 
 type CreateReportRequest struct {
 	WorkID       string `json:"work_id" validate:"required"`

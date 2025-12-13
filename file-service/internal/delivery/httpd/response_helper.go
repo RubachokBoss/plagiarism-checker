@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-// Вспомогательные функции для работы с запросами
 func getIntQueryParam(r *http.Request, key string, defaultValue int) int {
 	value := r.URL.Query().Get(key)
 	if value == "" {
@@ -50,7 +49,6 @@ func getBoolQueryParam(r *http.Request, key string, defaultValue bool) bool {
 	return boolValue
 }
 
-// Функции для отправки ответов
 func writeJSON(w http.ResponseWriter, status int, data interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
@@ -82,7 +80,6 @@ func writeSuccess(w http.ResponseWriter, data interface{}) {
 	writeJSON(w, http.StatusOK, response)
 }
 
-// Функция для проверки строки на подстроку (замена рекурсивной contains)
 func stringContains(s, substr string) bool {
 	if len(substr) > len(s) {
 		return false

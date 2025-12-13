@@ -21,13 +21,11 @@ func (h *Handler) DownloadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Устанавливаем заголовки для скачивания
 	w.Header().Set("Content-Type", response.ContentType)
 	w.Header().Set("Content-Disposition", "attachment; filename=\""+response.FileName+"\"")
 	w.Header().Set("Content-Length", strconv.FormatInt(response.FileSize, 10))
 	w.Header().Set("Cache-Control", "private, max-age=86400")
 
-	// Отправляем файл
 	w.WriteHeader(http.StatusOK)
 	w.Write(response.Content)
 }
@@ -91,7 +89,6 @@ func (h *Handler) handleDownloadError(w http.ResponseWriter, err error) {
 	}
 }
 
-// DownloadByHashHandler для скачивания файла по хэшу (используется Analysis Service)
 func (h *Handler) DownloadByHash(w http.ResponseWriter, r *http.Request) {
 	hash := r.URL.Query().Get("hash")
 	fileSize := getInt64QueryParam(r, "size", 0)
@@ -108,13 +105,11 @@ func (h *Handler) DownloadByHash(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Устанавливаем заголовки для скачивания
 	w.Header().Set("Content-Type", response.ContentType)
 	w.Header().Set("Content-Disposition", "attachment; filename=\""+response.FileName+"\"")
 	w.Header().Set("Content-Length", strconv.FormatInt(response.FileSize, 10))
 	w.Header().Set("Cache-Control", "private, max-age=86400")
 
-	// Отправляем файл
 	w.WriteHeader(http.StatusOK)
 	w.Write(response.Content)
 }

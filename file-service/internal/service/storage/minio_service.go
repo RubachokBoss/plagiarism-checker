@@ -10,14 +10,12 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
 
-// MinIOStorage реализация StorageInterface для MinIO
 type MinIOStorage struct {
 	client *minio.Client
 	bucket string
 	region string
 }
 
-// NewMinIOStorage создает новый экземпляр MinIOStorage
 func NewMinIOStorage(config StorageConfig) (*MinIOStorage, error) {
 	client, err := minio.New(config.Endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(config.AccessKey, config.SecretKey, ""),
@@ -28,7 +26,6 @@ func NewMinIOStorage(config StorageConfig) (*MinIOStorage, error) {
 		return nil, fmt.Errorf("failed to create MinIO client: %w", err)
 	}
 
-	// Проверяем соединение
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(config.Timeout)*time.Second)
 	defer cancel()
 
@@ -37,7 +34,6 @@ func NewMinIOStorage(config StorageConfig) (*MinIOStorage, error) {
 		return nil, fmt.Errorf("failed to connect to MinIO: %w", err)
 	}
 
-	// Проверяем существование бакета, создаем если нет
 	exists, err := client.BucketExists(ctx, config.Bucket)
 	if err != nil {
 		return nil, fmt.Errorf("failed to check bucket existence: %w", err)
@@ -150,12 +146,10 @@ func (s *MinIOStorage) Copy(ctx context.Context, srcBucket, srcKey, dstBucket, d
 }
 
 func (s *MinIOStorage) Move(ctx context.Context, srcBucket, srcKey, dstBucket, dstKey string) error {
-	// Копируем файл
 	if err := s.Copy(ctx, srcBucket, srcKey, dstBucket, dstKey); err != nil {
 		return err
 	}
 
-	// Удаляем оригинал
 	return s.Delete(ctx, srcBucket, srcKey)
 }
 
@@ -168,7 +162,5 @@ func (s *MinIOStorage) GeneratePresignedURL(ctx context.Context, bucket, key str
 }
 
 func (s *MinIOStorage) SetPublicAccess(ctx context.Context, bucket, key string, public bool) error {
-	// В MinIO политики доступа настраиваются на уровне бакета
-	// Для простоты возвращаем nil, так как это не критичная функция
 	return nil
 }

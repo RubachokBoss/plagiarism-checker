@@ -102,7 +102,6 @@ func (r *workRepository) GetByStudentAndAssignment(ctx context.Context, studentI
 }
 
 func (r *workRepository) GetByAssignmentID(ctx context.Context, assignmentID string, limit, offset int) ([]models.WorkWithDetails, int, error) {
-	// Получаем общее количество
 	countQuery := `SELECT COUNT(*) FROM works WHERE assignment_id = $1`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery, assignmentID).Scan(&total)
@@ -110,7 +109,6 @@ func (r *workRepository) GetByAssignmentID(ctx context.Context, assignmentID str
 		return nil, 0, err
 	}
 
-	// Получаем работы с деталями
 	query := `
 		SELECT 
 			w.id, w.student_id, w.assignment_id, w.file_id, w.status, w.created_at, w.updated_at,
@@ -155,7 +153,6 @@ func (r *workRepository) GetByAssignmentID(ctx context.Context, assignmentID str
 }
 
 func (r *workRepository) GetByStudentID(ctx context.Context, studentID string, limit, offset int) ([]models.WorkWithDetails, int, error) {
-	// Получаем общее количество
 	countQuery := `SELECT COUNT(*) FROM works WHERE student_id = $1`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery, studentID).Scan(&total)
@@ -163,7 +160,6 @@ func (r *workRepository) GetByStudentID(ctx context.Context, studentID string, l
 		return nil, 0, err
 	}
 
-	// Получаем работы с деталями
 	query := `
 		SELECT 
 			w.id, w.student_id, w.assignment_id, w.file_id, w.status, w.created_at, w.updated_at,
@@ -208,7 +204,6 @@ func (r *workRepository) GetByStudentID(ctx context.Context, studentID string, l
 }
 
 func (r *workRepository) GetAll(ctx context.Context, limit, offset int) ([]models.WorkWithDetails, int, error) {
-	// Получаем общее количество
 	countQuery := `SELECT COUNT(*) FROM works`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery).Scan(&total)
@@ -216,7 +211,6 @@ func (r *workRepository) GetAll(ctx context.Context, limit, offset int) ([]model
 		return nil, 0, err
 	}
 
-	// Получаем все работы с деталями
 	query := `
 		SELECT 
 			w.id, w.student_id, w.assignment_id, w.file_id, w.status, w.created_at, w.updated_at,

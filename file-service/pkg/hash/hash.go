@@ -12,7 +12,6 @@ import (
 	"os"
 )
 
-// HashAlgorithm тип для алгоритмов хэширования
 type HashAlgorithm string
 
 const (
@@ -22,7 +21,6 @@ const (
 	SHA512 HashAlgorithm = "sha512"
 )
 
-// FileHashResult содержит результат хэширования файла
 type FileHashResult struct {
 	Algorithm HashAlgorithm
 	Hash      string
@@ -30,7 +28,6 @@ type FileHashResult struct {
 	FileName  string
 }
 
-// Hasher интерфейс для хэширования
 type Hasher interface {
 	Calculate(data []byte) (string, error)
 	CalculateFile(filePath string) (*FileHashResult, error)
@@ -38,19 +35,16 @@ type Hasher interface {
 	Verify(data []byte, expectedHash string) (bool, error)
 }
 
-// FileHasher реализация хэширования файлов
 type FileHasher struct {
 	algorithm HashAlgorithm
 }
 
-// NewFileHasher создает новый FileHasher
 func NewFileHasher(algorithm HashAlgorithm) *FileHasher {
 	return &FileHasher{
 		algorithm: algorithm,
 	}
 }
 
-// Calculate вычисляет хэш для данных
 func (h *FileHasher) Calculate(data []byte) (string, error) {
 	hasher, err := h.getHasher()
 	if err != nil {
@@ -61,7 +55,6 @@ func (h *FileHasher) Calculate(data []byte) (string, error) {
 	return hex.EncodeToString(hasher.Sum(nil)), nil
 }
 
-// CalculateFile вычисляет хэш для файла
 func (h *FileHasher) CalculateFile(filePath string) (*FileHashResult, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -87,7 +80,6 @@ func (h *FileHasher) CalculateFile(filePath string) (*FileHashResult, error) {
 	}, nil
 }
 
-// CalculateReader вычисляет хэш для reader
 func (h *FileHasher) CalculateReader(reader io.Reader) (string, error) {
 	hasher, err := h.getHasher()
 	if err != nil {
@@ -101,7 +93,6 @@ func (h *FileHasher) CalculateReader(reader io.Reader) (string, error) {
 	return hex.EncodeToString(hasher.Sum(nil)), nil
 }
 
-// Verify проверяет хэш данных
 func (h *FileHasher) Verify(data []byte, expectedHash string) (bool, error) {
 	calculatedHash, err := h.Calculate(data)
 	if err != nil {
@@ -111,7 +102,6 @@ func (h *FileHasher) Verify(data []byte, expectedHash string) (bool, error) {
 	return calculatedHash == expectedHash, nil
 }
 
-// getHasher возвращает соответствующий хэшер
 func (h *FileHasher) getHasher() (hash.Hash, error) {
 	switch h.algorithm {
 	case MD5:
@@ -127,7 +117,6 @@ func (h *FileHasher) getHasher() (hash.Hash, error) {
 	}
 }
 
-// CompareFiles сравнивает два файла по хэшу
 func CompareFiles(file1, file2 string, algorithm HashAlgorithm) (bool, error) {
 	hasher := NewFileHasher(algorithm)
 

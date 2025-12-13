@@ -34,7 +34,6 @@ func NewStudentService(studentRepo repository.StudentRepository, logger zerolog.
 }
 
 func (s *studentService) CreateStudent(ctx context.Context, req *models.CreateStudentRequest) (*models.Student, error) {
-	// Проверяем, нет ли студента с таким email
 	existingStudent, err := s.studentRepo.GetByEmail(ctx, req.Email)
 	if err != nil {
 		return nil, fmt.Errorf("failed to check existing student: %w", err)
@@ -114,7 +113,6 @@ func (s *studentService) UpdateStudent(ctx context.Context, id string, req *mode
 		return errors.New("student not found")
 	}
 
-	// Проверяем, не используется ли email другим студентом
 	if req.Email != student.Email {
 		existingStudent, err := s.studentRepo.GetByEmail(ctx, req.Email)
 		if err != nil {
@@ -133,7 +131,6 @@ func (s *studentService) UpdateStudent(ctx context.Context, id string, req *mode
 }
 
 func (s *studentService) DeleteStudent(ctx context.Context, id string) error {
-	// Проверяем, существует ли студент
 	student, err := s.studentRepo.GetByID(ctx, id)
 	if err != nil {
 		return fmt.Errorf("failed to get student: %w", err)
@@ -142,7 +139,6 @@ func (s *studentService) DeleteStudent(ctx context.Context, id string) error {
 		return errors.New("student not found")
 	}
 
-	// Проверяем, есть ли связанные работы
 	if student.TotalWorks > 0 {
 		return errors.New("cannot delete student with existing works")
 	}

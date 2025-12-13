@@ -77,7 +77,6 @@ func (r *assignmentRepository) GetByID(ctx context.Context, id string) (*models.
 }
 
 func (r *assignmentRepository) GetAll(ctx context.Context, limit, offset int) ([]models.AssignmentWithStats, int, error) {
-	// Получаем общее количество
 	countQuery := `SELECT COUNT(*) FROM assignments`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery).Scan(&total)
@@ -85,7 +84,6 @@ func (r *assignmentRepository) GetAll(ctx context.Context, limit, offset int) ([
 		return nil, 0, err
 	}
 
-	// Получаем задания со статистикой
 	query := `
 		SELECT 
 			a.id, a.title, a.description, a.created_at, a.updated_at,

@@ -2,7 +2,6 @@ package models
 
 import "time"
 
-// Data Transfer Objects
 
 type CreateWorkRequest struct {
 	StudentID    string `json:"student_id" validate:"required,uuid"`

@@ -101,7 +101,6 @@ func (r *studentRepository) GetByEmail(ctx context.Context, email string) (*mode
 }
 
 func (r *studentRepository) GetAll(ctx context.Context, limit, offset int) ([]models.StudentWithStats, int, error) {
-	// Получаем общее количество
 	countQuery := `SELECT COUNT(*) FROM students`
 	var total int
 	err := r.db.QueryRowContext(ctx, countQuery).Scan(&total)
@@ -109,7 +108,6 @@ func (r *studentRepository) GetAll(ctx context.Context, limit, offset int) ([]mo
 		return nil, 0, err
 	}
 
-	// Получаем студентов со статистикой
 	query := `
 		SELECT 
 			s.id, s.name, s.email, s.created_at, s.updated_at,

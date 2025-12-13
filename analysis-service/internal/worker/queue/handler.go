@@ -17,7 +17,6 @@ type MessageHandler interface {
 
 type messageHandler struct {
 	logger zerolog.Logger
-	// Add dependencies here (e.g., services)
 }
 
 func NewMessageHandler(logger zerolog.Logger) MessageHandler {
@@ -33,8 +32,6 @@ func (h *messageHandler) HandleWorkCreated(ctx context.Context, event models.Wor
 		Str("assignment_id", event.AssignmentID).
 		Msg("Handling work created event")
 
-	// In real implementation, this would trigger analysis
-	// For now, just log the event
 	return nil
 }
 
@@ -45,8 +42,6 @@ func (h *messageHandler) HandleAnalysisRequest(ctx context.Context, request mode
 		Str("assignment_id", request.AssignmentID).
 		Msg("Handling analysis request")
 
-	// In real implementation, this would start analysis
-	// For now, just log the request
 	return nil
 }
 
@@ -55,25 +50,19 @@ func (h *messageHandler) HandleBatchRequest(ctx context.Context, request models.
 		Int("work_count", len(request.WorkIDs)).
 		Msg("Handling batch analysis request")
 
-	// Process each work in batch
 	for _, workID := range request.WorkIDs {
 		h.logger.Debug().Str("work_id", workID).Msg("Processing work in batch")
-		// In real implementation, process each work
 	}
 
 	return nil
 }
 
-// ProcessMessage processes incoming RabbitMQ messages
 func (h *messageHandler) ProcessMessage(ctx context.Context, msg RabbitMQMessage) error {
-	// Parse message based on routing key or message type
-	// This is a simplified implementation
 	var messageData map[string]interface{}
 	if err := json.Unmarshal(msg.Body, &messageData); err != nil {
 		return fmt.Errorf("failed to unmarshal message: %w", err)
 	}
 
-	// Determine message type
 	msgType, ok := messageData["type"].(string)
 	if !ok {
 		return fmt.Errorf("message type not specified")

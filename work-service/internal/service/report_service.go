@@ -40,7 +40,6 @@ func NewReportService(
 }
 
 func (s *reportService) GetWorkReport(ctx context.Context, workID string) (*models.ReportResponse, error) {
-	// Получаем информацию о работе
 	work, err := s.workRepo.GetByID(ctx, workID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get work: %w", err)
@@ -49,11 +48,9 @@ func (s *reportService) GetWorkReport(ctx context.Context, workID string) (*mode
 		return nil, errors.New("work not found")
 	}
 
-	// Получаем отчет из Analysis Service
 	analysisReport, err := s.analysisClient.GetReport(ctx, workID)
 	if err != nil {
 		s.logger.Error().Err(err).Str("work_id", workID).Msg("Failed to get analysis report")
-		// Если отчет еще не готов, возвращаем базовую информацию
 		if analysisReport == nil {
 			return &models.ReportResponse{
 				WorkID:       work.ID,
@@ -65,7 +62,6 @@ func (s *reportService) GetWorkReport(ctx context.Context, workID string) (*mode
 		}
 	}
 
-	// Собираем полный отчет
 	report := &models.ReportResponse{
 		WorkID:          work.ID,
 		StudentID:       work.StudentID,

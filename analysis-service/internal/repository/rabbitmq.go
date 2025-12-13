@@ -84,7 +84,6 @@ func (r *rabbitMQRepository) Consume(ctx context.Context, queue, consumer string
 		return nil, fmt.Errorf("failed to start consuming: %w", err)
 	}
 
-	// Respect context cancellation by closing channel when done
 	go func() {
 		<-ctx.Done()
 		_ = r.channel.Cancel(consumer, false)
@@ -94,7 +93,6 @@ func (r *rabbitMQRepository) Consume(ctx context.Context, queue, consumer string
 }
 
 func (r *rabbitMQRepository) SetupQueue(exchange, queue, routingKey string) error {
-	// Declare exchange
 	err := r.channel.ExchangeDeclare(
 		exchange, // name
 		"direct", // type
@@ -108,7 +106,6 @@ func (r *rabbitMQRepository) SetupQueue(exchange, queue, routingKey string) erro
 		return fmt.Errorf("failed to declare exchange: %w", err)
 	}
 
-	// Declare queue
 	q, err := r.channel.QueueDeclare(
 		queue, // name
 		true,  // durable
@@ -121,7 +118,6 @@ func (r *rabbitMQRepository) SetupQueue(exchange, queue, routingKey string) erro
 		return fmt.Errorf("failed to declare queue: %w", err)
 	}
 
-	// Bind queue to exchange
 	err = r.channel.QueueBind(
 		q.Name,     // queue name
 		routingKey, // routing key
@@ -158,7 +154,6 @@ func (r *rabbitMQRepository) Close() error {
 	return nil
 }
 
-// PublishWorkCreated publishes a work created event
 func (r *rabbitMQRepository) PublishWorkCreated(ctx context.Context, event interface{}) error {
 	message, err := json.Marshal(event)
 	if err != nil {
@@ -168,7 +163,6 @@ func (r *rabbitMQRepository) PublishWorkCreated(ctx context.Context, event inter
 	return r.Publish(ctx, "plagiarism_exchange", "work.created", message)
 }
 
-// PublishAnalysisCompleted publishes an analysis completed event
 func (r *rabbitMQRepository) PublishAnalysisCompleted(ctx context.Context, event interface{}) error {
 	message, err := json.Marshal(event)
 	if err != nil {

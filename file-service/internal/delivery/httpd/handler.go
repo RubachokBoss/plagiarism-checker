@@ -40,14 +40,11 @@ func NewHandler(
 }
 
 func (h *Handler) RegisterRoutes(router chi.Router) {
-	// Health check
 	router.Get("/health", h.HealthCheck)
 	router.Get("/ready", h.ReadyCheck)
 	router.Get("/stats", h.GetStats)
 
-	// Versioned API
 	router.Route("/api/v1", func(api chi.Router) {
-		// File operations
 		api.Route("/files", func(r chi.Router) {
 			r.Post("/upload", h.UploadFile)
 			r.Post("/upload/bytes", h.UploadBytes) // Новый эндпоинт
@@ -58,7 +55,6 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 			r.Get("/download/by-hash", h.DownloadByHash) // Новый эндпоинт
 		})
 
-		// Admin operations
 		api.Route("/admin/files", func(r chi.Router) {
 			r.Get("/", h.ListFiles)
 			r.Get("/search", h.SearchFiles)
@@ -69,7 +65,6 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 	})
 }
 
-// Новые методы для ассоциаций файлов
 func (h *Handler) GetFileAssociations(w http.ResponseWriter, r *http.Request) {
 	fileID := chi.URLParam(r, "file_id")
 	if fileID == "" {
@@ -77,8 +72,6 @@ func (h *Handler) GetFileAssociations(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// В реальности нужно реализовать репозиторий для ассоциаций
-	// Здесь заглушка для примера
 	associations := []map[string]interface{}{
 		{
 			"entity_type": "work",
@@ -102,7 +95,6 @@ func (h *Handler) AssociateFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Проверяем существование файла
 	exists, err := h.metadataRepo.Exists(r.Context(), req.FileID)
 	if err != nil {
 		h.logger.Error().Err(err).Msg("Failed to check file existence")
@@ -115,8 +107,6 @@ func (h *Handler) AssociateFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// В реальности сохраняем ассоциацию в БД
-	// Здесь заглушка
 	writeSuccess(w, map[string]interface{}{
 		"success":          true,
 		"file_id":          req.FileID,

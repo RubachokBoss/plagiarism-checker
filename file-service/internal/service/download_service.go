@@ -40,7 +40,6 @@ func NewDownloadService(
 }
 
 func (s *downloadService) DownloadFile(ctx context.Context, fileID string) (*models.DownloadFileResponse, error) {
-	// Получаем метаданные файла
 	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get file metadata: %w", err)
@@ -49,23 +48,19 @@ func (s *downloadService) DownloadFile(ctx context.Context, fileID string) (*mod
 		return nil, errors.New("file not found")
 	}
 
-	// Проверяем статус файла
 	if metadata.UploadStatus == models.FileStatusDeleted.String() {
 		return nil, errors.New("file has been deleted")
 	}
 
-	// Скачиваем файл из хранилища
 	fileReader, fileSize, err := s.storageRepo.DownloadFile(ctx, s.bucketName, metadata.StoragePath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download file from storage: %w", err)
 	}
 
-	// Обновляем статистику доступа
 	if err := s.metadataRepo.UpdateAccessInfo(ctx, fileID); err != nil {
 		s.logger.Error().Err(err).Str("file_id", fileID).Msg("Failed to update access info")
 	}
 
-	// Читаем содержимое файла
 	fileContent, err := io.ReadAll(fileReader)
 	fileReader.Close()
 	if err != nil {
@@ -88,7 +83,6 @@ func (s *downloadService) DownloadFile(ctx context.Context, fileID string) (*mod
 }
 
 func (s *downloadService) DownloadFileByHash(ctx context.Context, hash string, fileSize int64) (*models.DownloadFileResponse, error) {
-	// Находим файлы по хэшу
 	files, err := s.metadataRepo.GetByHash(ctx, hash, fileSize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to find files by hash: %w", err)
@@ -97,26 +91,21 @@ func (s *downloadService) DownloadFileByHash(ctx context.Context, hash string, f
 		return nil, errors.New("file not found")
 	}
 
-	// Берем первый найденный файл
 	metadata := files[0]
 
-	// Проверяем статус файла
 	if metadata.UploadStatus == models.FileStatusDeleted.String() {
 		return nil, errors.New("file has been deleted")
 	}
 
-	// Скачиваем файл из хранилища
 	fileReader, actualFileSize, err := s.storageRepo.DownloadFile(ctx, s.bucketName, metadata.StoragePath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to download file from storage: %w", err)
 	}
 
-	// Обновляем статистику доступа
 	if err := s.metadataRepo.UpdateAccessInfo(ctx, metadata.ID); err != nil {
 		s.logger.Error().Err(err).Str("file_id", metadata.ID).Msg("Failed to update access info")
 	}
 
-	// Читаем содержимое файла
 	fileContent, err := io.ReadAll(fileReader)
 	fileReader.Close()
 	if err != nil {
@@ -139,7 +128,6 @@ func (s *downloadService) DownloadFileByHash(ctx context.Context, hash string, f
 }
 
 func (s *downloadService) GetFileInfo(ctx context.Context, fileID string) (*models.FileInfoResponse, error) {
-	// Получаем метаданные файла
 	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get file metadata: %w", err)
@@ -148,12 +136,10 @@ func (s *downloadService) GetFileInfo(ctx context.Context, fileID string) (*mode
 		return nil, errors.New("file not found")
 	}
 
-	// Проверяем статус файла
 	if metadata.UploadStatus == models.FileStatusDeleted.String() {
 		return nil, errors.New("file has been deleted")
 	}
 
-	// Генерируем URL для доступа
 	storageURL := fmt.Sprintf("/files/%s", metadata.StoragePath)
 
 	return &models.FileInfoResponse{
@@ -172,7 +158,6 @@ func (s *downloadService) GetFileInfo(ctx context.Context, fileID string) (*mode
 }
 
 func (s *downloadService) GetPresignedURL(ctx context.Context, fileID string, expiresIn int64) (string, error) {
-	// Получаем метаданные файла
 	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
 	if err != nil {
 		return "", fmt.Errorf("failed to get file metadata: %w", err)
@@ -181,18 +166,15 @@ func (s *downloadService) GetPresignedURL(ctx context.Context, fileID string, ex
 		return "", errors.New("file not found")
 	}
 
-	// Проверяем статус файла
 	if metadata.UploadStatus == models.FileStatusDeleted.String() {
 		return "", errors.New("file has been deleted")
 	}
 
-	// Генерируем предварительно подписанный URL
 	url, err := s.storageRepo.GetPresignedURL(ctx, s.bucketName, metadata.StoragePath, expiresIn)
 	if err != nil {
 		return "", fmt.Errorf("failed to generate presigned URL: %w", err)
 	}
 
-	// Обновляем статистику доступа (только если URL будет использован)
 	if err := s.metadataRepo.UpdateAccessInfo(ctx, fileID); err != nil {
 		s.logger.Error().Err(err).Str("file_id", fileID).Msg("Failed to update access info")
 	}

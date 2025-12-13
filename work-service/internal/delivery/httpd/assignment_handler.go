@@ -15,7 +15,6 @@ func (h *Handler) CreateAssignment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Валидация
 	if req.Title == "" {
 		writeError(w, http.StatusBadRequest, "title is required")
 		return
@@ -89,7 +88,6 @@ func (h *Handler) UpdateAssignment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Валидация
 	if req.Title == "" {
 		writeError(w, http.StatusBadRequest, "title is required")
 		return

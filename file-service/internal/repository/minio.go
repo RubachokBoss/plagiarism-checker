@@ -26,7 +26,6 @@ type MinIORepository struct {
 }
 
 func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, useSSL bool, connectTimeout time.Duration, logger zerolog.Logger) (*MinIORepository, error) {
-	// Инициализация клиента MinIO
 	client, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKey, secretKey, ""),
 		Secure: useSSL,
@@ -42,8 +41,6 @@ func NewMinIORepository(endpoint, accessKey, secretKey, bucket, region string, u
 		logger: logger,
 	}
 
-	// Best-effort bootstrap: на старте НЕ валим весь сервис, если MinIO ещё не готов.
-	// Это особенно важно при запуске всего docker-compose или при нехватке места на диске.
 	if connectTimeout <= 0 {
 		connectTimeout = 30 * time.Second
 	}
@@ -75,14 +72,12 @@ func (r *MinIORepository) ensureBucket(ctx context.Context) error {
 		return nil
 	}
 
-	// Если MinIO ещё не отвечает — ретраим до дедлайна ctx.
 	backoff := 500 * time.Millisecond
 	for {
 		if err := ctx.Err(); err != nil {
 			return fmt.Errorf("minio not ready: %w", err)
 		}
 
-		// API readiness check
 		if _, err := r.client.ListBuckets(ctx); err != nil {
 			time.Sleep(backoff)
 			continue
@@ -111,7 +106,6 @@ func (r *MinIORepository) UploadFile(ctx context.Context, bucket, fileName strin
 	if err := r.ensureBucket(ctx); err != nil {
 		return err
 	}
-	// Загружаем файл
 	uploadInfo, err := r.client.PutObject(ctx, bucket, fileName, file, size, minio.PutObjectOptions{
 		ContentType: "application/octet-stream",
 	})
@@ -133,7 +127,6 @@ func (r *MinIORepository) DownloadFile(ctx context.Context, bucket, fileName str
 	if err := r.ensureBucket(ctx); err != nil {
 		return nil, 0, err
 	}
-	// Получаем информацию о файле
 	objInfo, err := r.client.StatObject(ctx, bucket, fileName, minio.StatObjectOptions{})
 	if err != nil {
 		if minio.ToErrorResponse(err).Code == "NoSuchKey" {
@@ -142,7 +135,6 @@ func (r *MinIORepository) DownloadFile(ctx context.Context, bucket, fileName str
 		return nil, 0, fmt.Errorf("failed to stat file: %w", err)
 	}
 
-	// Скачиваем файл
 	object, err := r.client.GetObject(ctx, bucket, fileName, minio.GetObjectOptions{})
 	if err != nil {
 		return nil, 0, fmt.Errorf("failed to get file: %w", err)
@@ -161,7 +153,6 @@ func (r *MinIORepository) DeleteFile(ctx context.Context, bucket, fileName strin
 	if err := r.ensureBucket(ctx); err != nil {
 		return err
 	}
-	// Удаляем файл
 	err := r.client.RemoveObject(ctx, bucket, fileName, minio.RemoveObjectOptions{})
 	if err != nil {
 		return fmt.Errorf("failed to delete file: %w", err)
@@ -213,7 +204,6 @@ func (r *MinIORepository) GetPresignedURL(ctx context.Context, bucket, fileName 
 	if err := r.ensureBucket(ctx); err != nil {
 		return "", err
 	}
-	// Создаем предварительно подписанный URL
 	url, err := r.client.PresignedGetObject(ctx, bucket, fileName, time.Duration(expiresIn)*time.Second, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to generate presigned URL: %w", err)
@@ -228,7 +218,6 @@ func (r *MinIORepository) ListFiles(ctx context.Context, bucket, prefix string) 
 	}
 	var files []string
 
-	// Получаем список объектов
 	objectCh := r.client.ListObjects(ctx, bucket, minio.ListObjectsOptions{
 		Prefix:    prefix,
 		Recursive: true,
@@ -251,7 +240,6 @@ func (r *MinIORepository) GetBucketStats(ctx context.Context, bucket string) (*m
 	var totalSize int64
 	var fileCount int64
 
-	// Получаем список всех объектов в бакете
 	objectCh := r.client.ListObjects(ctx, bucket, minio.ListObjectsOptions{
 		Recursive: true,
 	})
@@ -273,7 +261,6 @@ func (r *MinIORepository) GetBucketStats(ctx context.Context, bucket string) (*m
 	}, nil
 }
 
-// GenerateFileName генерирует уникальное имя файла
 func (r *MinIORepository) GenerateFileName(originalName string) string {
 	ext := filepath.Ext(originalName)
 	name := filepath.Base(originalName)
@@ -283,7 +270,6 @@ func (r *MinIORepository) GenerateFileName(originalName string) string {
 	return fmt.Sprintf("%s_%d%s", name, timestamp, ext)
 }
 
-// GenerateStoragePath генерирует путь для хранения файла
 func (r *MinIORepository) GenerateStoragePath(fileName string) string {
 	now := time.Now()
 	return fmt.Sprintf("%d/%02d/%s", now.Year(), now.Month(), fileName)

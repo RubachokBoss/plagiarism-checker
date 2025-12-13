@@ -31,10 +31,8 @@ func NewMigrator(cfg config.DatabaseConfig) *Migrator {
 		panic(fmt.Sprintf("failed to create migration driver: %v", err))
 	}
 
-	// Получаем путь к миграциям
 	migrationPath := "file://migrations"
 	if _, err := os.Stat("migrations"); os.IsNotExist(err) {
-		// Пробуем другой путь
 		migrationPath = "file://./migrations"
 	}
 

@@ -138,14 +138,12 @@ func (r *plagiarismRepository) GetFileHashesByAssignment(ctx context.Context, as
 }
 
 func (r *plagiarismRepository) SaveComparisonResult(ctx context.Context, workID string, comparedWith []string, results []models.ComparisonResult) error {
-	// Start transaction
 	tx, err := r.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
 	}
 	defer tx.Rollback()
 
-	// Update compared_hashes in reports table
 	updateQuery := `
 		UPDATE reports
 		SET compared_hashes = $1, compared_files_count = $2
@@ -157,9 +155,6 @@ func (r *plagiarismRepository) SaveComparisonResult(ctx context.Context, workID 
 		return err
 	}
 
-	// Save detailed comparison results (if needed)
-	// This could be saved in a separate table for detailed analysis
-	// For now, we'll just update the reports table
 
 	return tx.Commit()
 }
@@ -182,9 +177,6 @@ func (r *plagiarismRepository) GetComparisonHistory(ctx context.Context, workID 
 		return nil, err
 	}
 
-	// Parse JSON results
-	// This is simplified - in real implementation you'd parse the JSON
-	// For now, return empty slice
 	return []models.ComparisonResult{}, nil
 }
 
@@ -220,8 +212,6 @@ func (r *plagiarismRepository) GetTopPlagiarizedWorks(ctx context.Context, limit
 }
 
 func (r *plagiarismRepository) GetPlagiarismPatterns(ctx context.Context, assignmentID string) ([]models.ComparisonResult, error) {
-	// This would analyze patterns of plagiarism within an assignment
-	// For now, return empty results
 	return []models.ComparisonResult{}, nil
 }
 
@@ -256,7 +246,6 @@ func (r *plagiarismRepository) scanReport(rows *sql.Rows) (*models.Report, error
 		return nil, err
 	}
 
-	// Convert nullable fields
 	if originalWorkID.Valid {
 		report.OriginalWorkID = &originalWorkID.String
 	}
@@ -266,7 +255,6 @@ func (r *plagiarismRepository) scanReport(rows *sql.Rows) (*models.Report, error
 		report.ProcessingTimeMs = &timeMs
 	}
 
-	// Convert compared hashes
 	for _, hash := range comparedHashes {
 		if hash.Valid {
 			report.ComparedHashes = append(report.ComparedHashes, hash.String)

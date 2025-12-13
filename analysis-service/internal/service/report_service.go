@@ -67,7 +67,6 @@ func (s *reportService) GetReportByWorkID(ctx context.Context, workID string) (*
 }
 
 func (s *reportService) SearchReports(ctx context.Context, filters models.SearchReportsRequest) (*models.SearchReportsResponse, error) {
-	// Convert request filters to repository filters
 	repoFilters := make(map[string]interface{})
 
 	if filters.WorkID != nil && *filters.WorkID != "" {
@@ -102,22 +101,18 @@ func (s *reportService) SearchReports(ctx context.Context, filters models.Search
 		}
 	}
 
-	// Calculate offset
 	offset := (filters.Page - 1) * filters.Limit
 
-	// Search reports
 	reports, total, err := s.reportRepo.Search(ctx, repoFilters, filters.Limit, offset)
 	if err != nil {
 		return nil, fmt.Errorf("failed to search reports: %w", err)
 	}
 
-	// Convert to response
 	responseReports := make([]models.GetReportResponse, 0, len(reports))
 	for _, report := range reports {
 		responseReports = append(responseReports, *s.convertToResponse(&report))
 	}
 
-	// Calculate total pages
 	totalPages := total / filters.Limit
 	if total%filters.Limit > 0 {
 		totalPages++
@@ -133,7 +128,6 @@ func (s *reportService) SearchReports(ctx context.Context, filters models.Search
 }
 
 func (s *reportService) GetAssignmentStats(ctx context.Context, assignmentID string) (*models.GetAssignmentStatsResponse, error) {
-	// Get assignment statistics
 	stats, err := s.reportRepo.GetAssignmentStats(ctx, assignmentID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get assignment stats: %w", err)
@@ -143,25 +137,21 @@ func (s *reportService) GetAssignmentStats(ctx context.Context, assignmentID str
 		return nil, errors.New("assignment not found or no reports available")
 	}
 
-	// Get recent reports for this assignment
 	reports, _, err := s.reportRepo.GetByAssignmentID(ctx, assignmentID, 10, 0)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get assignment reports: %w", err)
 	}
 
-	// Convert reports to response
 	responseReports := make([]models.GetReportResponse, 0, len(reports))
 	for _, report := range reports {
 		responseReports = append(responseReports, *s.convertToResponse(&report))
 	}
 
-	// Get plagiarism patterns
 	patterns, err := s.plagiarismRepo.GetPlagiarismPatterns(ctx, assignmentID)
 	if err != nil {
 		s.logger.Error().Err(err).Msg("Failed to get plagiarism patterns")
 	}
 
-	// Prepare statistics
 	statistics := map[string]interface{}{
 		"total_reports":         stats.TotalWorks,
 		"analyzed_percentage":   float64(stats.AnalyzedWorks) / float64(stats.TotalWorks) * 100,
@@ -183,7 +173,6 @@ func (s *reportService) GetAssignmentStats(ctx context.Context, assignmentID str
 }
 
 func (s *reportService) GetStudentStats(ctx context.Context, studentID string) (*models.GetStudentStatsResponse, error) {
-	// Get student statistics
 	stats, err := s.reportRepo.GetStudentStats(ctx, studentID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get student stats: %w", err)
@@ -193,19 +182,16 @@ func (s *reportService) GetStudentStats(ctx context.Context, studentID string) (
 		return nil, errors.New("student not found or no reports available")
 	}
 
-	// Get recent reports for this student
 	reports, _, err := s.reportRepo.GetByStudentID(ctx, studentID, 10, 0)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get student reports: %w", err)
 	}
 
-	// Convert reports to response
 	responseReports := make([]models.GetReportResponse, 0, len(reports))
 	for _, report := range reports {
 		responseReports = append(responseReports, *s.convertToResponse(&report))
 	}
 
-	// Get comparison history for the student's works
 	var comparisonHistory []models.ComparisonResult
 	for _, report := range reports {
 		history, err := s.plagiarismRepo.GetComparisonHistory(ctx, report.WorkID)
@@ -216,7 +202,6 @@ func (s *reportService) GetStudentStats(ctx context.Context, studentID string) (
 		comparisonHistory = append(comparisonHistory, history...)
 	}
 
-	// Prepare statistics
 	statistics := map[string]interface{}{
 		"total_reports":         stats.TotalWorks,
 		"analyzed_percentage":   float64(stats.AnalyzedWorks) / float64(stats.TotalWorks) * 100,
@@ -242,13 +227,11 @@ func (s *reportService) GetAllStats(ctx context.Context) (*models.AnalysisStats,
 }
 
 func (s *reportService) ExportReports(ctx context.Context, filters map[string]interface{}, format string) ([]byte, error) {
-	// Get reports based on filters
 	reports, _, err := s.reportRepo.Search(ctx, filters, 1000, 0)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get reports for export: %w", err)
 	}
 
-	// Export based on format
 	switch format {
 	case "json":
 		return s.exportJSON(reports)
@@ -260,7 +243,6 @@ func (s *reportService) ExportReports(ctx context.Context, filters map[string]in
 }
 
 func (s *reportService) exportJSON(reports []models.Report) ([]byte, error) {
-	// Convert to response format first
 	responseReports := make([]models.GetReportResponse, 0, len(reports))
 	for _, report := range reports {
 		responseReports = append(responseReports, *s.convertToResponse(&report))
@@ -270,10 +252,8 @@ func (s *reportService) exportJSON(reports []models.Report) ([]byte, error) {
 }
 
 func (s *reportService) exportCSV(reports []models.Report) ([]byte, error) {
-	// CSV header
 	csvData := "Report ID,Work ID,Assignment ID,Student ID,Status,Plagiarism,Match %,Processing Time (ms),Compared Files,Created At,Completed At\n"
 
-	// CSV rows
 	for _, report := range reports {
 		completedAt := ""
 		if report.CompletedAt != nil {
@@ -321,7 +301,6 @@ func (s *reportService) convertToResponse(report *models.Report) *models.GetRepo
 		CompletedAt:        report.CompletedAt,
 	}
 
-	// Parse details if available
 	if report.Details != nil && len(report.Details) > 0 {
 		var details map[string]interface{}
 		if err := json.Unmarshal(report.Details, &details); err == nil {
@@ -329,7 +308,6 @@ func (s *reportService) convertToResponse(report *models.Report) *models.GetRepo
 		}
 	}
 
-	// Convert processing time
 	if report.ProcessingTimeMs != nil {
 		processingTime := *report.ProcessingTimeMs
 		response.ProcessingTimeMs = &processingTime

@@ -38,7 +38,6 @@ func NewDeleteService(
 }
 
 func (s *deleteService) DeleteFile(ctx context.Context, fileID string, hardDelete bool) (*models.DeleteFileResponse, error) {
-	// Получаем метаданные файла
 	metadata, err := s.metadataRepo.GetByID(ctx, fileID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get file metadata: %w", err)
@@ -47,7 +46,6 @@ func (s *deleteService) DeleteFile(ctx context.Context, fileID string, hardDelet
 		return nil, errors.New("file not found")
 	}
 
-	// Проверяем, не удален ли уже файл
 	if metadata.UploadStatus == models.FileStatusDeleted.String() {
 		return &models.DeleteFileResponse{
 			FileID:  fileID,
@@ -57,7 +55,6 @@ func (s *deleteService) DeleteFile(ctx context.Context, fileID string, hardDelet
 	}
 
 	if hardDelete {
-		// Полное удаление: удаляем файл из хранилища и метаданные из БД
 		if err := s.storageRepo.DeleteFile(ctx, s.bucketName, metadata.StoragePath); err != nil {
 			return nil, fmt.Errorf("failed to delete file from storage: %w", err)
 		}
@@ -77,7 +74,6 @@ func (s *deleteService) DeleteFile(ctx context.Context, fileID string, hardDelet
 			Message: "File permanently deleted",
 		}, nil
 	} else {
-		// Мягкое удаление: только меняем статус
 		if err := s.metadataRepo.SoftDelete(ctx, fileID); err != nil {
 			return nil, fmt.Errorf("failed to soft delete file: %w", err)
 		}
@@ -95,7 +91,6 @@ func (s *deleteService) DeleteFile(ctx context.Context, fileID string, hardDelet
 }
 
 func (s *deleteService) DeleteFileByHash(ctx context.Context, hash string, fileSize int64, hardDelete bool) ([]*models.DeleteFileResponse, error) {
-	// Находим файлы по хэшу
 	files, err := s.metadataRepo.GetByHash(ctx, hash, fileSize)
 	if err != nil {
 		return nil, fmt.Errorf("failed to find files by hash: %w", err)
@@ -118,9 +113,6 @@ func (s *deleteService) DeleteFileByHash(ctx context.Context, hash string, fileS
 }
 
 func (s *deleteService) CleanupExpiredFiles(ctx context.Context, daysOld int) (int, error) {
-	// Этот метод требует реализации дополнительного запроса в репозитории
-	// для поиска файлов старше указанного количества дней
-	// В текущей реализации возвращаем заглушку
 
 	s.logger.Warn().
 		Int("days_old", daysOld).

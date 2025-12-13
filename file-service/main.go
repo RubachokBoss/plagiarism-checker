@@ -15,7 +15,6 @@ import (
 )
 
 func main() {
-	// Парсинг аргументов командной строки
 	migrateCmd := flag.NewFlagSet("migrate", flag.ExitOnError)
 	migrateDirection := migrateCmd.String("direction", "up", "direction of migration (up/down)")
 
@@ -28,23 +27,19 @@ func main() {
 		}
 	}
 
-	// Инициализация логгера
 	log := logger.New()
 
-	// Загрузка конфигурации
 	cfg, err := config.Load()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to load configuration")
 	}
 
-	// Инициализация базы данных
 	db, err := database.NewPostgres(cfg.Database)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database")
 	}
 	defer db.Close()
 
-	// Проверка соединения с БД
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -54,20 +49,17 @@ func main() {
 
 	log.Info().Msg("Database connection established")
 
-	// Создание приложения
 	application, err := app.New(cfg, log, db)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to create application")
 	}
 
-	// Контекст для graceful shutdown
 	ctx, stop := signal.NotifyContext(context.Background(),
 		syscall.SIGINT,
 		syscall.SIGTERM,
 	)
 	defer stop()
 
-	// Запуск сервера в горутине
 	go func() {
 		if err := application.Run(); err != nil {
 			log.Fatal().Err(err).Msg("Failed to run application")
@@ -76,11 +68,9 @@ func main() {
 
 	log.Info().Msgf("File Service started on %s", cfg.Server.Address)
 
-	// Ожидание сигнала завершения
 	<-ctx.Done()
 	log.Info().Msg("Shutting down File Service...")
 
-	// Graceful shutdown
 	shutdownCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 

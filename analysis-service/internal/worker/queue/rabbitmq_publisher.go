@@ -27,7 +27,6 @@ func NewRabbitMQPublisher(channel *amqp.Channel, logger zerolog.Logger) RabbitMQ
 }
 
 func (p *rabbitMQPublisher) Publish(ctx context.Context, exchange, routingKey string, body []byte) error {
-	// Set up context with timeout
 	publishCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
@@ -47,14 +46,10 @@ func (p *rabbitMQPublisher) Publish(ctx context.Context, exchange, routingKey st
 }
 
 func (p *rabbitMQPublisher) PublishWithDelay(ctx context.Context, exchange, routingKey string, body []byte, delay time.Duration) error {
-	// For delayed messages, we need to use delayed message exchange plugin
-	// This is a simplified implementation
 
-	// Set up context with timeout
 	publishCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	// Add delay header if supported
 	headers := amqp.Table{}
 	if delay > 0 {
 		headers["x-delay"] = int32(delay.Milliseconds())
@@ -77,7 +72,6 @@ func (p *rabbitMQPublisher) PublishWithDelay(ctx context.Context, exchange, rout
 }
 
 func (p *rabbitMQPublisher) Close() error {
-	// Channel will be closed by parent
 	p.logger.Info().Msg("RabbitMQ publisher closed")
 	return nil
 }

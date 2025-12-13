@@ -100,7 +100,6 @@ func (s *assignmentService) UpdateAssignment(ctx context.Context, id string, req
 }
 
 func (s *assignmentService) DeleteAssignment(ctx context.Context, id string) error {
-	// Проверяем, существует ли задание
 	assignment, err := s.assignmentRepo.GetByID(ctx, id)
 	if err != nil {
 		return fmt.Errorf("failed to get assignment: %w", err)
@@ -109,7 +108,6 @@ func (s *assignmentService) DeleteAssignment(ctx context.Context, id string) err
 		return errors.New("assignment not found")
 	}
 
-	// Проверяем, есть ли связанные работы
 	if assignment.TotalWorks > 0 {
 		return errors.New("cannot delete assignment with existing works")
 	}

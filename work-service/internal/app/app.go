@@ -26,7 +26,6 @@ type App struct {
 }
 
 func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
-	// Создаем интеграционные клиенты
 	fileClient := integration.NewFileClient(
 		cfg.Services.File.URL,
 		cfg.Services.File.UploadEndpoint,
@@ -54,15 +53,12 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 	)
 	if err != nil {
 		log.Error().Err(err).Msg("Failed to create RabbitMQ client")
-		// Продолжаем без RabbitMQ, это допустимо для разработки
 	}
 
-	// Создаем репозитории
 	workRepo := repository.NewWorkRepository(db, log)
 	assignmentRepo := repository.NewAssignmentRepository(db, log)
 	studentRepo := repository.NewStudentRepository(db, log)
 
-	// Создаем сервисы
 	assignmentService := service.NewAssignmentService(assignmentRepo, log)
 	studentService := service.NewStudentService(studentRepo, log)
 	workService := service.NewWorkService(
@@ -81,7 +77,6 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Создаем обработчики
 	handler := httpd.NewHandler(
 		workService,
 		assignmentService,
@@ -90,17 +85,14 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Создаем роутер
 	router := chi.NewRouter()
 
-	// Настраиваем middleware
 	router.Use(middleware.RequestID)
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.Timeout(60 * time.Second))
 
-	// Настраиваем CORS
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   cfg.CORS.AllowedOrigins,
 		AllowedMethods:   cfg.CORS.AllowedMethods,
@@ -110,10 +102,8 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		MaxAge:           cfg.CORS.MaxAge,
 	}))
 
-	// Регистрируем маршруты
 	handler.RegisterRoutes(router)
 
-	// Создаем HTTP сервер
 	server := &http.Server{
 		Addr:         cfg.Server.Address,
 		Handler:      router,
@@ -139,20 +129,17 @@ func (a *App) Run() error {
 func (a *App) Shutdown(ctx context.Context) error {
 	a.logger.Info().Msg("Shutting down work service...")
 
-	// Закрываем RabbitMQ соединение
 	if a.rabbitmqClient != nil {
 		if err := a.rabbitmqClient.Close(); err != nil {
 			a.logger.Error().Err(err).Msg("Failed to close RabbitMQ connection")
 		}
 	}
 
-	// Закрываем соединение с БД
 	if a.db != nil {
 		if err := a.db.Close(); err != nil {
 			a.logger.Error().Err(err).Msg("Failed to close database connection")
 		}
 	}
 
-	// Останавливаем сервер
 	return a.server.Shutdown(ctx)
 }

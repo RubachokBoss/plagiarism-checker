@@ -15,7 +15,6 @@ func (h *Handler) CreateStudent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Валидация
 	if req.Name == "" {
 		writeError(w, http.StatusBadRequest, "name is required")
 		return
@@ -115,7 +114,6 @@ func (h *Handler) UpdateStudent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Валидация
 	if req.Name == "" {
 		writeError(w, http.StatusBadRequest, "name is required")
 		return

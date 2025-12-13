@@ -12,26 +12,22 @@ import (
 )
 
 func (h *Handler) CreateWork(w http.ResponseWriter, r *http.Request) {
-	// Проверяем Content-Type
 	if strings.HasPrefix(r.Header.Get("Content-Type"), "multipart/form-data") {
 		h.UploadWork(w, r)
 		return
 	}
 
-	// Читаем JSON запрос
 	var req models.CreateWorkRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		writeError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
-	// Валидация
 	if req.StudentID == "" || req.AssignmentID == "" {
 		writeError(w, http.StatusBadRequest, "student_id and assignment_id are required")
 		return
 	}
 
-	// Проверяем UUID
 	if _, err := uuid.Parse(req.StudentID); err != nil {
 		writeError(w, http.StatusBadRequest, "Invalid student_id format")
 		return
@@ -42,7 +38,6 @@ func (h *Handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Создаем работу
 	ctx := r.Context()
 	response, err := h.workService.CreateWork(ctx, &req)
 	if err != nil {
@@ -54,13 +49,11 @@ func (h *Handler) CreateWork(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) UploadWork(w http.ResponseWriter, r *http.Request) {
-	// Парсим multipart форму
 	if err := r.ParseMultipartForm(32 << 20); err != nil { // 32MB
 		writeError(w, http.StatusBadRequest, "Failed to parse form data")
 		return
 	}
 
-	// Получаем файл
 	file, header, err := r.FormFile("file")
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "File is required")
@@ -68,24 +61,20 @@ func (h *Handler) UploadWork(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	// Читаем содержимое файла
 	fileContent, err := io.ReadAll(file)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "Failed to read file")
 		return
 	}
 
-	// Получаем остальные поля формы
 	studentID := r.FormValue("student_id")
 	assignmentID := r.FormValue("assignment_id")
 
-	// Валидация
 	if studentID == "" || assignmentID == "" {
 		writeError(w, http.StatusBadRequest, "student_id and assignment_id are required")
 		return
 	}
 
-	// Проверяем UUID
 	if _, err := uuid.Parse(studentID); err != nil {
 		writeError(w, http.StatusBadRequest, "Invalid student_id format")
 		return
@@ -96,7 +85,6 @@ func (h *Handler) UploadWork(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Создаем запрос на загрузку
 	req := &models.UploadWorkRequest{
 		StudentID:    studentID,
 		AssignmentID: assignmentID,
@@ -104,7 +92,6 @@ func (h *Handler) UploadWork(w http.ResponseWriter, r *http.Request) {
 		FileName:     header.Filename,
 	}
 
-	// Загружаем работу
 	ctx := r.Context()
 	response, err := h.workService.UploadWork(ctx, req)
 	if err != nil {

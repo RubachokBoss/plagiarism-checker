@@ -26,7 +26,6 @@ type App struct {
 }
 
 func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
-	// Создаем репозиторий MinIO
 	minioRepo, err := repository.NewMinIORepository(
 		cfg.MinIO.Endpoint,
 		cfg.MinIO.AccessKey,
@@ -41,13 +40,10 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		return nil, err
 	}
 
-	// Создаем оберточный репозиторий хранилища
 	storageRepo := repository.NewStorageRepository(minioRepo, log)
 
-	// Создаем репозиторий метаданных
 	metadataRepo := repository.NewFileMetadataRepository(db, log)
 
-	// Создаем сервисы
 	hashService := service.NewHashService(cfg.Hash.Algorithm)
 
 	uploadService := service.NewUploadService(
@@ -78,8 +74,6 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		cfg.Storage.BucketName,
 	)
 
-	// Создаем обработчики
-	// В функции New после создания репозиториев и сервисов:
 	handler := httpd.NewHandler(
 		uploadService,
 		downloadService,
@@ -89,17 +83,14 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
-	// Создаем роутер
 	router := chi.NewRouter()
 
-	// Настраиваем middleware
 	router.Use(middleware.RequestID)
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.Timeout(60 * time.Second))
 
-	// Настраиваем CORS
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   cfg.CORS.AllowedOrigins,
 		AllowedMethods:   cfg.CORS.AllowedMethods,
@@ -109,10 +100,8 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		MaxAge:           cfg.CORS.MaxAge,
 	}))
 
-	// Регистрируем маршруты
 	handler.RegisterRoutes(router)
 
-	// Создаем HTTP сервер
 	server := &http.Server{
 		Addr:         cfg.Server.Address,
 		Handler:      router,
@@ -137,13 +126,11 @@ func (a *App) Run() error {
 func (a *App) Shutdown(ctx context.Context) error {
 	a.logger.Info().Msg("Shutting down file service...")
 
-	// Закрываем соединение с БД
 	if a.db != nil {
 		if err := a.db.Close(); err != nil {
 			a.logger.Error().Err(err).Msg("Failed to close database connection")
 		}
 	}
 
-	// Останавливаем сервер
 	return a.server.Shutdown(ctx)
 }

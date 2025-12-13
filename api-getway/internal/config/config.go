@@ -2,60 +2,61 @@ package config
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Server   ServerConfig
-	Proxy    ProxyConfig
-	Services ServicesConfig
-	Logging  LoggingConfig
-	CORS     CORSConfig
+	Server   ServerConfig   `mapstructure:"server"`
+	Proxy    ProxyConfig    `mapstructure:"proxy"`
+	Services ServicesConfig `mapstructure:"services"`
+	Logging  LoggingConfig  `mapstructure:"logging"`
+	CORS     CORSConfig     `mapstructure:"cors"`
 }
 
 type ServerConfig struct {
-	Address         string
-	ReadTimeout     time.Duration
-	WriteTimeout    time.Duration
-	IdleTimeout     time.Duration
-	ShutdownTimeout time.Duration
+	Address         string        `mapstructure:"address"`
+	ReadTimeout     time.Duration `mapstructure:"read_timeout"`
+	WriteTimeout    time.Duration `mapstructure:"write_timeout"`
+	IdleTimeout     time.Duration `mapstructure:"idle_timeout"`
+	ShutdownTimeout time.Duration `mapstructure:"shutdown_timeout"`
 }
 
 type ProxyConfig struct {
-	Timeout         time.Duration
-	MaxIdleConns    int
-	IdleConnTimeout time.Duration
+	Timeout         time.Duration `mapstructure:"timeout"`
+	MaxIdleConns    int           `mapstructure:"max_idle_connections"`
+	IdleConnTimeout time.Duration `mapstructure:"idle_conn_timeout"`
 }
 
 type ServiceConfig struct {
-	URL            string
-	HealthEndpoint string
-	Timeout        time.Duration
-	RetryCount     int
-	RetryDelay     time.Duration
+	URL            string        `mapstructure:"url"`
+	HealthEndpoint string        `mapstructure:"health_endpoint"`
+	Timeout        time.Duration `mapstructure:"timeout"`
+	RetryCount     int           `mapstructure:"retry_count"`
+	RetryDelay     time.Duration `mapstructure:"retry_delay"`
 }
 
 type ServicesConfig struct {
-	Work     ServiceConfig
-	File     ServiceConfig
-	Analysis ServiceConfig
+	Work     ServiceConfig `mapstructure:"work"`
+	File     ServiceConfig `mapstructure:"file"`
+	Analysis ServiceConfig `mapstructure:"analysis"`
 }
 
 type LoggingConfig struct {
-	Level   string
-	Pretty  bool
-	NoColor bool
+	Level   string `mapstructure:"level"`
+	Pretty  bool   `mapstructure:"pretty"`
+	NoColor bool   `mapstructure:"no_color"`
 }
 
 type CORSConfig struct {
-	AllowedOrigins   []string
-	AllowedMethods   []string
-	AllowedHeaders   []string
-	ExposedHeaders   []string
-	AllowCredentials bool
-	MaxAge           int
+	AllowedOrigins   []string `mapstructure:"allowed_origins"`
+	AllowedMethods   []string `mapstructure:"allowed_methods"`
+	AllowedHeaders   []string `mapstructure:"allowed_headers"`
+	ExposedHeaders   []string `mapstructure:"exposed_headers"`
+	AllowCredentials bool     `mapstructure:"allow_credentials"`
+	MaxAge           int      `mapstructure:"max_age"`
 }
 
 func Load() (*Config, error) {
@@ -75,6 +76,7 @@ func Load() (*Config, error) {
 	}
 
 	// Привязка переменных окружения
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.AutomaticEnv()
 
 	// Загрузка конфигурации в структуру

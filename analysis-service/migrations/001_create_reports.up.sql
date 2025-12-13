@@ -1,48 +1,50 @@
+-- UUID генерация (gen_random_uuid())
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- Создание таблицы отчетов
 CREATE TABLE IF NOT EXISTS reports (
-                                       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     work_id UUID NOT NULL,
     file_id VARCHAR(255) NOT NULL,
     assignment_id UUID NOT NULL,
     student_id UUID NOT NULL,
 
     -- Статус анализа
-    status VARCHAR(50) NOT NULL DEFAULT 'pending'
-    CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
+    status VARCHAR(50) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
 
     -- Результаты проверки на плагиат
-    plagiarism_flag BOOLEAN DEFAULT FALSE,
+    plagiarism_flag BOOLEAN NOT NULL DEFAULT FALSE,
     original_work_id UUID,
-    match_percentage INTEGER DEFAULT 0,
-    CHECK (match_percentage >= 0 AND match_percentage <= 100),
+    match_percentage INTEGER NOT NULL DEFAULT 0 CHECK (match_percentage >= 0 AND match_percentage <= 100),
 
     -- Хэши файлов
     file_hash VARCHAR(64),
     compared_hashes TEXT[], -- Массив хэшей с которыми сравнивали
 
--- Детали анализа
-    details JSONB DEFAULT '{}',
+    -- Детали анализа
+    details JSONB NOT NULL DEFAULT '{}'::jsonb,
 
     -- Метрики производительности
     processing_time_ms INTEGER,
-    compared_files_count INTEGER DEFAULT 0,
+    compared_files_count INTEGER NOT NULL DEFAULT 0,
 
     -- Временные метки
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     started_at TIMESTAMP WITH TIME ZONE,
     completed_at TIMESTAMP WITH TIME ZONE,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-                             -- Индексы
-                             UNIQUE(work_id),
-    INDEX idx_reports_work_id ON reports(work_id),
-    INDEX idx_reports_assignment_id ON reports(assignment_id),
-    INDEX idx_reports_student_id ON reports(student_id),
-    INDEX idx_reports_status ON reports(status),
-    INDEX idx_reports_plagiarism_flag ON reports(plagiarism_flag),
-    INDEX idx_reports_created_at ON reports(created_at),
-    INDEX idx_reports_file_hash ON reports(file_hash)
-    );
+    UNIQUE(work_id)
+);
+
+-- Индексы (PostgreSQL не поддерживает INDEX внутри CREATE TABLE)
+CREATE INDEX IF NOT EXISTS idx_reports_work_id ON reports(work_id);
+CREATE INDEX IF NOT EXISTS idx_reports_assignment_id ON reports(assignment_id);
+CREATE INDEX IF NOT EXISTS idx_reports_student_id ON reports(student_id);
+CREATE INDEX IF NOT EXISTS idx_reports_status ON reports(status);
+CREATE INDEX IF NOT EXISTS idx_reports_plagiarism_flag ON reports(plagiarism_flag);
+CREATE INDEX IF NOT EXISTS idx_reports_created_at ON reports(created_at);
+CREATE INDEX IF NOT EXISTS idx_reports_file_hash ON reports(file_hash);
 
 -- Таблица для статистики по заданиям
 CREATE TABLE IF NOT EXISTS assignment_stats (
@@ -73,8 +75,7 @@ CREATE TABLE IF NOT EXISTS analysis_queue (
     file_id VARCHAR(255) NOT NULL,
     assignment_id UUID NOT NULL,
     student_id UUID NOT NULL,
-    status VARCHAR(50) NOT NULL DEFAULT 'pending'
-    CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
+    status VARCHAR(50) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
     priority INTEGER DEFAULT 0,
     attempts INTEGER DEFAULT 0,
     max_attempts INTEGER DEFAULT 3,
@@ -82,21 +83,21 @@ CREATE TABLE IF NOT EXISTS analysis_queue (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     scheduled_at TIMESTAMP WITH TIME ZONE,
     started_at TIMESTAMP WITH TIME ZONE,
-    completed_at TIMESTAMP WITH TIME ZONE,
-
-                               INDEX idx_analysis_queue_status ON analysis_queue(status),
-    INDEX idx_analysis_queue_priority ON analysis_queue(priority),
-    INDEX idx_analysis_queue_scheduled_at ON analysis_queue(scheduled_at)
+    completed_at TIMESTAMP WITH TIME ZONE
     );
+
+CREATE INDEX IF NOT EXISTS idx_analysis_queue_status ON analysis_queue(status);
+CREATE INDEX IF NOT EXISTS idx_analysis_queue_priority ON analysis_queue(priority);
+CREATE INDEX IF NOT EXISTS idx_analysis_queue_scheduled_at ON analysis_queue(scheduled_at);
 
 -- Триггер для автоматического обновления updated_at
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = CURRENT_TIMESTAMP;
-RETURN NEW;
+    RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_reports_updated_at
     BEFORE UPDATE ON reports
@@ -142,9 +143,9 @@ WHERE assignment_id = NEW.assignment_id
                                        last_analyzed_at = EXCLUDED.last_analyzed_at,
                                        updated_at = EXCLUDED.updated_at;
 
-RETURN NEW;
+    RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_assignment_stats_trigger
     AFTER INSERT OR UPDATE ON reports
@@ -182,9 +183,9 @@ WHERE student_id = NEW.student_id
                                     last_analyzed_at = EXCLUDED.last_analyzed_at,
                                     updated_at = EXCLUDED.updated_at;
 
-RETURN NEW;
+    RETURN NEW;
 END;
-$$ language 'plpgsql';
+$$ LANGUAGE plpgsql;
 
 CREATE TRIGGER update_student_stats_trigger
     AFTER INSERT OR UPDATE ON reports

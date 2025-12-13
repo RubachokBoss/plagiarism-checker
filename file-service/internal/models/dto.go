@@ -6,7 +6,6 @@ import (
 	"time"
 )
 
-// Data Transfer Objects
 
 type UploadFileRequest struct {
 	File       *multipart.FileHeader `json:"-" form:"file"`

@@ -38,7 +38,6 @@ func NewRabbitMQConsumer(channel *amqp.Channel, queue, consumerTag string, logge
 }
 
 func (c *rabbitMQConsumer) Consume(ctx context.Context) (<-chan RabbitMQMessage, error) {
-	// Set prefetch count
 	err := c.channel.Qos(
 		1,     // prefetch count
 		0,     // prefetch size
@@ -48,7 +47,6 @@ func (c *rabbitMQConsumer) Consume(ctx context.Context) (<-chan RabbitMQMessage,
 		return nil, err
 	}
 
-	// Start consuming
 	msgs, err := c.channel.Consume(
 		c.queue,       // queue
 		c.consumerTag, // consumer
@@ -62,7 +60,6 @@ func (c *rabbitMQConsumer) Consume(ctx context.Context) (<-chan RabbitMQMessage,
 		return nil, err
 	}
 
-	// Convert to our message type
 	output := make(chan RabbitMQMessage)
 
 	go func() {
@@ -79,7 +76,6 @@ func (c *rabbitMQConsumer) Consume(ctx context.Context) (<-chan RabbitMQMessage,
 					return
 				}
 
-				// Create our message wrapper
 				rabbitMsg := RabbitMQMessage{
 					Body:      msg.Body,
 					Timestamp: msg.Timestamp,
@@ -87,12 +83,9 @@ func (c *rabbitMQConsumer) Consume(ctx context.Context) (<-chan RabbitMQMessage,
 					Nack:      msg.Nack,
 				}
 
-				// Send to output channel
 				select {
 				case output <- rabbitMsg:
-					// Message sent successfully
 				case <-ctx.Done():
-					// Context cancelled, nack the message
 					msg.Nack(false, true)
 					return
 				}
@@ -126,12 +119,10 @@ func (c *rabbitMQConsumer) GetQueueLength() (int, error) {
 
 func (c *rabbitMQConsumer) Close() error {
 	if c.channel != nil {
-		// Cancel consumer
 		if err := c.channel.Cancel(c.consumerTag, false); err != nil {
 			c.logger.Error().Err(err).Msg("Failed to cancel RabbitMQ consumer")
 		}
 
-		// Channel will be closed by parent
 	}
 
 	c.logger.Info().Msg("RabbitMQ consumer closed")

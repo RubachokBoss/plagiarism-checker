@@ -8,21 +8,18 @@ import (
 )
 
 func New() zerolog.Logger {
-	// Настройка output
 	output := zerolog.ConsoleWriter{
 		Out:        os.Stdout,
 		TimeFormat: time.RFC3339,
 		NoColor:    false,
 	}
 
-	// Создание логгера
 	logger := zerolog.New(output).
 		With().
 		Timestamp().
 		Caller().
 		Logger()
 
-	// Уровень логирования
 	logger = logger.Level(zerolog.InfoLevel)
 
 	return logger
@@ -42,7 +39,6 @@ func NewWithConfig(level string, pretty, noColor bool) zerolog.Logger {
 		log = zerolog.New(os.Stdout).With().Timestamp().Logger()
 	}
 
-	// Установка уровня логирования
 	switch level {
 	case "debug":
 		log = log.Level(zerolog.DebugLevel)

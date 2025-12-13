@@ -71,7 +71,6 @@ func (s *hashService) getHasher() (hash.Hash, error) {
 	}
 }
 
-// FileHashCalculator специализированный сервис для вычисления хэша файлов
 type FileHashCalculator struct {
 	hashService HashService
 }
@@ -90,7 +89,6 @@ func (c *FileHashCalculator) GetAlgorithm() string {
 	return c.hashService.GetHashAlgorithm()
 }
 
-// CompareFiles сравнивает два файла по хэшу
 func (c *FileHashCalculator) CompareFiles(file1, file2 []byte) (bool, error) {
 	hash1, err := c.CalculateFileHash(file1)
 	if err != nil {

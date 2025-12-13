@@ -32,7 +32,6 @@ func NewWorkerPool(maxWorkers int, logger zerolog.Logger) *WorkerPool {
 func (wp *WorkerPool) Start(ctx context.Context) error {
 	wp.logger.Info().Int("max_workers", wp.maxWorkers).Msg("Starting worker pool")
 
-	// Start workers
 	for i := 0; i < wp.maxWorkers; i++ {
 		wp.wg.Add(1)
 		go wp.worker(i)
@@ -45,13 +44,10 @@ func (wp *WorkerPool) Start(ctx context.Context) error {
 func (wp *WorkerPool) Stop() error {
 	wp.logger.Info().Msg("Stopping worker pool")
 
-	// Close tasks channel to stop receiving new tasks
 	close(wp.tasks)
 
-	// Wait for all workers to finish
 	wp.wg.Wait()
 
-	// Close shutdown channel
 	close(wp.shutdown)
 
 	wp.logger.Info().Msg("Worker pool stopped")
@@ -61,13 +57,10 @@ func (wp *WorkerPool) Stop() error {
 func (wp *WorkerPool) Submit(task Task) {
 	select {
 	case wp.tasks <- task:
-		// Task submitted successfully
 	default:
 		wp.logger.Warn().Msg("Worker pool task queue is full")
-		// Try to submit with timeout
 		select {
 		case wp.tasks <- task:
-			// Task submitted after waiting
 		case <-time.After(1 * time.Second):
 			wp.logger.Error().Msg("Failed to submit task to worker pool (timeout)")
 		}
@@ -86,12 +79,10 @@ func (wp *WorkerPool) worker(id int) {
 	for task := range wp.tasks {
 		wp.logger.Debug().Int("worker_id", id).Msg("Worker processing task")
 
-		// Update active workers count
 		wp.mu.Lock()
 		wp.activeWorkers--
 		wp.mu.Unlock()
 
-		// Execute task
 		func() {
 			defer func() {
 				if r := recover(); r != nil {
@@ -101,7 +92,6 @@ func (wp *WorkerPool) worker(id int) {
 						Msg("Worker recovered from panic")
 				}
 
-				// Update active workers count
 				wp.mu.Lock()
 				wp.activeWorkers++
 				wp.mu.Unlock()

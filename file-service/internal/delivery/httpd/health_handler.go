@@ -13,7 +13,6 @@ import (
 func (h *Handler) GetStats(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	// Получаем статистику файлов
 	fileStats, err := h.metadataRepo.GetStats(ctx)
 	if err != nil {
 		h.logger.Error().Err(err).Msg("Failed to get file stats")
@@ -21,14 +20,11 @@ func (h *Handler) GetStats(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Получаем статистику хранилища
 	storageInfo, err := h.storageRepo.GetBucketStats(ctx, h.uploadService.GetConfig().BucketName)
 	if err != nil {
 		h.logger.Error().Err(err).Msg("Failed to get storage stats")
-		// Продолжаем без статистики хранилища
 	}
 
-	// Форматируем размер для читабельности
 	formatSize := func(bytes int64) string {
 		const unit = 1024
 		if bytes < unit {
@@ -53,7 +49,6 @@ func (h *Handler) GetStats(w http.ResponseWriter, r *http.Request) {
 		"active_files":   fileStats.TotalFiles, // В реальности нужно вычитать удаленные
 	}
 
-	// Добавляем статистику хранилища если доступна
 	if storageInfo != nil {
 		stats["storage_provider"] = storageInfo.Provider
 		stats["storage_bucket"] = storageInfo.BucketName
@@ -79,7 +74,6 @@ func (h *Handler) ListFiles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Преобразуем в формат для ответа
 	fileResponses := make([]map[string]interface{}, len(files))
 	for i, file := range files {
 		fileResponses[i] = map[string]interface{}{
@@ -125,7 +119,6 @@ func (h *Handler) SearchFiles(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 
-	// Ищем по имени файла
 	filesByName, err := h.metadataRepo.GetByFileName(ctx, query)
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
 		h.logger.Error().Err(err).Msg("Failed to search files by name")
@@ -133,14 +126,11 @@ func (h *Handler) SearchFiles(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Ищем по метаданным (пример для ключа "tags")
 	filesByMetadata, err := h.metadataRepo.SearchByMetadata(ctx, "tags", query)
 	if err != nil {
 		h.logger.Error().Err(err).Msg("Failed to search files by metadata")
-		// Продолжаем без результатов поиска по метаданным
 	}
 
-	// Объединяем результаты
 	allFiles := make(map[string]*models.FileMetadata)
 
 	if filesByName != nil {
@@ -151,7 +141,6 @@ func (h *Handler) SearchFiles(w http.ResponseWriter, r *http.Request) {
 		allFiles[file.ID] = file
 	}
 
-	// Применяем пагинацию
 	var paginatedFiles []*models.FileMetadata
 	start := (page - 1) * limit
 	end := start + limit
@@ -167,7 +156,6 @@ func (h *Handler) SearchFiles(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Преобразуем результаты
 	results := make([]map[string]interface{}, len(paginatedFiles))
 	for i, file := range paginatedFiles {
 		results[i] = map[string]interface{}{
@@ -190,7 +178,6 @@ func (h *Handler) SearchFiles(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// Вспомогательные функции
 func formatTime(t *time.Time) string {
 	if t == nil {
 		return ""
