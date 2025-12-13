@@ -271,7 +271,8 @@ func (s *analysisService) BatchAnalyze(ctx context.Context, workIDs []string) (*
 		CompletedAt: time.Now(),
 	}
 
-	batchSize := 5 // Process 5 works at a time
+	// Обрабатываем работы небольшими пачками, чтобы не перегружать CPU/БД.
+	batchSize := 5
 	for i := 0; i < len(workIDs); i += batchSize {
 		end := i + batchSize
 		if end > len(workIDs) {

@@ -89,45 +89,45 @@ func Load() (*Config, error) {
 }
 
 func setDefaults() {
-	// Server defaults
+	// Значения по умолчанию: сервер
 	viper.SetDefault("server.address", ":8080")
 	viper.SetDefault("server.read_timeout", "15s")
 	viper.SetDefault("server.write_timeout", "15s")
 	viper.SetDefault("server.idle_timeout", "60s")
 	viper.SetDefault("server.shutdown_timeout", "10s")
 
-	// Proxy defaults
+	// Значения по умолчанию: прокси
 	viper.SetDefault("proxy.timeout", "30s")
 	viper.SetDefault("proxy.max_idle_connections", 100)
 	viper.SetDefault("proxy.idle_conn_timeout", "90s")
 
-	// Work service defaults
+	// Значения по умолчанию: work-service
 	viper.SetDefault("services.work.url", "http://work-service:8081")
 	viper.SetDefault("services.work.health_endpoint", "/health")
 	viper.SetDefault("services.work.timeout", "10s")
 	viper.SetDefault("services.work.retry_count", 3)
 	viper.SetDefault("services.work.retry_delay", "100ms")
 
-	// File service defaults
+	// Значения по умолчанию: file-service
 	viper.SetDefault("services.file.url", "http://file-service:8082")
 	viper.SetDefault("services.file.health_endpoint", "/health")
 	viper.SetDefault("services.file.timeout", "15s")
 	viper.SetDefault("services.file.retry_count", 3)
 	viper.SetDefault("services.file.retry_delay", "100ms")
 
-	// Analysis service defaults
+	// Значения по умолчанию: analysis-service
 	viper.SetDefault("services.analysis.url", "http://analysis-service:8083")
 	viper.SetDefault("services.analysis.health_endpoint", "/health")
 	viper.SetDefault("services.analysis.timeout", "10s")
 	viper.SetDefault("services.analysis.retry_count", 3)
 	viper.SetDefault("services.analysis.retry_delay", "100ms")
 
-	// Logging defaults
+	// Значения по умолчанию: логирование
 	viper.SetDefault("logging.level", "info")
 	viper.SetDefault("logging.pretty", false)
 	viper.SetDefault("logging.no_color", false)
 
-	// CORS defaults
+	// Значения по умолчанию: CORS
 	viper.SetDefault("cors.allowed_origins", []string{"*"})
 	viper.SetDefault("cors.allowed_methods", []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
 	viper.SetDefault("cors.allowed_headers", []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"})

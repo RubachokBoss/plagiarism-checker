@@ -45,6 +45,10 @@ func (h *Handler) SetupProxyRoutes(workProxy, fileProxy, analysisProxy *ServiceP
 			r.Get("/export", analysisProxy.ServeHTTP)
 		})
 
+		r.Route("/wordcloud", func(r chi.Router) {
+			r.Get("/work/{work_id}", analysisProxy.ServeHTTP)
+		})
+
 		r.Route("/assignments", func(r chi.Router) {
 			r.Get("/", workProxy.ServeHTTP)
 			r.Post("/", workProxy.ServeHTTP)
@@ -109,7 +113,7 @@ func (h *Handler) adminServices(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, response)
 }
 
-// ServeHTTP реализация для ServiceProxy
+// ServeHTTP проксирует запрос в целевой микросервис.
 func (sp *ServiceProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	sp.Proxy.ServeHTTP(w, r)
 }

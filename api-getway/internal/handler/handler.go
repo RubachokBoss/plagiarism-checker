@@ -132,7 +132,7 @@ func (h *Handler) CreateServiceProxy(targetURL, pathPrefix string) (*ServiceProx
 			"code":    "SERVICE_UNAVAILABLE",
 		}
 
-		if err := writeJSON(w, http.StatusOK, errorResponse); err != nil {
+		if err := writeJSON(w, http.StatusServiceUnavailable, errorResponse); err != nil {
 			h.logger.Error().Err(err).Msg("Failed to write JSON response")
 		}
 	}

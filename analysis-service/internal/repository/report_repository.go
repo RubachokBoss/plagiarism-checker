@@ -51,6 +51,9 @@ func (r *reportRepository) Create(ctx context.Context, report *models.Report) er
 	} else if _, err := uuid.Parse(report.ID); err != nil {
 		report.ID = uuid.New().String()
 	}
+	if len(report.Details) == 0 {
+		report.Details = []byte("{}")
+	}
 
 	query := `
 		INSERT INTO reports (
@@ -325,6 +328,10 @@ func (r *reportRepository) GetAll(ctx context.Context, limit, offset int) ([]mod
 }
 
 func (r *reportRepository) Update(ctx context.Context, report *models.Report) error {
+	if len(report.Details) == 0 {
+		report.Details = []byte("{}")
+	}
+
 	query := `
 		UPDATE reports
 		SET 

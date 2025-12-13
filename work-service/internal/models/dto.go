@@ -2,7 +2,6 @@ package models
 
 import "time"
 
-
 type CreateWorkRequest struct {
 	StudentID    string `json:"student_id" validate:"required,uuid"`
 	AssignmentID string `json:"assignment_id" validate:"required,uuid"`
