@@ -54,7 +54,7 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		service.UploadConfig{
 			MaxUploadSize:  cfg.Server.MaxUploadSize,
 			BucketName:     cfg.Storage.BucketName,
-			AllowedTypes:   []string{".txt", ".pdf", ".doc", ".docx", ".zip", ".rar"},
+				AllowedTypes:   []string{".txt", ".pdf", ".doc", ".docx", ".zip", ".rar", "text/"},
 			GenerateHash:   true,
 			CheckDuplicate: true,
 		},

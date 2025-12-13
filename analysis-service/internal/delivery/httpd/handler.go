@@ -13,17 +13,20 @@ import (
 type Handler struct {
 	analysisService service.AnalysisService
 	reportService   service.ReportService
+	wordCloudService service.WordCloudService
 	logger          zerolog.Logger
 }
 
 func NewHandler(
 	analysisService service.AnalysisService,
 	reportService service.ReportService,
+	wordCloudService service.WordCloudService,
 	logger zerolog.Logger,
 ) *Handler {
 	return &Handler{
 		analysisService: analysisService,
 		reportService:   reportService,
+		wordCloudService: wordCloudService,
 		logger:          logger,
 	}
 }
@@ -49,6 +52,10 @@ func (h *Handler) RegisterRoutes(router chi.Router) {
 			r.Get("/assignment/{assignment_id}", h.GetAssignmentStats)
 			r.Get("/student/{student_id}", h.GetStudentStats)
 			r.Get("/export", h.ExportReports)
+		})
+
+		api.Route("/wordcloud", func(r chi.Router) {
+			r.Get("/work/{work_id}", h.GetWordCloudPNG)
 		})
 	})
 }

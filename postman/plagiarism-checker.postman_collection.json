@@ -1,0 +1,470 @@
+{
+  "info": {
+    "name": "Plagiarism Checker (e2e)",
+    "_postman_id": "e4b3f1b4-2d6a-4d2b-9f63-0d8b2b3c9a01",
+    "description": "Gateway-first e2e flow. Order: 00 Reset -> 01 Health -> 02 Create student #1 -> 03 Create student #2 -> 03b Create student #3 -> 03c Create student #4 -> 04 Create assignment -> 05 Upload work #1 -> 06 Upload work #2 -> 06b Upload work #3 -> 06c Upload work #4 -> 07 Wait report (runner) -> 08 Get report -> 09 Assignment analytics -> 10 Wordcloud.\n\nIMPORTANT (Postman Web): file paths in collection JSON are unreliable. For upload requests choose files manually (Body->form-data, key 'file' type File). If selection disappears, copy files to ASCII path like C:\\temp\\p1.txt and select from there.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "api", "value": "{{baseUrl}}/api/v1" },
+    { "key": "student1", "value": "" },
+    { "key": "student2", "value": "" },
+    { "key": "student3", "value": "" },
+    { "key": "student4", "value": "" },
+    { "key": "assignmentId", "value": "" },
+    { "key": "work1", "value": "" },
+    { "key": "work2", "value": "" },
+    { "key": "work3", "value": "" },
+    { "key": "work4", "value": "" },
+    { "key": "pollAttempt", "value": "0" },
+    { "key": "pollMax", "value": "30" }
+  ],
+  "item": [
+    {
+      "name": "00 Reset variables",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('student1', '');",
+              "pm.collectionVariables.set('student2', '');",
+              "pm.collectionVariables.set('student3', '');",
+              "pm.collectionVariables.set('student4', '');",
+              "pm.collectionVariables.set('assignmentId', '');",
+              "pm.collectionVariables.set('work1', '');",
+              "pm.collectionVariables.set('work2', '');",
+              "pm.collectionVariables.set('work3', '');",
+              "pm.collectionVariables.set('work4', '');",
+              "pm.collectionVariables.set('pollAttempt', '0');"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "01 Gateway health",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "02 Create student #1",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "pm.test('has data.id', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('student1', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"student 1\",\n  \"email\": \"student1_{{$timestamp}}@example.com\"\n}"
+            },
+            "url": "{{api}}/students"
+          }
+        },
+        {
+          "name": "03 Create student #2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "pm.test('has data.id', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('student2', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"student 2\",\n  \"email\": \"student2_{{$timestamp}}@example.com\"\n}"
+            },
+            "url": "{{api}}/students"
+          }
+        }
+        ,
+        {
+          "name": "03b Create student #3",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "pm.test('has data.id', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('student3', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"student 3\",\n  \"email\": \"student3_{{$timestamp}}@example.com\"\n}"
+            },
+            "url": "{{api}}/students"
+          }
+        },
+        {
+          "name": "03c Create student #4",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "pm.test('has data.id', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('student4', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"student 4\",\n  \"email\": \"student4_{{$timestamp}}@example.com\"\n}"
+            },
+            "url": "{{api}}/students"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assignments",
+      "item": [
+        {
+          "name": "04 Create assignment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "pm.test('has data.id', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('assignmentId', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"HW {{$timestamp}}\",\n  \"description\": \"plag test\"\n}"
+            },
+            "url": "{{api}}/assignments"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Works",
+      "item": [
+        {
+          "name": "05 Upload work #1 (multipart)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const s1 = pm.collectionVariables.get('student1');",
+                  "const a = pm.collectionVariables.get('assignmentId');",
+                  "pm.test('student1 set', function () { pm.expect(s1).to.be.ok; });",
+                  "pm.test('assignmentId set', function () { pm.expect(a).to.be.ok; });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) { json = {}; }",
+                  "pm.test('upload ok (has data.id)', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('work1', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "student_id", "value": "{{student1}}", "type": "text" },
+                { "key": "assignment_id", "value": "{{assignmentId}}", "type": "text" },
+                { "key": "file", "type": "file", "src": [], "description": "select file: плагиат11.txt" }
+              ]
+            },
+            "url": "{{api}}/works"
+          }
+        },
+        {
+          "name": "06 Upload work #2 (multipart)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const s2 = pm.collectionVariables.get('student2');",
+                  "const a = pm.collectionVariables.get('assignmentId');",
+                  "pm.test('student2 set', function () { pm.expect(s2).to.be.ok; });",
+                  "pm.test('assignmentId set', function () { pm.expect(a).to.be.ok; });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) { json = {}; }",
+                  "pm.test('upload ok (has data.id)', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('work2', json.data.id);",
+                  "pm.collectionVariables.set('pollAttempt', '0');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "student_id", "value": "{{student2}}", "type": "text" },
+                { "key": "assignment_id", "value": "{{assignmentId}}", "type": "text" },
+                { "key": "file", "type": "file", "src": [], "description": "select file: плагиат22.txt" }
+              ]
+            },
+            "url": "{{api}}/works"
+          }
+        }
+        ,
+        {
+          "name": "06b Upload work #3 (multipart)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const s3 = pm.collectionVariables.get('student3');",
+                  "const a = pm.collectionVariables.get('assignmentId');",
+                  "pm.test('student3 set', function () { pm.expect(s3).to.be.ok; });",
+                  "pm.test('assignmentId set', function () { pm.expect(a).to.be.ok; });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) { json = {}; }",
+                  "pm.test('upload ok (has data.id)', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('work3', json.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "student_id", "value": "{{student3}}", "type": "text" },
+                { "key": "assignment_id", "value": "{{assignmentId}}", "type": "text" },
+                { "key": "file", "type": "file", "src": [], "description": "select file: file1.txt" }
+              ]
+            },
+            "url": "{{api}}/works"
+          }
+        },
+        {
+          "name": "06c Upload work #4 (multipart)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const s4 = pm.collectionVariables.get('student4');",
+                  "const a = pm.collectionVariables.get('assignmentId');",
+                  "pm.test('student4 set', function () { pm.expect(s4).to.be.ok; });",
+                  "pm.test('assignmentId set', function () { pm.expect(a).to.be.ok; });"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) { json = {}; }",
+                  "pm.test('upload ok (has data.id)', function () { pm.expect(json).to.have.nested.property('data.id'); });",
+                  "pm.collectionVariables.set('work4', json.data.id);",
+                  "pm.collectionVariables.set('pollAttempt', '0');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "student_id", "value": "{{student4}}", "type": "text" },
+                { "key": "assignment_id", "value": "{{assignmentId}}", "type": "text" },
+                { "key": "file", "type": "file", "src": [], "description": "select file: file2.txt" }
+              ]
+            },
+            "url": "{{api}}/works"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "07 Wait report for work4 (runner)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const max = parseInt(pm.collectionVariables.get('pollMax') || '30', 10);",
+                  "const attempt = parseInt(pm.collectionVariables.get('pollAttempt') || '0', 10);",
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "const status = (json && json.data && json.data.status) ? json.data.status : '';",
+                  "if (status === 'completed') {",
+                  "  pm.collectionVariables.set('pollAttempt', '0');",
+                  "  postman.setNextRequest('08 Get report by work4');",
+                  "} else if (attempt + 1 >= max) {",
+                  "  pm.collectionVariables.set('pollAttempt', '0');",
+                  "  pm.test('report completed', function () { pm.expect(status).to.eql('completed'); });",
+                  "  postman.setNextRequest(null);",
+                  "} else {",
+                  "  pm.collectionVariables.set('pollAttempt', String(attempt + 1));",
+                  "  postman.setNextRequest('07 Wait report for work4 (runner)');",
+                  "}",
+                  ""
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": "{{api}}/reports/work/{{work4}}"
+          }
+        },
+        {
+          "name": "08 Get report by work4",
+          "request": {
+            "method": "GET",
+            "url": "{{api}}/reports/work/{{work4}}"
+          }
+        },
+        {
+          "name": "08b Get report by work2",
+          "request": {
+            "method": "GET",
+            "url": "{{api}}/reports/work/{{work2}}"
+          }
+        },
+        {
+          "name": "09 Assignment analytics (stats)",
+          "request": {
+            "method": "GET",
+            "url": "{{api}}/reports/assignment/{{assignmentId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Word cloud (10/10)",
+      "item": [
+        {
+          "name": "10 Word cloud PNG for work4",
+          "request": {
+            "method": "GET",
+            "url": "{{api}}/wordcloud/work/{{work4}}?width=800&height=600&max_words=150&min_len=2&remove_stopwords=true&lang=ru"
+          }
+        },
+        {
+          "name": "10b Word cloud PNG for work2",
+          "request": {
+            "method": "GET",
+            "url": "{{api}}/wordcloud/work/{{work2}}?width=800&height=600&max_words=150&min_len=2&remove_stopwords=true&lang=ru"
+          }
+        }
+      ]
+    }
+  ]
+}

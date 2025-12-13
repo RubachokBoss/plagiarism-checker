@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"mime/multipart"
+	"net/http"
 	"path/filepath"
 	"strings"
 	"time"
@@ -214,6 +215,21 @@ func (s *uploadService) detectMimeType(fileName string, fileBytes []byte) string
 
 	if mimeType, ok := mimeTypes[ext]; ok {
 		return mimeType
+	}
+
+	if len(fileBytes) > 0 {
+		sniffLen := 512
+		if len(fileBytes) < sniffLen {
+			sniffLen = len(fileBytes)
+		}
+		ct := http.DetectContentType(fileBytes[:sniffLen])
+		ct = strings.ToLower(strings.TrimSpace(ct))
+		if semi := strings.Index(ct, ";"); semi >= 0 {
+			ct = strings.TrimSpace(ct[:semi])
+		}
+		if ct != "" {
+			return ct
+		}
 	}
 
 	return "application/octet-stream"

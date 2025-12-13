@@ -27,11 +27,16 @@ type fileClient struct {
 }
 
 type FileInfoResponse struct {
-	FileID   string `json:"file_id"`
-	Hash     string `json:"hash"`
-	Size     int64  `json:"size"`
-	FileName string `json:"file_name"`
-	MimeType string `json:"mime_type"`
+	FileID       string `json:"file_id"`
+	Hash         string `json:"hash"`
+	Size         int64  `json:"file_size"`
+	OriginalName string `json:"original_name"`
+	MimeType     string `json:"mime_type"`
+}
+
+type fileInfoEnvelope struct {
+	Success bool             `json:"success"`
+	Data    FileInfoResponse `json:"data"`
 }
 
 func NewFileClient(baseURL string, timeout time.Duration, retryCount int, retryDelay time.Duration, logger zerolog.Logger) FileClient {
@@ -75,12 +80,14 @@ func (c *fileClient) GetFileHash(ctx context.Context, fileID string) (string, in
 		}
 
 		if resp.StatusCode == http.StatusOK {
-			if err := json.NewDecoder(resp.Body).Decode(&fileInfo); err != nil {
+			var env fileInfoEnvelope
+			if err := json.NewDecoder(resp.Body).Decode(&env); err != nil {
 				resp.Body.Close()
 				lastErr = fmt.Errorf("failed to decode response: %w", err)
 				continue
 			}
 			resp.Body.Close()
+			fileInfo = &env.Data
 
 			c.logger.Debug().
 				Str("file_id", fileID).
@@ -187,12 +194,14 @@ func (c *fileClient) GetFileInfo(ctx context.Context, fileID string) (*FileInfoR
 		}
 
 		if resp.StatusCode == http.StatusOK {
-			if err := json.NewDecoder(resp.Body).Decode(&fileInfo); err != nil {
+			var env fileInfoEnvelope
+			if err := json.NewDecoder(resp.Body).Decode(&env); err != nil {
 				resp.Body.Close()
 				lastErr = fmt.Errorf("failed to decode response: %w", err)
 				continue
 			}
 			resp.Body.Close()
+			fileInfo = &env.Data
 			return fileInfo, nil
 		}
 

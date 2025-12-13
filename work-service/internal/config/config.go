@@ -127,7 +127,7 @@ func setDefaults() {
 	viper.SetDefault("services.analysis.retry_count", 3)
 	viper.SetDefault("services.analysis.retry_delay", "100ms")
 
-	viper.SetDefault("rabbitmq.url", "amqp://guest:guest@localhost:5672/")
+	viper.SetDefault("rabbitmq.url", "amqp://guest:guest@rabbitmq:5672/")
 	viper.SetDefault("rabbitmq.exchange", "plagiarism_exchange")
 	viper.SetDefault("rabbitmq.routing_key", "work.created")
 	viper.SetDefault("rabbitmq.queue_name", "work_created_queue")

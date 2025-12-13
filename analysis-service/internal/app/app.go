@@ -114,6 +114,12 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 
+	wordCloudService := service.NewWordCloudService(
+		reportRepo,
+		fileClient,
+		log,
+	)
+
 	workerPool := worker.NewWorkerPool(cfg.Analysis.MaxWorkers, log)
 
 	analysisWorker := worker.NewAnalysisWorker(
@@ -127,6 +133,7 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 	handler := httpd.NewHandler(
 		analysisService,
 		reportService,
+		wordCloudService,
 		log,
 	)
 

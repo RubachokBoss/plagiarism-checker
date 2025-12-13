@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -52,7 +53,10 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		log,
 	)
 	if err != nil {
-		log.Error().Err(err).Msg("Failed to create RabbitMQ client")
+		rabbitmqClient, err = connectRabbitMQWithRetry(cfg, log)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	workRepo := repository.NewWorkRepository(db, log)
@@ -119,6 +123,35 @@ func New(cfg *config.Config, log zerolog.Logger, db *sql.DB) (*App, error) {
 		db:             db,
 		rabbitmqClient: rabbitmqClient,
 	}, nil
+}
+
+func connectRabbitMQWithRetry(cfg *config.Config, log zerolog.Logger) (integration.RabbitMQClient, error) {
+	const maxAttempts = 30
+	const delay = 1 * time.Second
+
+	var lastErr error
+	for i := 1; i <= maxAttempts; i++ {
+		client, err := integration.NewRabbitMQClient(
+			cfg.RabbitMQ.URL,
+			cfg.RabbitMQ.Exchange,
+			cfg.RabbitMQ.RoutingKey,
+			cfg.RabbitMQ.QueueName,
+			log,
+		)
+		if err == nil {
+			return client, nil
+		}
+
+		lastErr = err
+		log.Warn().
+			Int("attempt", i).
+			Int("max_attempts", maxAttempts).
+			Err(err).
+			Msg("Failed to connect to RabbitMQ, retrying")
+		time.Sleep(delay)
+	}
+
+	return nil, fmt.Errorf("failed to connect to RabbitMQ after %d attempts: %w", maxAttempts, lastErr)
 }
 
 func (a *App) Run() error {
