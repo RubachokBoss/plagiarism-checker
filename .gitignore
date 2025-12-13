@@ -22,4 +22,9 @@ vendor/
 # Logs
 *.log
 
+# Артефакты локального e2e прогона (генерируются скриптами/ручными запросами)
+wordcloud_*.png
+wordcloud-*.png
+wordcloud*.png
+
 
