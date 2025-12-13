@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -51,7 +52,7 @@ func (s *wordCloudService) RenderWorkWordCloudPNG(ctx context.Context, workID st
 		return nil, fmt.Errorf("work id is required")
 	}
 	if _, err := uuid.Parse(workID); err != nil {
-		return nil, fmt.Errorf("invalid work_id")
+		return nil, ErrInvalidWorkID
 	}
 
 	report, err := s.reportRepo.GetByWorkID(ctx, workID)
@@ -59,20 +60,24 @@ func (s *wordCloudService) RenderWorkWordCloudPNG(ctx context.Context, workID st
 		return nil, fmt.Errorf("failed to get report: %w", err)
 	}
 	if report == nil {
-		return nil, fmt.Errorf("report not found for this work")
+		return nil, ErrReportNotFound
 	}
 	if strings.TrimSpace(report.FileID) == "" {
-		return nil, fmt.Errorf("file_id is empty for this work")
+		return nil, ErrFileIDEmpty
 	}
 
 	content, err := s.fileClient.GetFileContent(ctx, report.FileID)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get file content: %w", err)
+		// Отличаем "нет файла" от остальных сбоев file-service.
+		if strings.HasPrefix(err.Error(), "file not found:") || errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+			return nil, fmt.Errorf("%w: %v", ErrFileServiceError, err)
+		}
+		return nil, fmt.Errorf("%w: %v", ErrFileServiceError, err)
 	}
 
 	text := strings.TrimSpace(string(content))
 	if text == "" {
-		return nil, fmt.Errorf("file content is empty")
+		return nil, ErrFileContentEmpty
 	}
 
 	width := opts.Width
@@ -114,27 +119,27 @@ func (s *wordCloudService) RenderWorkWordCloudPNG(ctx context.Context, workID st
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "https://quickchart.io/wordcloud", bytes.NewReader(body))
 	if err != nil {
-		return nil, fmt.Errorf("failed to create quickchart request: %w", err)
+		return nil, fmt.Errorf("%w: failed to create request: %v", ErrQuickChartError, err)
 	}
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := s.httpClient.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("quickchart request failed: %w", err)
+		return nil, fmt.Errorf("%w: request failed: %v", ErrQuickChartError, err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		b, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("quickchart returned status %d: %s", resp.StatusCode, string(b))
+		return nil, fmt.Errorf("%w: returned status %d: %s", ErrQuickChartError, resp.StatusCode, string(b))
 	}
 
 	img, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read quickchart response: %w", err)
+		return nil, fmt.Errorf("%w: failed to read response: %v", ErrQuickChartError, err)
 	}
 	if len(img) == 0 {
-		return nil, fmt.Errorf("quickchart returned empty image")
+		return nil, fmt.Errorf("%w: returned empty image", ErrQuickChartError)
 	}
 
 	s.logger.Info().
@@ -145,4 +150,3 @@ func (s *wordCloudService) RenderWorkWordCloudPNG(ctx context.Context, workID st
 
 	return img, nil
 }
-

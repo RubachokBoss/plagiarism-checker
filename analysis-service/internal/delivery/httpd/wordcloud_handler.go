@@ -1,6 +1,7 @@
 package httpd
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
@@ -50,18 +51,24 @@ func (h *Handler) GetWordCloudPNG(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) handleWordCloudError(w http.ResponseWriter, err error) {
-	errMsg := err.Error()
 	switch {
-	case errMsg == "invalid work_id":
-		writeError(w, http.StatusBadRequest, errMsg)
-	case errMsg == "report not found for this work":
-		writeError(w, http.StatusNotFound, errMsg)
-	case errMsg == "file content is empty":
-		writeError(w, http.StatusBadRequest, errMsg)
-	case errMsg == "file_id is empty for this work":
-		writeError(w, http.StatusConflict, errMsg)
+	case errors.Is(err, service.ErrInvalidWorkID):
+		writeError(w, http.StatusBadRequest, err.Error())
+	case errors.Is(err, service.ErrReportNotFound):
+		writeError(w, http.StatusNotFound, err.Error())
+	case errors.Is(err, service.ErrFileContentEmpty):
+		writeError(w, http.StatusBadRequest, err.Error())
+	case errors.Is(err, service.ErrFileIDEmpty):
+		writeError(w, http.StatusConflict, err.Error())
+	case errors.Is(err, service.ErrFileServiceError):
+		// Ошибка зависимого микросервиса (file-service).
+		writeError(w, http.StatusBadGateway, err.Error())
+	case errors.Is(err, service.ErrQuickChartError):
+		// Ошибка внешнего API (quickchart).
+		writeError(w, http.StatusBadGateway, err.Error())
 	default:
+		// Для отладки возвращаем сообщение ошибки, но оставляем 500 как признак внутреннего сбоя.
 		h.logger.Error().Err(err).Msg("Word cloud error")
-		writeError(w, http.StatusInternalServerError, "Internal server error")
+		writeError(w, http.StatusInternalServerError, err.Error())
 	}
 }
