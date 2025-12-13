@@ -120,7 +120,8 @@ func (a *similarityAnalyzer) FindSimilarSections(text1, text2 string, minLength 
 	for i, gram1 := range ngrams1 {
 		for j, gram2 := range ngrams2 {
 			similarity := a.CalculateSimilarity(gram1, gram2)
-			if similarity > 0.8 { // High similarity threshold
+			// Порог "высокой" схожести для поиска похожих фрагментов.
+			if similarity > 0.8 {
 				section := SimilarSection{
 					Text1Start: i,
 					Text1End:   i + minLength - 1,
